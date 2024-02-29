@@ -1,0 +1,157 @@
+.content {
+    width: 1360px;
+    margin: 50px auto 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.detail {
+    width: 45%;
+}
+
+.detail__box {
+    display: flex;
+    justify-content: left;
+    width: 150px;
+    margin-bottom: 30px;
+}
+
+.detail__back {
+    margin-right: 15px;
+}
+
+.detail__back>button {
+    border: none;
+    background-color: #fff;
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    box-shadow: 2px 2px 4px #959595;
+    font-size: 18px;
+}
+
+.detail__ttl {
+    margin: 0;
+}
+
+.detail__img {
+    width: 100%;
+}
+
+.detail__category {
+    display: flex;
+    justify-content: left;
+    padding-left: 0;
+    list-style: none;
+    font-size: 16px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.detail__category--item {
+    padding-right: 5px;
+}
+
+.wrapper{
+    width: 45%;
+    position: relative;
+}
+
+.reservation {
+    width: 100%;
+    height: 115%;
+    padding-top: 20px;
+    background-color: #3560F6;
+    border-radius: 6px;
+    position: relative;
+    position: absolute;
+    top: -15%;
+}
+
+.reservation__ttl {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 0;
+    color: #fff;
+}
+
+.reservation__form {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.reservation__form--date,
+.reservation__form--time,
+.reservation__form--people {
+    border: none;
+    border-radius: 6px;
+    height: 40px;
+    padding: 5px 10px;
+}
+
+.reservation__form--date {
+    width: 30%;
+    position: relative;
+}
+
+.reservation__form--date::-webkit-calendar-picker-indicator {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+}
+
+.reservation__form--time,
+.reservation__form--people {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.reservation__form--time {
+    position: relative;
+}
+
+.reservation__form--time::-webkit-calendar-picker-indicator {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+}
+
+.reservation__form--people {
+    appearance: none;
+}
+
+.form__result {
+    margin-top: 20px;
+    background-color: #5580F7;
+    color: #fff;
+    border-radius: 6px;
+    padding: 20px 20px;
+}
+
+.form__result--table {
+    width: 100%;
+}
+
+.form__result--item {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.form__result--item:first-child {
+    width: 20%;
+}
+
+.form__btn {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #003FF5;
+    border: none;
+    color: #fff;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}

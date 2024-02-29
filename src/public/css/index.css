@@ -1,0 +1,172 @@
+.search {
+    width: 50%;
+    margin-right: 10px;
+}
+
+.search__form,
+.search__area,
+.search__genre,
+.search__word {
+    background-color: #fff;
+    border: none;
+}
+
+.search__area--box,
+.search__genre--box {
+    display: inline;
+    position: relative;
+}
+
+.search__area,
+.search__genre {
+    border-right: 1px solid #EEE;
+    width: 15%;
+    appearance: none;
+    padding-left: 5px;
+}
+
+.search__area--box::before,
+.search__genre--box::before {
+    content: '';
+    width: 9px;
+    height: 9px;
+    border: 0;
+    border-bottom: solid 5px #333;
+    border-right: solid 5px #333;
+    transform: rotate(45deg);
+    position: absolute;
+    top: 40%;
+    right: 13%;
+    margin: auto;
+}
+
+.search__form {
+    padding: 10px 10px;
+    border-radius: 6px;
+    box-shadow: 2px 2px 4px #959595;
+}
+
+.search__form--box {
+    display: inline;
+}
+
+.search__word {
+    width: 60%;
+}
+
+.search__word::placeholder {
+    color: #757575;
+}
+
+.search__btn {
+    background-color: transparent;
+    border: none;
+    width: 30px;
+    cursor: pointer;
+}
+
+.content {
+    width: 1360px;
+    margin: 30px auto 0;
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    flex-wrap: wrap;
+}
+
+.content__item {
+    background-color: #fff;
+    width: 330px;
+    height: 300px;
+    border-radius: 6px;
+    box-shadow: 2px 2px 4px #959595;
+    margin-bottom: 30px;
+    grid-column: auto/span 5;
+}
+
+.shop__img--box {
+    height: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.shop__img {
+    width: 100%;
+}
+
+.shop__txt {
+    padding: 20px;
+}
+
+.shop__name {
+    margin: 0;
+}
+
+.shop__category {
+    display: flex;
+    justify-content: left;
+    padding-left: 0;
+    list-style: none;
+    margin: 0;
+    font-size: 14px;
+}
+
+.shop__category--item {
+    padding-right: 5px;
+}
+
+.shop__form {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.shop__form--detail>button {
+    background-color: #3560F6;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    padding: 7px 15px;
+    font-size: 14px;
+}
+
+.shop__form--favorite>button {
+    background-color: transparent;
+    border: none;
+}
+
+.shop__form--detail>button,
+.shop__form--favorite>button {
+    cursor: pointer;
+}
+
+.heart {
+    width: 30px;
+    height: 30px;
+    position: relative;
+}
+
+.heart::before,
+.heart::after {
+    content: "";
+    width: 50%;
+    height: 80%;
+    background: #EEE;
+    border-radius: 25px 25px 0 0;
+    display: block;
+    position: absolute;
+}
+
+
+
+.heart::before {
+    transform: rotate(-45deg);
+    left: 14%;
+}
+
+.heart::after {
+    transform: rotate(45deg);
+    right: 14%;
+}

@@ -1,0 +1,190 @@
+.txt__box,
+.content {
+    width: 1300px;
+    margin: 0 auto;
+    display: flex;
+}
+
+.txt__reservation {
+    width: 45%;
+    display: flex;
+    align-items: flex-end;
+}
+
+.txt__reservation--item {
+    margin: 0;
+}
+
+.txt__favorite{
+    width: 55%;
+}
+
+.txt__favorite--item {
+    margin-bottom: 0;
+    margin-top: 40px;
+}
+
+.content__reservation{
+    width: 45%;
+}
+
+.reservation {
+    margin-top: 20px;
+    background-color: #3560F6;
+    color: #fff;
+    border-radius: 6px;
+    padding: 30px 30px;
+    width: 80%;
+    box-shadow: 2px 2px 4px #959595;
+}
+
+.reservation__ttl--box {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+#box__1{
+    display: flex;
+}
+
+.reservation__icon {
+    width: 30px;
+    height: 30px;
+}
+
+.reservation__ttl {
+    margin: 0 0 0 30px;
+    line-height: 30px;
+}
+
+.reservation__cancel--btn{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+}
+
+.reservation__cancel--img {
+    width: 30px;
+    height: 30px;
+}
+
+.reservation__table {
+    width: 100%;
+}
+
+.reservation__item {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.reservation__item:first-child {
+    width: 20%;
+}
+
+.content__shop{
+    width: 55%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.shop{
+        background-color: #fff;
+            width: 330px;
+            height: 300px;
+            border-radius: 6px;
+            box-shadow: 2px 2px 4px #959595;
+            margin-top: 20px;
+}
+
+.shop__img--box {
+    height: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.shop__img {
+    width: 100%;
+}
+
+.shop__txt {
+    padding: 20px;
+}
+
+.shop__name {
+    margin: 0;
+}
+
+.shop__category {
+    display: flex;
+    justify-content: left;
+    padding-left: 0;
+    list-style: none;
+    margin: 0;
+    font-size: 14px;
+}
+
+.shop__category--item {
+    padding-right: 5px;
+}
+
+.shop__form {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.shop__form--detail>button {
+    background-color: #3560F6;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    padding: 7px 15px;
+    font-size: 14px;
+}
+
+.shop__form--favorite>button {
+    background-color: transparent;
+    border: none;
+}
+
+.shop__form--detail>button,
+.shop__form--favorite>button {
+    cursor: pointer;
+}
+
+.heart {
+    width: 30px;
+    height: 30px;
+    position: relative;
+}
+
+.heart::before,
+.heart::after {
+    content: "";
+    width: 50%;
+    height: 80%;
+    background: #EEE;
+    border-radius: 25px 25px 0 0;
+    display: block;
+    position: absolute;
+}
+
+
+
+.heart::before {
+    transform: rotate(-45deg);
+    left: 14%;
+}
+
+.heart::after {
+    transform: rotate(45deg);
+    right: 14%;
+}

@@ -1,0 +1,118 @@
+body {
+    background-color: #EEEEEE;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    width: 1360px;
+    margin: 50px auto 0 auto;
+}
+
+.header__box {
+    display: flex;
+    justify-content: left;
+}
+
+.header__btn,
+.modal__close--btn {
+    background-color: #3560F6;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 2px 2px 4px #959595;
+    width: 40px;
+    height: 40px;
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+.line__1,
+.line__2,
+.line__3 {
+    border-top: 1px solid #fff;
+}
+
+.line__2,
+.line__3 {
+    margin-top: 6px;
+}
+
+.line__1 {
+    width: 10px;
+}
+
+.line__2 {
+    width: 20px;
+}
+
+.line__3 {
+    width: 5px;
+}
+
+.header__ttl {
+    color: #3560F6;
+    margin: 0 0 0 30px;
+}
+
+.modal {
+    background-color: #fff;
+    height: 100vh;
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transition: all .3s;
+}
+
+.modal:target {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal__content {
+    position: relative;
+}
+
+.modal__close--btn {
+    position: absolute;
+}
+
+.cross::before,
+.cross::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1px;
+    height: 20px;
+    background: #fff;
+}
+
+.cross::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.cross::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.modal__box--btn {
+    width: 1360px;
+    margin: 0 auto;
+    padding-top: 50px;
+}
+
+.modal__link {
+    text-decoration: none;
+    color: #3560F6;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.modal__box--link {
+    text-align: center;
+    margin-top: 200px;
+}
