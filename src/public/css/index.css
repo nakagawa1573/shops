@@ -23,21 +23,22 @@
     width: 15%;
     appearance: none;
     padding-left: 5px;
+    cursor: pointer;
 }
 
 .search__area--box::before,
 .search__genre--box::before {
-    content: '';
-    width: 9px;
-    height: 9px;
-    border: 0;
-    border-bottom: solid 5px #333;
-    border-right: solid 5px #333;
-    transform: rotate(45deg);
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 6px 6px 0 6px;
+    border-color: #E2E2E2 transparent transparent transparent;
     position: absolute;
-    top: 40%;
+    top: 50%;
     right: 13%;
-    margin: auto;
+    transform: translateY(-50%);
+    pointer-events: none;
 }
 
 .search__form {
@@ -142,31 +143,44 @@
     cursor: pointer;
 }
 
-.heart {
-    width: 30px;
-    height: 30px;
+.heart,
+.heart_favorite {
+    width: 32px;
+    height: 32px;
     position: relative;
 }
 
 .heart::before,
-.heart::after {
+.heart::after,
+.heart_favorite::before,
+.heart_favorite::after {
     content: "";
     width: 50%;
     height: 80%;
-    background: #EEE;
+
     border-radius: 25px 25px 0 0;
     display: block;
     position: absolute;
 }
 
+.heart::before,
+.heart::after {
+    background: #EEE;
+}
 
+.heart_favorite::before,
+.heart_favorite::after {
+    background: #EB3223;
+}
 
-.heart::before {
+.heart::before,
+.heart_favorite::before {
     transform: rotate(-45deg);
     left: 14%;
 }
 
-.heart::after {
+.heart::after,
+.heart_favorite::after {
     transform: rotate(45deg);
     right: 14%;
 }

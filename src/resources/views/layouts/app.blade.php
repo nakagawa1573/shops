@@ -40,23 +40,44 @@
                 </a>
             </div>
             {{-- ifでログイン状態、否ログイン状態で変わるようにする --}}
-            <div class="modal__box--link">
-                <p>
-                    <a class="modal__link" href="/">
-                        Home
-                    </a>
-                </p>
-                <p>
-                    <a class="modal__link" href="">
-                        Registration
-                    </a>
-                </p>
-                <p>
-                    <a class="modal__link" href="">
-                        Login
-                    </a>
-                </p>
-            </div>
+            @if (Auth::check())
+                <div class="modal__box--link">
+                    <p>
+                        <a class="modal__link" href="/">
+                            Home
+                        </a>
+                    </p>
+                    <form class="modal__logout" action="/logout" method="post">
+                        @csrf
+                        <button type="submit">
+                            Logout
+                        </button>
+                    </form>
+                    <p>
+                        <a class="modal__link" href="/mypage">
+                            Mypage
+                        </a>
+                    </p>
+                </div>
+            @else
+                <div class="modal__box--link">
+                    <p>
+                        <a class="modal__link" href="/">
+                            Home
+                        </a>
+                    </p>
+                    <p>
+                        <a class="modal__link" href="/register">
+                            Registration
+                        </a>
+                    </p>
+                    <p>
+                        <a class="modal__link" href="/login">
+                            Login
+                        </a>
+                    </p>
+                </div>
+            @endif
         </article>
     </section>
 </body>

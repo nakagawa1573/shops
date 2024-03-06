@@ -12,7 +12,6 @@
 .detail__box {
     display: flex;
     justify-content: left;
-    width: 150px;
     margin-bottom: 30px;
 }
 
@@ -23,15 +22,20 @@
 .detail__back>button {
     border: none;
     background-color: #fff;
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     border-radius: 6px;
     box-shadow: 2px 2px 4px #959595;
-    font-size: 18px;
+    position: relative;
+    font-size: 25px;
+    font-weight: bold;
+    line-height: 35px;
+    cursor: pointer;
 }
 
 .detail__ttl {
     margin: 0;
+    line-height: 40px;
 }
 
 .detail__img {
@@ -52,7 +56,7 @@
     padding-right: 5px;
 }
 
-.wrapper{
+.wrapper {
     width: 45%;
     position: relative;
 }
@@ -92,34 +96,40 @@
 .reservation__form--date {
     width: 30%;
     position: relative;
+    cursor: pointer;
 }
 
 .reservation__form--date::-webkit-calendar-picker-indicator {
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    position: absolute;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
 }
 
 .reservation__form--time,
 .reservation__form--people {
     width: 100%;
+    appearance: none;
+    cursor: pointer;
+}
+
+.wrapper__input{
+    position: relative;
+    height: 40px;
     margin-top: 20px;
 }
 
-.reservation__form--time {
-    position: relative;
-}
-
-.reservation__form--time::-webkit-calendar-picker-indicator {
-    width: 100%;
-    height: 100%;
-    opacity: 0;
+.wrapper__input::before{
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 12px 9px 0 9px;
+    border-color: #E2E2E2 transparent transparent transparent;
     position: absolute;
-}
-
-.reservation__form--people {
-    appearance: none;
+    top: 50%;
+    right: 2%;
+    transform: translateY(-50%);
+    pointer-events: none;
 }
 
 .form__result {
@@ -154,4 +164,10 @@
     color: #fff;
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
+    cursor: pointer;
+}
+
+.error{
+    color: #fff;
+    padding-left: 20px;
 }

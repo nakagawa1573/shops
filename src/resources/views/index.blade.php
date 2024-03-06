@@ -5,33 +5,37 @@
 
 @section('search')
     <section class="search">
-        <form class="search__form" action="" method="post" novalidate>
+        <form class="search__form" action="/" method="get" novalidate>
             @csrf
             <div class="search__area--box">
-                <select class="search__area" name="area" id="" required>
-                    <option value=""selected>
+                <select class="search__area" name="area_id" required>
+                    <option value="" selected>
                         All area
                     </option>
-                    <option value="">
-                        東京
-                    </option>
+                    @foreach ($areas as $area)
+                        <option value="{{$area->id}}" {{$area->id == $area_id ? 'selected' : ''}}>
+                            {{$area->area}}
+                        </option>
+                    @endforeach
                 </select>
             </div>
             <div class="search__genre--box">
-                <select class="search__genre" name="genre" id="" required>
+                <select class="search__genre" name="genre_id" required>
                     <option value="" selected>
                         All genre
                     </option>
-                    <option value="">
-                        寿司
-                    </option>
+                    @foreach ($genres as $genre)
+                        <option value="{{$genre->id}}" {{$genre->id == $genre_id ? 'selected' : ''}}>
+                            {{$genre->genre}}
+                        </option>
+                    @endforeach
                 </select>
             </div>
             <div class="search__form--box">
                 <button class="search__btn" type="submit">
                     <img src="{{ asset('storage/search.svg') }}" alt="search">
                 </button>
-                <input class="search__word" type="text" name="keyword" value="" placeholder="Search ...">
+                <input class="search__word" type="text" name="keyword" value="{{$keyword ?? ''}}" placeholder="Search ...">
             </div>
         </form>
     </section>
@@ -39,211 +43,75 @@
 
 @section('content')
     <section class="content">
-        {{-- foreachを使って数を増やしていく --}}
-        <article class="content__item">
-            <div class="shop__img--box">
-                <img class="shop__img" src="{{ asset('storage/shop/sushi.jpg') }}" alt="sushi">
-            </div>
-            <div class="shop__txt">
-                <h2 class="shop__name">
-                    仙人
-                </h2>
-                <ul class="shop__category">
-                    {{-- foreachを使ってカテゴリーをつける --}}
-                    <li class="shop__category--item">
-                        #東京都
-                    </li>
-                    <li class="shop__category--item">
-                        #寿司
-                    </li>
-                </ul>
-                <div class="shop__form">
-                    <form class="shop__form--detail" action="" method="get">
-                        @csrf
-                        <button type="submit">
-                            詳しくみる
-                        </button>
-                    </form>
-                    <form class="shop__form--favorite" action="" method="post">
-                        @csrf
-                        <input type="hidden" name="" value="">
-                        <button type="submit">
-                            {{-- ifを使ってもしお気に入りにされていたら違う色のハートになるようにする --}}
-                            <div class="heart"></div>
-                        </button>
-                    </form>
+        @foreach ($shops as $shop)
+            <article class="content__item">
+                <div class="shop__img--box">
+                    <img class="shop__img" src="{{ asset('storage/shop') }}/{{ $shop->img }}" alt="shop">
                 </div>
-            </div>
-        </article>
-        <article class="content__item">
-            <div class="shop__img--box">
-                <img class="shop__img" src="{{ asset('storage/shop/sushi.jpg') }}" alt="sushi">
-            </div>
-            <div class="shop__txt">
-                <p class="shop__name">
-                    仙人
-                </p>
-                <ul class="shop__category">
-                    {{-- foreachを使ってカテゴリーをつける --}}
-                    <li class="shop__category--item">
-                        東京都
-                    </li>
-                    <li class="shop__category--item">
-                        寿司
-                    </li>
-                </ul>
-                <div class="shop__form">
-                    <form class="shop__form--detail" action="" method="get">
+                <div class="shop__txt">
+                    <h2 class="shop__name">
+                        {{ $shop->shop }}
+                    </h2>
+                    <ul class="shop__category">
+                        <li class="shop__category--item">
+                            #{{ $shop->area->area }}
+                        </li>
+                        @foreach ($shop->genre as $genre)
+                            <li class="shop__category--item">
+                                #{{ $genre->genre }}
+                            </li>
+                        @endforeach
+                    </ul>
+                    <div class="shop__form">
+                        <form class="shop__form--detail" action="/detail/{{ $shop->id }}" method="get">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $shop->id }}">
+                            <button type="submit">
+                                詳しくみる
+                            </button>
+                        </form>
                         @csrf
-                        <button type="submit">
-                            詳しく見る
-                        </button>
-                    </form>
-                    <form class="shop__form--favorite" action="" method="post">
-                        @csrf
-                        <input type="hidden" name="" value="">
-                        <button type="submit">
-                            H
-                        </button>
-                    </form>
+                        @if (Auth::check())
+                            @php
+                                $flag = false;
+                                foreach ($favorites as $favorite) {
+                                    if ($favorite->shop_id == $shop->id) {
+                                        $flag = true;
+                                        break;
+                                    }
+                                }
+                            @endphp
+                            @if ($flag)
+                                <form class="shop__form--favorite" action="/favorite/delete" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <input type="hidden" name="shop_id" value="{{ $shop->id }}">
+                                    <input type="hidden" name="user_id" value="{{ $user->id }}">
+                                    <button type="submit">
+                                        <div class="heart_favorite"></div>
+                                    </button>
+                                </form>
+                            @else
+                                <form class="shop__form--favorite" action="/favorite" method="post">
+                                    @csrf
+                                    <input type="hidden" name="shop_id" value="{{ $shop->id }}">
+                                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                                    <button type="submit">
+                                        <div class="heart"></div>
+                                    </button>
+                                </form>
+                            @endif
+                        @else
+                            <form class="shop__form--favorite" action="/login" method="get">
+                                @csrf
+                                <button type="submit">
+                                    <div class="heart"></div>
+                                </button>
+                            </form>
+                        @endif
+                    </div>
                 </div>
-            </div>
-        </article>
-        <article class="content__item">
-            <div class="shop__img--box">
-                <img class="shop__img" src="{{ asset('storage/shop/sushi.jpg') }}" alt="sushi">
-            </div>
-            <div class="shop__txt">
-                <p class="shop__name">
-                    仙人
-                </p>
-                <ul class="shop__category">
-                    {{-- foreachを使ってカテゴリーをつける --}}
-                    <li class="shop__category--item">
-                        東京都
-                    </li>
-                    <li class="shop__category--item">
-                        イタリアン
-                    </li>
-                </ul>
-                <div class="shop__form">
-                    <form class="shop__form--detail" action="" method="get">
-                        @csrf
-                        <button type="submit">
-                            詳しく見る
-                        </button>
-                    </form>
-                    <form class="shop__form--favorite" action="" method="post">
-                        @csrf
-                        <input type="hidden" name="" value="">
-                        <button type="submit">
-                            H
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </article>
-        <article class="content__item">
-            <div class="shop__img--box">
-                <img class="shop__img" src="{{ asset('storage/shop/sushi.jpg') }}" alt="sushi">
-            </div>
-            <div class="shop__txt">
-                <p class="shop__name">
-                    仙人
-                </p>
-                <ul class="shop__category">
-                    {{-- foreachを使ってカテゴリーをつける --}}
-                    <li class="shop__category--item">
-                        東京都
-                    </li>
-                    <li class="shop__category--item">
-                        イタリアン
-                    </li>
-                </ul>
-                <div class="shop__form">
-                    <form class="shop__form--detail" action="" method="get">
-                        @csrf
-                        <button type="submit">
-                            詳しく見る
-                        </button>
-                    </form>
-                    <form class="shop__form--favorite" action="" method="post">
-                        @csrf
-                        <input type="hidden" name="" value="">
-                        <button type="submit">
-                            H
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </article>
-        <article class="content__item">
-            <div class="shop__img--box">
-                <img class="shop__img" src="{{ asset('storage/shop/sushi.jpg') }}" alt="sushi">
-            </div>
-            <div class="shop__txt">
-                <p class="shop__name">
-                    仙人
-                </p>
-                <ul class="shop__category">
-                    {{-- foreachを使ってカテゴリーをつける --}}
-                    <li class="shop__category--item">
-                        東京都
-                    </li>
-                    <li class="shop__category--item">
-                        イタリアン
-                    </li>
-                </ul>
-                <div class="shop__form">
-                    <form class="shop__form--detail" action="" method="get">
-                        @csrf
-                        <button type="submit">
-                            詳しく見る
-                        </button>
-                    </form>
-                    <form class="shop__form--favorite" action="" method="post">
-                        @csrf
-                        <input type="hidden" name="" value="">
-                        <button type="submit">
-                            H
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </article>
-        <article class="content__item">
-            <div class="shop__img--box">
-                <img class="shop__img" src="{{ asset('storage/shop/sushi.jpg') }}" alt="sushi">
-            </div>
-            <div class="shop__txt">
-                <p class="shop__name">
-                    仙人
-                </p>
-                <ul class="shop__category">
-                    {{-- foreachを使ってカテゴリーをつける --}}
-                    <li class="shop__category--item">
-                        東京都
-                    </li>
-                    <li class="shop__category--item">
-                        イタリアン
-                    </li>
-                </ul>
-                <div class="shop__form">
-                    <form class="shop__form--detail" action="" method="get">
-                        @csrf
-                        <button type="submit">
-                            詳しく見る
-                        </button>
-                    </form>
-                    <form class="shop__form--favorite" action="" method="post">
-                        @csrf
-                        <input type="hidden" name="" value="">
-                        <button type="submit">
-                            H
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </article>
+            </article>
+        @endforeach
     </section>
 @endsection

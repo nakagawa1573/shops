@@ -8,10 +8,11 @@
         <p class="content__txt">
             会員登録ありがとうございます
         </p>
-
         <div class="content__item">
-            <form class="content__item--form" action="" method="post">
+            <form class="content__item--form" action="/login" method="post">
                 @csrf
+                <input type="hidden" name="email" value="{{session('email')}}">
+                <input type="hidden" name="password" value="{{session('password')}}">
                 <button class="content__item--btn" type="submit">
                     ログインする
                 </button>

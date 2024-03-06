@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('shop_genres', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Shop::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Genre::class)->constrained()->cascadeOnDelete();
+            $table->foreignId('shop_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('genre_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

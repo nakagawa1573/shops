@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class ShopGenre extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'shop_id',
+        'genre_id',
+    ];
 }

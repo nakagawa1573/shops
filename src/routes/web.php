@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +16,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [ShopController::class, 'index']);
+Route::middleware('auth')->group(function () {
+    Route::get('/mypage', [UserController::class, 'index'])->name('mypage');
+    Route::post('/reservation', [UserController::class, 'storeReservation']);
+    Route::delete('/reservation/delete', [UserController::class, 'destroyReservation']);
+    Route::post('/favorite', [UserController::class, 'storeFavorite']);
+    Route::delete('/favorite/delete', [UserController::class, 'destroyFavorite']);
+    Route::get('/done', [UserController::class, 'showDone']);
+    Route::post('/favorite', [UserController::class, 'storeFavorite']);
+});
 
-Route::get('/mypage', [UserController::class, 'index']);
+Route::get('/', [ShopController::class, 'index'])->name('home');
+Route::get('/detail/{shop_id}', [ShopController::class, 'showDetail']);
+Route::get('/back', [ShopController::class, 'back']);
+Route::get('/thanks', [RegisterController::class, 'showThanks']);
+
+
+

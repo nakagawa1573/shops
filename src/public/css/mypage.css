@@ -15,7 +15,7 @@
     margin: 0;
 }
 
-.txt__favorite{
+.txt__favorite {
     width: 55%;
 }
 
@@ -24,7 +24,7 @@
     margin-top: 40px;
 }
 
-.content__reservation{
+.content__reservation {
     width: 45%;
 }
 
@@ -38,13 +38,17 @@
     box-shadow: 2px 2px 4px #959595;
 }
 
+.reservation:last-child{
+    margin-bottom: 20px;
+}
+
 .reservation__ttl--box {
     display: flex;
     justify-content: space-between;
     margin-bottom: 30px;
 }
 
-#box__1{
+#box__1 {
     display: flex;
 }
 
@@ -58,7 +62,7 @@
     line-height: 30px;
 }
 
-.reservation__cancel--btn{
+.reservation__cancel--btn {
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -85,20 +89,29 @@
     width: 20%;
 }
 
-.content__shop{
+.content__shop {
     width: 55%;
-    display: flex;
-    justify-content: space-between;
+    /* display: flex;
+    justify-content: space-between; */
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(auto-fill, 320px);
+    flex-wrap: wrap;
     flex-wrap: wrap;
 }
 
-.shop{
-        background-color: #fff;
-            width: 330px;
-            height: 300px;
-            border-radius: 6px;
-            box-shadow: 2px 2px 4px #959595;
-            margin-top: 20px;
+.shop {
+    background-color: #fff;
+    width: 330px;
+    height: 300px;
+    border-radius: 6px;
+    box-shadow: 2px 2px 4px #959595;
+    margin-top: 20px;
+    grid-column: auto/span 5;
+}
+
+.shop:last-child{
+    margin-bottom: 20px;
 }
 
 .shop__img--box {
@@ -160,31 +173,44 @@
     cursor: pointer;
 }
 
-.heart {
-    width: 30px;
-    height: 30px;
+.heart,
+.heart_favorite {
+    width: 32px;
+    height: 32px;
     position: relative;
 }
 
 .heart::before,
-.heart::after {
+.heart::after,
+.heart_favorite::before,
+.heart_favorite::after {
     content: "";
     width: 50%;
     height: 80%;
-    background: #EEE;
+
     border-radius: 25px 25px 0 0;
     display: block;
     position: absolute;
 }
 
+.heart::before,
+.heart::after{
+    background: #EEE;
+}
 
+.heart_favorite::before,
+.heart_favorite::after{
+    background: #EB3223;
+}
 
-.heart::before {
+.heart::before,
+.heart_favorite::before {
     transform: rotate(-45deg);
     left: 14%;
 }
 
-.heart::after {
+.heart::after,
+.heart_favorite::after {
     transform: rotate(45deg);
     right: 14%;
 }

@@ -13,7 +13,7 @@
         <div class="txt__favorite">
             {{-- ユーザー名を表示させる --}}
             <h1 class="txt__favorite--item">
-                testさん
+                {{ $user->name }}さん
             </h1>
             <h2 class="txt__favorite--item">
                 お気に入り店舗
@@ -22,221 +22,119 @@
     </section>
     <section class="content">
         <section class="content__reservation">
-            <article class="reservation">
-                <div class="reservation__ttl--box">
-                    <div id="box__1">
-                        <img class="reservation__icon" src="{{ asset('storage/watch.png') }}" alt="">
-                        <p class="reservation__ttl">
-                            予約1
-                        </p>
-                    </div>
-                    <div>
-                        <form action="" method="post">
-                            @csrf
-                            @method('delete')
-                            <button class="reservation__cancel--btn" type="submit">
-                                <img class="reservation__cancel--img" src="{{ asset('storage/cross.svg') }}" alt="">
-                            </button>
-                        </form>
-                    </div>
-                </div>
-                {{-- 予約状況を取得して表示&foreachで複製 --}}
-                <table class="reservation__table">
-                    <tr class="reservation__row">
-                        <td class="reservation__item">
-                            Shop
-                        </td>
-                        <td class="reservation__item">
-                            仙人
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="reservation__item">
-                            Date
-                        </td>
-                        <td class="reservation__item">
-                            2021-04-01
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="reservation__item">
-                            Time
-                        </td>
-                        <td class="reservation__item">
-                            17:00
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="reservation__item">
-                            Number
-                        </td>
-                        <td class="reservation__item">
-                            1人
-                        </td>
-                    </tr>
-                </table>
-            </article>
-            <article class="reservation">
-                <div class="reservation__ttl--box">
-                    <div id="box__1">
-                        <img class="reservation__icon" src="{{ asset('storage/watch.png') }}" alt="">
-                        <p class="reservation__ttl">
-                            予約1
-                        </p>
-                    </div>
-                    <div>
-                        <form action="" method="post">
-                            @csrf
-                            @method('delete')
-                            <button class="reservation__cancel--btn" type="submit">
-                                <img class="reservation__cancel--img" src="{{ asset('storage/cross.svg') }}" alt="">
-                            </button>
-                        </form>
-                    </div>
-                </div>
-                {{-- 予約状況を取得して表示&foreachで複製 --}}
-                <table class="reservation__table">
-                    <tr class="reservation__row">
-                        <td class="reservation__item">
-                            Shop
-                        </td>
-                        <td class="reservation__item">
-                            仙人
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="reservation__item">
-                            Date
-                        </td>
-                        <td class="reservation__item">
-                            2021-04-01
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="reservation__item">
-                            Time
-                        </td>
-                        <td class="reservation__item">
-                            17:00
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="reservation__item">
-                            Number
-                        </td>
-                        <td class="reservation__item">
-                            1人
-                        </td>
-                    </tr>
-                </table>
-            </article>
+            @php
+                $count = 0;
+            @endphp
+            @foreach ($reservations as $reservation)
+                @foreach ($reservation->reservation as $reservation)
+                    <article class="reservation">
+                        <div class="reservation__ttl--box">
+                            <div id="box__1">
+                                <img class="reservation__icon" src="{{ asset('storage/watch.png') }}" alt="">
+                                <p class="reservation__ttl">
+                                    @php
+                                        $count ++;
+                                    @endphp
+                                    予約{{ $count }}
+                                </p>
+                            </div>
+                            <div>
+                                <form action="/reservation/delete" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <input type="hidden" name="id" value="{{ $reservation->pivot->id }}">
+                                    <button class="reservation__cancel--btn" type="submit">
+                                        <img class="reservation__cancel--img" src="{{ asset('storage/cross.svg') }}"
+                                            alt="">
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <table class="reservation__table">
+                            <tr class="reservation__row">
+                                <td class="reservation__item">
+                                    Shop
+                                </td>
+                                <td class="reservation__item">
+                                    {{ $reservation->shop }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="reservation__item">
+                                    Date
+                                </td>
+                                <td class="reservation__item">
+                                    {{ $reservation->pivot->date }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="reservation__item">
+                                    Time
+                                </td>
+                                <td class="reservation__item">
+                                    {{ Carbon\Carbon::parse($reservation->pivot->time)->format('H:i') }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="reservation__item">
+                                    Number
+                                </td>
+                                <td class="reservation__item">
+                                    @if ($reservation->pivot->number == 'over_10')
+                                        10人以上
+                                    @else
+                                    {{ $reservation->pivot->number }}人
+                                    @endif
+                                </td>
+                            </tr>
+                        </table>
+                    </article>
+                @endforeach
+            @endforeach
         </section>
         <section class="content__shop">
-            <article class="shop">
-                <div class="shop__img--box">
-                    <img class="shop__img" src="{{ asset('storage/shop/sushi.jpg') }}" alt="sushi">
-                </div>
-                <div class="shop__txt">
-                    <h2 class="shop__name">
-                        仙人
-                    </h2>
-                    <ul class="shop__category">
-                        {{-- foreachを使ってカテゴリーをつける --}}
-                        <li class="shop__category--item">
-                            #東京都
-                        </li>
-                        <li class="shop__category--item">
-                            #寿司
-                        </li>
-                    </ul>
-                    <div class="shop__form">
-                        <form class="shop__form--detail" action="" method="get">
-                            @csrf
-                            <button type="submit">
-                                詳しくみる
-                            </button>
-                        </form>
-                        <form class="shop__form--favorite" action="" method="post">
-                            @csrf
-                            <input type="hidden" name="" value="">
-                            <button type="submit">
-                                {{-- ifを使ってもしお気に入りにされていたら違う色のハートになるようにする --}}
-                                <div class="heart"></div>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </article>
-            <article class="shop">
-                <div class="shop__img--box">
-                    <img class="shop__img" src="{{ asset('storage/shop/sushi.jpg') }}" alt="sushi">
-                </div>
-                <div class="shop__txt">
-                    <h2 class="shop__name">
-                        仙人
-                    </h2>
-                    <ul class="shop__category">
-                        {{-- foreachを使ってカテゴリーをつける --}}
-                        <li class="shop__category--item">
-                            #東京都
-                        </li>
-                        <li class="shop__category--item">
-                            #寿司
-                        </li>
-                    </ul>
-                    <div class="shop__form">
-                        <form class="shop__form--detail" action="" method="get">
-                            @csrf
-                            <button type="submit">
-                                詳しくみる
-                            </button>
-                        </form>
-                        <form class="shop__form--favorite" action="" method="post">
-                            @csrf
-                            <input type="hidden" name="" value="">
-                            <button type="submit">
-                                {{-- ifを使ってもしお気に入りにされていたら違う色のハートになるようにする --}}
-                                <div class="heart"></div>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </article>
-            <article class="shop">
-                <div class="shop__img--box">
-                    <img class="shop__img" src="{{ asset('storage/shop/sushi.jpg') }}" alt="sushi">
-                </div>
-                <div class="shop__txt">
-                    <h2 class="shop__name">
-                        仙人
-                    </h2>
-                    <ul class="shop__category">
-                        {{-- foreachを使ってカテゴリーをつける --}}
-                        <li class="shop__category--item">
-                            #東京都
-                        </li>
-                        <li class="shop__category--item">
-                            #寿司
-                        </li>
-                    </ul>
-                    <div class="shop__form">
-                        <form class="shop__form--detail" action="" method="get">
-                            @csrf
-                            <button type="submit">
-                                詳しくみる
-                            </button>
-                        </form>
-                        <form class="shop__form--favorite" action="" method="post">
-                            @csrf
-                            <input type="hidden" name="" value="">
-                            <button type="submit">
-                                {{-- ifを使ってもしお気に入りにされていたら違う色のハートになるようにする --}}
-                                <div class="heart"></div>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </article>
+            @foreach ($favorites as $favorite)
+                @foreach ($favorite->favorite as $favorite)
+                    <article class="shop">
+                        <div class="shop__img--box">
+                            <img class="shop__img" src="{{ asset('storage/shop') }}/{{ $favorite->img }}" alt="shop">
+                        </div>
+                        <div class="shop__txt">
+                            <h2 class="shop__name">
+                                {{ $favorite->shop }}
+                            </h2>
+                            <ul class="shop__category">
+                                <li class="shop__category--item">
+                                    #{{ $favorite->area->area }}
+                                </li>
+                                @foreach ($favorite->genre as $genre)
+                                    <li class="shop__category--item">
+                                        #{{ $genre->genre }}
+                                    </li>
+                                @endforeach
+                            </ul>
+                            <div class="shop__form">
+                                <form class="shop__form--detail" action="/detail/{{ $favorite->id }}" method="get">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $favorite->id }}">
+                                    <button type="submit">
+                                        詳しくみる
+                                    </button>
+                                </form>
+                                <form class="shop__form--favorite" action="/favorite/delete" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <input type="hidden" name="shop_id" value="{{ $favorite->id }}">
+                                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                                    <button type="submit">
+                                        <div class="heart_favorite"></div>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </article>
+                @endforeach
+            @endforeach
         </section>
     </section>
 @endsection

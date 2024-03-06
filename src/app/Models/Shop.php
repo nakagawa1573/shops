@@ -13,6 +13,7 @@ class Shop extends Model
         'area_id',
         'shop',
         'overview',
+        'img',
     ];
 
     public function area()
@@ -20,18 +21,39 @@ class Shop extends Model
         return $this->belongsTo(Area::class);
     }
 
+    public function genre()
+    {
+        return $this->belongsToMany(Genre::class, 'shop_genres');
+    }
+
     public function favorite()
     {
-        return $this->hasMany(Favorite::class);
+        return $this->belongsToMany(User::class, 'favorites');
     }
 
     public function reservation()
     {
-        return $this->hasMany(Reservation::class);
+        return $this->belongsToMany(User::class, 'reservations')->withPivot('id', 'date', 'time', 'number');
     }
 
-    public function genre()
+    public function scopeShopSearch($query, $keyword)
     {
-        return $this->belongsToMany(Genre::class);
+        $query->where('shop','LIKE', '%'. $keyword. '%');
+    }
+
+    public function scopeAreaSearch($query, $area)
+    {
+        if ($area) {
+            $query->where('area_id', $area);
+        }
+    }
+
+    public function scopeGenreSearch($query, $genre)
+    {
+        if ($genre) {
+            $query->whereHas('genre', function($query) use($genre){
+                $query->where('genre_id', $genre);
+            });
+        }
     }
 }

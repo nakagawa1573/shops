@@ -15,6 +15,6 @@ class Genre extends Model
 
     public function shop()
     {
-        return $this->belongsToMany(Shop::class);
+        return $this->belongsToMany(Shop::class, 'shop_genres');
     }
 }

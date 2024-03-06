@@ -10,11 +10,12 @@
         </p>
 
         <div class="content__item">
-            <a class="content__item--link">
+            <form class="content__item--link" action="/back" method="get">
+                @csrf
                 <button class="content__item--btn" type="submit">
                     戻る
                 </button>
-            </a>
+            </form>
         </div>
     </section>
 @endsection
