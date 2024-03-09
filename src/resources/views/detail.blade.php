@@ -176,4 +176,39 @@
             </article>
         </div>
     </section>
+    <section class="evaluation">
+        <article class="comment__group">
+            <div class="evaluation__total">
+                <p class="evaluation__total--number">
+                    5.0
+                </p>
+                <div class="evaluation__total--star">
+                    <div class="total__star"></div>
+                </div>
+                <p class="evaluation__total--count">
+                    (6)
+                </p>
+            </div>
+            <div class="comment__item">
+                <h3 class="user">
+                    山田太郎
+                </h3>
+                <div class="star__box">
+                    <div class="star"></div>
+                </div>
+                <p class="comment">
+                    テストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテスト
+                </p>
+            </div>
+        </article>
+        <article class="evaluation__form">
+            <form action="" method="post">
+                @csrf
+                <textarea class="evaluation__comment" name="comment" cols="30" rows="10" placeholder="コメントを入力してください"></textarea>
+                <button class="evaluation__comment__btn" type="submit">
+                    投稿
+                </button>
+            </form>
+        </article>
+    </section>
 @endsection

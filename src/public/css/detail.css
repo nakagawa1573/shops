@@ -1,4 +1,5 @@
-.content {
+.content,
+.evaluation {
     width: 1360px;
     margin: 50px auto 0;
     display: flex;
@@ -112,13 +113,13 @@
     cursor: pointer;
 }
 
-.wrapper__input{
+.wrapper__input {
     position: relative;
     height: 40px;
     margin-top: 20px;
 }
 
-.wrapper__input::before{
+.wrapper__input::before {
     content: "";
     width: 0;
     height: 0;
@@ -167,7 +168,178 @@
     cursor: pointer;
 }
 
-.error{
+.error {
     color: #fff;
     padding-left: 20px;
+}
+
+.evaluation__total {
+    margin-bottom: 20px;
+    display: flex;
+    position: relative;
+}
+
+.evaluation__total--number {
+    font-size: 52px;
+    margin: 0;
+}
+
+.evaluation__total--star {
+    height: 30px;
+    position: absolute;
+    bottom: 22%;
+    left: 25%;
+}
+
+.total__star {
+    position: relative;
+    /* 指定した分だけ相対的に移動 */
+    font-size: 30px;
+    /* フォントサイズ */
+    letter-spacing: 0px;
+    /* 文字間隔 */
+}
+
+.total__star:before {
+    position: absolute;
+    /* 親要素を基準 */
+    display: inline-block;
+    /* ブロック要素 */
+    color: #dededc;
+    /* ★の色 */
+    white-space: nowrap;
+    /* 改行不可 */
+    top: 0;
+    /* 上限より表示 */
+    left: 0;
+    /* 左端より表示 */
+    line-height: 1em;
+    /* 高さを指定 */
+    content: "★★★★★";
+    /* ★の指定 */
+}
+
+.total__star:after {
+    position: absolute;
+    /* 親要素を基準 */
+    display: inline-block;
+    /* ブロック要素 */
+    color: #fbbc04;
+    /* ★の色 */
+    white-space: nowrap;
+    /* 改行不可 */
+    top: 0;
+    /* 上限より表示 */
+    left: 0;
+    /* 左端より表示 */
+    line-height: 1em;
+    /* 高さを指定 */
+    overflow: hidden;
+    /* オーバーフロー部分は非表示 */
+    width: 150px;
+    /* 評価★の幅 */
+    content: "★★★★★";
+    /* ★の指定 */
+}
+
+.evaluation__total--count {
+    position: absolute;
+    bottom: 22%;
+    left: 65%;
+    font-size: 20px;
+    margin: 0;
+}
+
+.comment__item {
+    width: 400px;
+    background-color: #fff;
+    border-radius: 6px;
+    padding: 20px 20px;
+    margin-bottom: 40px;
+}
+
+.star__box {
+    height: 20px;
+}
+
+.star {
+    position: relative;
+    /* 指定した分だけ相対的に移動 */
+    font-size: 20px;
+    /* フォントサイズ */
+    letter-spacing: 0px;
+    /* 文字間隔 */
+}
+
+.star:before {
+    position: absolute;
+    /* 親要素を基準 */
+    display: inline-block;
+    /* ブロック要素 */
+    color: #dededc;
+    /* ★の色 */
+    white-space: nowrap;
+    /* 改行不可 */
+    top: 0;
+    /* 上限より表示 */
+    left: 0;
+    /* 左端より表示 */
+    line-height: 1em;
+    /* 高さを指定 */
+    content: "★★★★★";
+    /* ★の指定 */
+}
+
+.star:after {
+    position: absolute;
+    /* 親要素を基準 */
+    display: inline-block;
+    /* ブロック要素 */
+    color: #fbbc04;
+    /* ★の色 */
+    white-space: nowrap;
+    /* 改行不可 */
+    top: 0;
+    /* 上限より表示 */
+    left: 0;
+    /* 左端より表示 */
+    line-height: 1em;
+    /* 高さを指定 */
+    overflow: hidden;
+    /* オーバーフロー部分は非表示 */
+    width: 100px;
+    /* 評価★の幅 */
+    content: "★★★★★";
+    /* ★の指定 */
+}
+
+.user {
+    margin: 0;
+    font-size: 20px;
+}
+
+.evaluation__form {
+    margin-top: 98px;
+}
+
+.evaluation__comment {
+    border: none;
+    border-radius: 6px;
+    resize: none;
+    font-size: 16px;
+    width: 520px;
+    height: 250;
+    padding: 20px 10px;
+}
+
+.evaluation__comment__btn {
+    font-size: 16px;
+    width: 80px;
+    height: 45px;
+    background-color: #003FF5;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    display: block;
+    margin: 20px 0 0 auto;
 }
