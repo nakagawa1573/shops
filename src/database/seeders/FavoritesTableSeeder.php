@@ -37,5 +37,7 @@ class FavoritesTableSeeder extends Seeder
             'updated_at' => now(),
         ];
         DB::table('favorites')->insert($param);
+
+        Favorite::factory()->count(30)->create();
     }
 }

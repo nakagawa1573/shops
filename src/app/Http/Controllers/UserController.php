@@ -17,8 +17,8 @@ class UserController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $favorites = User::with('favorite.genre', 'favorite.area')->get();
-        $reservations = User::with('reservation.genre', 'reservation.area')->get();
+        $favorites = User::with('favorite.genre', 'favorite.area')->where('id', $user->id)->get();
+        $reservations = User::with('reservation.genre', 'reservation.area')->where('id', $user->id)->get();
 
         return view('mypage', compact('user', 'favorites', 'reservations'));
     }
@@ -33,8 +33,9 @@ class UserController extends Controller
         $reservation = $request->only(['user_id', 'shop_id', 'date', 'time', 'number']);
         $date = $request->date;
         $time = $request->time;
+        $user = Auth::user();
 
-        if (Carbon::parse($date . $time) > Carbon::now()) {
+        if (Carbon::parse($date . $time) > Carbon::now() && $user->id == $request->user_id) {
             Reservation::create($reservation);
             return redirect('/done');
         } else {
@@ -51,8 +52,11 @@ class UserController extends Controller
 
     public function storeFavorite(FavoriteRequest $request)
     {
-        $favorite = $request->only('user_id', 'shop_id');
-        Favorite::create($favorite);
+        $user = Auth::user();
+        if ($user->id == $request->user_id) {
+            $favorite = $request->only('user_id', 'shop_id');
+            Favorite::create($favorite);
+        }
 
         return back();
     }

@@ -46,5 +46,7 @@ class ReservationsTableSeeder extends Seeder
             'updated_at' => now(),
         ];
         DB::table('reservations')->insert($param);
+
+        Reservation::factory()->count(30)->create();
     }
 }

@@ -23,5 +23,7 @@ class UsersTableSeeder extends Seeder
             'updated_at' => now(),
         ];
         DB::table('users')->insert($param);
+
+        User::factory()->count(10)->create();
     }
 }
