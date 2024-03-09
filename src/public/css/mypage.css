@@ -62,6 +62,20 @@
     line-height: 30px;
 }
 
+#box__2{
+    display: flex;
+}
+
+.reservation__change{
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    height: 30px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
 .reservation__cancel--btn {
     background-color: transparent;
     border: none;

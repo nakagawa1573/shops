@@ -38,7 +38,14 @@
                                     予約{{ $count }}
                                 </p>
                             </div>
-                            <div>
+                            <div id="box__2">
+                                <form action="/reservation/change" method="get">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $reservation->pivot->id }}">
+                                    <button class="reservation__change">
+                                        変更
+                                    </button>
+                                </form>
                                 <form action="/reservation/delete" method="post">
                                     @csrf
                                     @method('delete')

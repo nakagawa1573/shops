@@ -50,6 +50,32 @@ class UserController extends Controller
         return back();
     }
 
+    public function showChange(Request $request)
+    {
+        $reservation = Reservation::with('shop')->where('id', $request->id)->first();
+        // dd($reservation);
+        return view('change', compact('reservation'));
+    }
+
+    public function change(ReservationRequest $request)
+    {
+        $user = Auth::user();
+        $date = $request->date;
+        $time = $request->time;
+
+        if (Carbon::parse($date . $time) > Carbon::now() && $request->id == $user->id) {
+            Reservation::find($request->id)->update([
+                'date' => $request->date,
+                'time' => $request->time,
+                'number' => $request->number,
+            ]);
+        } else {
+            return back()->with('message', '予約手続きに失敗しました');
+        }
+
+        return redirect('/mypage');
+    }
+
     public function storeFavorite(FavoriteRequest $request)
     {
         $user = Auth::user();
@@ -70,5 +96,4 @@ class UserController extends Controller
 
         return back();
     }
-
 }

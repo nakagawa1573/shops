@@ -20,6 +20,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/mypage', [UserController::class, 'index'])->name('mypage');
     Route::post('/reservation', [UserController::class, 'storeReservation']);
     Route::delete('/reservation/delete', [UserController::class, 'destroyReservation']);
+    Route::get('/reservation/change', [UserController::class, 'showChange']);
+    Route::patch('/reservation/change', [UserController::class, 'change']);
     Route::post('/favorite', [UserController::class, 'storeFavorite']);
     Route::delete('/favorite/delete', [UserController::class, 'destroyFavorite']);
     Route::get('/done', [UserController::class, 'showDone']);
