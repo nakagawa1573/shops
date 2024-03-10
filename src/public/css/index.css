@@ -77,7 +77,7 @@
 .content__item {
     background-color: #fff;
     width: 330px;
-    height: 300px;
+    height: 330px;
     border-radius: 6px;
     box-shadow: 2px 2px 4px #959595;
     margin-bottom: 30px;
@@ -99,6 +99,7 @@
 
 .shop__txt {
     padding: 20px;
+    padding-bottom: 0;
 }
 
 .shop__name {
@@ -121,7 +122,7 @@
 .shop__form {
     display: flex;
     justify-content: space-between;
-    margin-top: 15px;
+    margin-top: 10px;
 }
 
 .shop__form--detail>button {
@@ -183,4 +184,30 @@
 .heart_favorite::after {
     transform: rotate(45deg);
     right: 14%;
+}
+
+.shop__evaluation {
+    position: relative;
+}
+
+.total__star,
+.total__star--check {
+    font-size: 20px;
+}
+
+.total__star {
+    color: #dededc;
+}
+
+.total__star--check {
+    color: #fbbc04;
+    position: absolute;
+    white-space: nowrap;
+    overflow: hidden;
+    top: 0;
+}
+
+#count{
+    font-size: 16px;
+    color: #959595;
 }

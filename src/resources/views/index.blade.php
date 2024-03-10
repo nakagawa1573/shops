@@ -13,8 +13,8 @@
                         All area
                     </option>
                     @foreach ($areas as $area)
-                        <option value="{{$area->id}}" {{$area->id == $area_id ? 'selected' : ''}}>
-                            {{$area->area}}
+                        <option value="{{ $area->id }}" {{ $area->id == $area_id ? 'selected' : '' }}>
+                            {{ $area->area }}
                         </option>
                     @endforeach
                 </select>
@@ -25,8 +25,8 @@
                         All genre
                     </option>
                     @foreach ($genres as $genre)
-                        <option value="{{$genre->id}}" {{$genre->id == $genre_id ? 'selected' : ''}}>
-                            {{$genre->genre}}
+                        <option value="{{ $genre->id }}" {{ $genre->id == $genre_id ? 'selected' : '' }}>
+                            {{ $genre->genre }}
                         </option>
                     @endforeach
                 </select>
@@ -35,7 +35,8 @@
                 <button class="search__btn" type="submit">
                     <img src="{{ asset('storage/search.svg') }}" alt="search">
                 </button>
-                <input class="search__word" type="text" name="keyword" value="{{$keyword ?? ''}}" placeholder="Search ...">
+                <input class="search__word" type="text" name="keyword" value="{{ $keyword ?? '' }}"
+                    placeholder="Search ...">
             </div>
         </form>
     </section>
@@ -52,6 +53,30 @@
                     <h2 class="shop__name">
                         {{ $shop->shop }}
                     </h2>
+                    <div class="shop__evaluation">
+                        @if ($shop->evaluation->count() !== 0)
+                            @php
+                                $countDate = $shop->evaluation->count();
+                                $count = 0;
+                                foreach ($shop->evaluation as $evaluation) {
+                                    $count += $evaluation->pivot->evaluation;
+                                }
+                                $average = number_format($count / $countDate, 1);
+                                $stars = number_format($average * 2) * 10;
+                            @endphp
+                        @else
+                            @php
+                                $stars = 0;
+                                $countDate = 0;
+                            @endphp
+                        @endif
+                        <div class="total__star">
+                            ★★★★★ <span id="count">({{$countDate}})</span>
+                        </div>
+                        <div class="total__star--check" style="width: {{ $stars ?? 0 }}px">
+                            ★★★★★
+                        </div>
+                    </div>
                     <ul class="shop__category">
                         <li class="shop__category--item">
                             #{{ $shop->area->area }}

@@ -38,7 +38,7 @@ class Shop extends Model
 
     public function evaluation()
     {
-        return $this->belongsToMany(User::class, 'evaluations');
+        return $this->belongsToMany(User::class, 'evaluations')->withPivot('evaluation');
     }
 
     public function scopeShopSearch($query, $keyword)

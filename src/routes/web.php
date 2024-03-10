@@ -3,6 +3,7 @@
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,20 +18,23 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth')->group(function () {
+    Route::post('/reservation', [ReservationController::class, 'store']);
+    Route::delete('/reservation/delete', [ReservationController::class, 'destroy']);
+    Route::get('/reservation/change', [ReservationController::class, 'showChange']);
+    Route::patch('/reservation/change', [ReservationController::class, 'change']);
+    Route::get('/done', [ReservationController::class, 'showDone']);
+
     Route::get('/mypage', [UserController::class, 'index'])->name('mypage');
-    Route::post('/reservation', [UserController::class, 'storeReservation']);
-    Route::delete('/reservation/delete', [UserController::class, 'destroyReservation']);
-    Route::get('/reservation/change', [UserController::class, 'showChange']);
-    Route::patch('/reservation/change', [UserController::class, 'change']);
-    Route::post('/favorite', [UserController::class, 'storeFavorite']);
-    Route::delete('/favorite/delete', [UserController::class, 'destroyFavorite']);
-    Route::get('/done', [UserController::class, 'showDone']);
-    Route::post('/favorite', [UserController::class, 'storeFavorite']);
+    Route::post('/favorite', [UserController::class, 'store']);
+    Route::delete('/favorite/delete', [UserController::class, 'destroy']);
+
+    Route::POST('/detail/{shop_id}/evaluation', [ShopController::class, 'store']);
 });
 
 Route::get('/', [ShopController::class, 'index'])->name('home');
-Route::get('/detail/{shop_id}', [ShopController::class, 'showDetail']);
+Route::get('/detail/{shop_id}', [ShopController::class, 'show']);
 Route::get('/back', [ShopController::class, 'back']);
+
 Route::get('/thanks', [RegisterController::class, 'showThanks']);
 
 

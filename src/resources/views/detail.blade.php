@@ -167,7 +167,6 @@
                                 </td>
                             </tr>
                         </table>
-                        <script src="{{ asset('js/main.js') }}"></script>
                     </div>
                     <button class="form__btn" type="submit">
                         予約する
@@ -179,31 +178,79 @@
     <section class="evaluation">
         <article class="comment__group">
             <div class="evaluation__total">
+                @if ($evaluations->count() !== 0)
+                    @php
+                        $countDate = $evaluations->count();
+                        $count = 0;
+                        foreach ($evaluations as $evaluation) {
+                            $count += $evaluation->evaluation;
+                        }
+                        $average = number_format($count / $countDate, 1);
+                        $stars = number_format($average * 2) * 15;
+                    @endphp
+                @endif
                 <p class="evaluation__total--number">
-                    5.0
+                    {{ $average ?? 0 }}
                 </p>
                 <div class="evaluation__total--star">
-                    <div class="total__star"></div>
+                    <div class="total__star">
+                        ★★★★★
+                    </div>
+                    <div class="total__star--check" style="width: {{ $stars ?? 0 }}px">
+                        ★★★★★
+                    </div>
                 </div>
                 <p class="evaluation__total--count">
-                    (6)
+                    ({{ $countDate ?? 0 }})
                 </p>
             </div>
-            <div class="comment__item">
-                <h3 class="user">
-                    山田太郎
-                </h3>
-                <div class="star__box">
-                    <div class="star"></div>
+            @foreach ($evaluations as $evaluation)
+                <div class="comment__item">
+                    <h3 class="user">
+                        {{ $evaluation->user->name }}
+                    </h3>
+                    <div class="star__box">
+                        <div class="star">★★★★★</div>
+                        <div class="star__check--group">
+                            @php
+                                $count = $evaluation->evaluation;
+                            @endphp
+                            @for ($i = 1; $i <= $count; $i++)
+                                <div class="star__check">★</div>
+                            @endfor
+                        </div>
+                    </div>
+                    <p class="comment">
+                        {{ $evaluation->comment }}
+                    </p>
                 </div>
-                <p class="comment">
-                    テストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテスト
-                </p>
-            </div>
+            @endforeach
         </article>
         <article class="evaluation__form">
-            <form action="" method="post">
+            <div class="evaluation__stars">
+                <button class="evaluation__star" id="star1">
+                    ★
+                </button>
+                <button class="evaluation__star" id="star2">
+                    ★
+                </button>
+                <button class="evaluation__star" id="star3">
+                    ★
+                </button>
+                <button class="evaluation__star" id="star4">
+                    ★
+                </button>
+                <button class="evaluation__star" id="star5">
+                    ★
+                </button>
+            </div>
+            <form action="/detail/{{ $shop->id }}/evaluation" method="post">
                 @csrf
+                @if (Auth::check())
+                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                @endif
+                <input type="hidden" name="shop_id" value="{{ $shop->id }}">
+                <input type="hidden" id="evaluation" name="evaluation" value="">
                 <textarea class="evaluation__comment" name="comment" cols="30" rows="10" placeholder="コメントを入力してください"></textarea>
                 <button class="evaluation__comment__btn" type="submit">
                     投稿
@@ -211,4 +258,5 @@
             </form>
         </article>
     </section>
+    <script src="{{ asset('js/main.js') }}"></script>
 @endsection

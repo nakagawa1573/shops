@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Shop;
 use App\Models\Area;
+use App\Models\Evaluation;
 use App\Models\Genre;
 use App\Models\ShopGenre;
 use App\Models\Favorite;
@@ -20,7 +21,7 @@ class ShopController extends Controller
         $area_id = $request->area_id;
         $genre_id = $request->genre_id;
 
-        $shops = Shop::with('area', 'genre')
+        $shops = Shop::with('area', 'genre', 'evaluation')
             ->shopSearch($keyword)
             ->areaSearch($area_id)
             ->genreSearch($genre_id)
@@ -33,11 +34,10 @@ class ShopController extends Controller
             $favorites = Favorite::where('user_id', $user->id)->get();
             return view('index', compact('shops', 'areas', 'genres', 'favorites', 'user', 'keyword', 'area_id', 'genre_id'));
         }
-
         return view('index', compact('shops', 'areas', 'genres', 'keyword', 'area_id', 'genre_id'));
     }
 
-    public function showDetail(Request $request)
+    public function show(Request $request)
     {
         $shop = Shop::find($request->id);
         $url = url()->previous();
@@ -47,7 +47,9 @@ class ShopController extends Controller
             session(['url' => $url]);
         }
 
-        return view('detail', compact('shop'));
+        $evaluations = Evaluation::with('user')->where('shop_id', $shop->id)->get();
+
+        return view('detail', compact('shop', 'evaluations'));
     }
 
     public function back()
@@ -55,5 +57,13 @@ class ShopController extends Controller
         $url = session('url');
 
         return redirect($url);
+    }
+
+    public function store(Request $request)
+    {
+        $evaluations = $request->only(['user_id', 'shop_id', 'evaluation', 'comment']);
+        Evaluation::create($evaluations);
+
+        return back();
     }
 }

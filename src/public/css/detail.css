@@ -174,80 +174,52 @@
 }
 
 .evaluation__total {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     display: flex;
-    position: relative;
 }
 
 .evaluation__total--number {
     font-size: 52px;
     margin: 0;
+    height: 52px;
+    line-height: 52px;
 }
 
 .evaluation__total--star {
-    height: 30px;
-    position: absolute;
-    bottom: 22%;
-    left: 25%;
-}
-
-.total__star {
+    height: 52px;
+    line-height: 65px;
+    margin: 0 10px;
     position: relative;
-    /* 指定した分だけ相対的に移動 */
+}
+
+.total__star,
+.total__star--check {
     font-size: 30px;
-    /* フォントサイズ */
-    letter-spacing: 0px;
-    /* 文字間隔 */
+    height: 100%;
 }
 
-.total__star:before {
+.total__star--check{
     position: absolute;
-    /* 親要素を基準 */
-    display: inline-block;
-    /* ブロック要素 */
-    color: #dededc;
-    /* ★の色 */
-    white-space: nowrap;
-    /* 改行不可 */
     top: 0;
-    /* 上限より表示 */
-    left: 0;
-    /* 左端より表示 */
-    line-height: 1em;
-    /* 高さを指定 */
-    content: "★★★★★";
-    /* ★の指定 */
-}
-
-.total__star:after {
-    position: absolute;
-    /* 親要素を基準 */
-    display: inline-block;
-    /* ブロック要素 */
-    color: #fbbc04;
-    /* ★の色 */
     white-space: nowrap;
-    /* 改行不可 */
-    top: 0;
-    /* 上限より表示 */
-    left: 0;
-    /* 左端より表示 */
-    line-height: 1em;
-    /* 高さを指定 */
     overflow: hidden;
-    /* オーバーフロー部分は非表示 */
-    width: 150px;
-    /* 評価★の幅 */
-    content: "★★★★★";
-    /* ★の指定 */
+}
+
+.total__star,
+.evaluation__star{
+    color: #dededc;
+}
+
+.total__star--check,
+.evaluation__star--check{
+    color: #fbbc04;
 }
 
 .evaluation__total--count {
-    position: absolute;
-    bottom: 22%;
-    left: 65%;
     font-size: 20px;
     margin: 0;
+    height: 52px;
+    line-height: 65px;
 }
 
 .comment__item {
@@ -260,57 +232,27 @@
 
 .star__box {
     height: 20px;
+    display: flex;
+    position: relative;
 }
 
 .star {
-    position: relative;
-    /* 指定した分だけ相対的に移動 */
     font-size: 20px;
-    /* フォントサイズ */
-    letter-spacing: 0px;
-    /* 文字間隔 */
-}
-
-.star:before {
-    position: absolute;
-    /* 親要素を基準 */
-    display: inline-block;
-    /* ブロック要素 */
     color: #dededc;
-    /* ★の色 */
-    white-space: nowrap;
-    /* 改行不可 */
-    top: 0;
-    /* 上限より表示 */
-    left: 0;
-    /* 左端より表示 */
-    line-height: 1em;
-    /* 高さを指定 */
-    content: "★★★★★";
-    /* ★の指定 */
+    height: 20px;
+    line-height: 20px;
 }
 
-.star:after {
+.star__check--group {
     position: absolute;
-    /* 親要素を基準 */
-    display: inline-block;
-    /* ブロック要素 */
+    display: flex;
+}
+
+.star__check {
+    font-size: 20px;
+    height: 20px;
+    line-height: 20px;
     color: #fbbc04;
-    /* ★の色 */
-    white-space: nowrap;
-    /* 改行不可 */
-    top: 0;
-    /* 上限より表示 */
-    left: 0;
-    /* 左端より表示 */
-    line-height: 1em;
-    /* 高さを指定 */
-    overflow: hidden;
-    /* オーバーフロー部分は非表示 */
-    width: 100px;
-    /* 評価★の幅 */
-    content: "★★★★★";
-    /* ★の指定 */
 }
 
 .user {
@@ -318,8 +260,18 @@
     font-size: 20px;
 }
 
-.evaluation__form {
-    margin-top: 98px;
+.evaluation__stars {
+    display: flex;
+    justify-content: center;
+}
+
+.evaluation__star,
+.evaluation__star--check {
+    border: none;
+    padding: 0;
+    font-size: 50px;
+    cursor: pointer;
+    background-color: transparent;
 }
 
 .evaluation__comment {
@@ -330,6 +282,7 @@
     width: 520px;
     height: 250;
     padding: 20px 10px;
+    margin-top: 30px;
 }
 
 .evaluation__comment__btn {
@@ -341,5 +294,5 @@
     border-radius: 6px;
     color: #fff;
     display: block;
-    margin: 20px 0 0 auto;
+    margin: 20px 0 40px auto;
 }

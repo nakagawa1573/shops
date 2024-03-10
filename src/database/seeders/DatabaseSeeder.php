@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Evaluation;
 use App\Models\Favorite;
 use Illuminate\Database\Seeder;
 
@@ -21,5 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         $this->call(FavoritesTableSeeder::class);
         $this->call(ReservationsTableSeeder::class);
+        $this->call(EvaluationsTableSeeder::class);
     }
 }
