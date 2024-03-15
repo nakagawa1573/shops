@@ -12,6 +12,8 @@ use Laravel\Fortify\Contracts\RegisterResponse;
 use Laravel\Fortify\Contracts\RegisterViewResponse;
 use Laravel\Fortify\Fortify;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -62,22 +64,38 @@ class RegisterController extends Controller
         }
 
         event(new Registered($user = $creator->create($request->all())));
-        $email = $request->email;
-        $password = $request->password;
+        $this->guard->login($user);
 
-        $flag = true;
-        return redirect('/thanks')->with(compact('email', 'password', 'flag'));
+        // return app(RegisterResponse::class);
+        // $email = $request->email;
+        // $password = $request->password;
+
+        return redirect('/register/verify');
     }
 
     public function showThanks()
     {
-        $flag = Session::get('flag');
-
-        if (!$flag) {
-            return redirect('/');
-        }
-        Session::forget('flag');
-        
         return view('thanks');
+    }
+
+    public function showVerify()
+    {
+        return view('auth.verifyEmail');
+    }
+
+    public function confirm(EmailVerificationRequest $request)
+    {
+        $request->fulfill();
+
+        Auth::guard('web')->logout();
+
+        return redirect('/thanks');
+    }
+
+    public function send(Request $request)
+    {
+        $request->user()->sendEmailVerificationNotification();
+
+        return back()->with('message', '確認用メールを再送しました');
     }
 }

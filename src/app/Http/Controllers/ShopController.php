@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\EvaluationRequest;
 use App\Models\Shop;
 use App\Models\Area;
 use App\Models\Evaluation;
@@ -32,7 +33,7 @@ class ShopController extends Controller
 
         if ($user) {
             $favorites = Favorite::where('user_id', $user->id)->get();
-            return view('index', compact('shops', 'areas', 'genres', 'favorites', 'user', 'keyword', 'area_id', 'genre_id'));
+            return view('index', compact('shops', 'areas', 'genres', 'favorites', 'keyword', 'area_id', 'genre_id'));
         }
         return view('index', compact('shops', 'areas', 'genres', 'keyword', 'area_id', 'genre_id'));
     }
@@ -59,9 +60,10 @@ class ShopController extends Controller
         return redirect($url);
     }
 
-    public function store(Request $request)
+    public function store(EvaluationRequest $request)
     {
-        $evaluations = $request->only(['user_id', 'shop_id', 'evaluation', 'comment']);
+        $evaluations = $request->only(['shop_id', 'evaluation', 'comment']);
+        $evaluations['user_id'] = Auth::user()->id;
         Evaluation::create($evaluations);
 
         return back();

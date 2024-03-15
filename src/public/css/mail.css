@@ -1,0 +1,50 @@
+.content {
+    width: 1000px;
+    margin: 30px auto 0;
+}
+
+.content__mail {
+    width: 800px;
+    margin: 50px auto 0;
+}
+
+.content__mail--item {
+    display: flex;
+    justify-content: space-between;
+}
+
+#subject {
+    height: 30px;
+    margin-bottom: 70px;
+}
+
+#content {
+    height: 500px;
+    margin-bottom: 30px;
+}
+
+#ttl {
+    margin: 0;
+    margin-right: 100px;
+}
+
+#item {
+    width: 80%;
+    border: none;
+    border-radius: 6px;
+    resize: none;
+    padding: 10px 10px;
+    font-size: 16px;
+}
+
+#btn {
+    background-color: #3560F6;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    padding: 7px 15px;
+    font-size: 14px;
+    display: block;
+    margin: 0 0 30px auto;
+    cursor: pointer;
+}

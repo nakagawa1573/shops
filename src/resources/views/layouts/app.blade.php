@@ -39,8 +39,7 @@
                     </button>
                 </a>
             </div>
-            {{-- ifでログイン状態、否ログイン状態で変わるようにする --}}
-            @if (Auth::check())
+            @if (Auth::guard('web')->check())
                 <div class="modal__box--link">
                     <p>
                         <a class="modal__link" href="/">
@@ -56,6 +55,44 @@
                     <p>
                         <a class="modal__link" href="/mypage">
                             Mypage
+                        </a>
+                    </p>
+                </div>
+            @elseif(Auth::guard('owners')->check())
+                <div class="modal__box--link">
+                    <p>
+                        <a class="modal__link" href="/">
+                            Home
+                        </a>
+                    </p>
+                    <form class="modal__logout" action="/owner/logout" method="post">
+                        @csrf
+                        <button type="submit">
+                            Logout
+                        </button>
+                    </form>
+                    <p>
+                        <a class="modal__link" href="/owner">
+                            Management
+                        </a>
+                    </p>
+                </div>
+            @elseif(Auth::guard('admins')->check())
+                <div class="modal__box--link">
+                    <p>
+                        <a class="modal__link" href="/">
+                            Home
+                        </a>
+                    </p>
+                    <form class="modal__logout" action="/admin/logout" method="post">
+                        @csrf
+                        <button type="submit">
+                            Logout
+                        </button>
+                    </form>
+                    <p>
+                        <a class="modal__link" href="/admin">
+                            Registration for owner
                         </a>
                     </p>
                 </div>

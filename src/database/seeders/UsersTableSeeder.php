@@ -18,6 +18,7 @@ class UsersTableSeeder extends Seeder
         $param = [
             'name' => '山田太郎',
             'email' => 'test@test.com',
+            'email_verified_at' => now(),
             'password' => Hash::make(123456789),
             'created_at' => now(),
             'updated_at' => now(),

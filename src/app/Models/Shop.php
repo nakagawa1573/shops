@@ -11,10 +11,16 @@ class Shop extends Model
 
     protected $fillable = [
         'area_id',
+        'owner_id',
         'shop',
         'overview',
         'img',
     ];
+
+    public function owner()
+    {
+        return $this->belongsTo(Owner::class);
+    }
 
     public function area()
     {

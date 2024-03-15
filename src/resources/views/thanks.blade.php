@@ -9,14 +9,11 @@
             会員登録ありがとうございます
         </p>
         <div class="content__item">
-            <form class="content__item--form" action="/login" method="post">
-                @csrf
-                <input type="hidden" name="email" value="{{session('email')}}">
-                <input type="hidden" name="password" value="{{session('password')}}">
+            <a href="/login">
                 <button class="content__item--btn" type="submit">
                     ログインする
                 </button>
-            </form>
+            </a>
         </div>
     </section>
 @endsection

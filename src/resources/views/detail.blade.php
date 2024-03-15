@@ -36,16 +36,18 @@
                 <h2 class="reservation__ttl">
                     予約
                 </h2>
-                @if ($errors->any() || session('message'))
+                @if (
+                    $errors->has('shop_id') ||
+                        $errors->has('date') ||
+                        $errors->has('time') ||
+                        $errors->has('number') ||
+                        session('message'))
                     <p class="error">
                         {{ $errors->first() ?: session('message') }}
                     </p>
                 @endif
                 <form class="reservation__form" action="/reservation" method="post">
                     @csrf
-                    @if (Auth::check())
-                        <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                    @endif
                     <input type="hidden" name="shop_id" value="{{ $shop->id }}">
                     <input class="reservation__form--date" type="date" name="date" id="date"
                         value="{{ old('date') ?: date('Y-m-d') }}">
@@ -227,6 +229,12 @@
             @endforeach
         </article>
         <article class="evaluation__form">
+            {{-- {{dd($errors)}} --}}
+            @if ($errors->has('shop_id') || $errors->has('evaluation') || $errors->has('comment'))
+                <p class="error__evaluation">
+                    {{ $errors->first() ?: session('message') }}
+                </p>
+            @endif
             <div class="evaluation__stars">
                 <button class="evaluation__star" id="star1">
                     ★
@@ -246,12 +254,9 @@
             </div>
             <form action="/detail/{{ $shop->id }}/evaluation" method="post">
                 @csrf
-                @if (Auth::check())
-                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                @endif
                 <input type="hidden" name="shop_id" value="{{ $shop->id }}">
                 <input type="hidden" id="evaluation" name="evaluation" value="">
-                <textarea class="evaluation__comment" name="comment" cols="30" rows="10" placeholder="コメントを入力してください"></textarea>
+                <textarea class="evaluation__comment" name="comment" cols="20" rows="10" placeholder="コメントを入力してください" >{{old('comment')}}</textarea>
                 <button class="evaluation__comment__btn" type="submit">
                     投稿
                 </button>

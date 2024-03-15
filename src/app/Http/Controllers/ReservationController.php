@@ -17,12 +17,12 @@ class ReservationController extends Controller
 
     public function store(ReservationRequest $request)
     {
-        $reservation = $request->only(['user_id', 'shop_id', 'date', 'time', 'number']);
+        $reservation = $request->only(['shop_id', 'date', 'time', 'number']);
+        $reservation['user_id'] = Auth::user()->id;
         $date = $request->date;
         $time = $request->time;
-        $user = Auth::user();
 
-        if (Carbon::parse($date . $time) > Carbon::now() && $user->id == $request->user_id) {
+        if (Carbon::parse($date . $time) > Carbon::now()) {
             Reservation::create($reservation);
             return redirect('/done');
         } else {
@@ -37,22 +37,21 @@ class ReservationController extends Controller
         return back();
     }
 
-    public function showChange(Request $request)
+    public function showUpdate(Request $request)
     {
         $reservation = Reservation::with('shop')->where('id', $request->id)->first();
-        return view('change', compact('reservation'));
+        return view('updateReservation', compact('reservation'));
     }
 
-    public function change(ReservationRequest $request)
+    public function update(ReservationRequest $request)
     {
-        $user = Auth::user();
         $date = $request->date;
         $time = $request->time;
-
-        if (Carbon::parse($date . $time) > Carbon::now() && $request->id == $user->id) {
-            Reservation::find($request->id)->update([
-                'date' => $request->date,
-                'time' => $request->time,
+        $data = Reservation::find($request->id);
+        if (!is_null($data) && $data->shop_id == $request->shop_id && Carbon::parse($date . ' ' . $time) > Carbon::now()) {
+            $data->update([
+                'date' => $date,
+                'time' => $time,
                 'number' => $request->number,
             ]);
         } else {

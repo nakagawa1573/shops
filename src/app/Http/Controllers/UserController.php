@@ -24,10 +24,9 @@ class UserController extends Controller
     public function store(FavoriteRequest $request)
     {
         $user = Auth::user();
-        if ($user->id == $request->user_id) {
-            $favorite = $request->only('user_id', 'shop_id');
-            Favorite::create($favorite);
-        }
+        $favorite = $request->only('shop_id');
+        $favorite['user_id'] = $user->id;
+        Favorite::create($favorite);
 
         return back();
     }

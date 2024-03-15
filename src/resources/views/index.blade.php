@@ -111,7 +111,6 @@
                                     @csrf
                                     @method('delete')
                                     <input type="hidden" name="shop_id" value="{{ $shop->id }}">
-                                    <input type="hidden" name="user_id" value="{{ $user->id }}">
                                     <button type="submit">
                                         <div class="heart_favorite"></div>
                                     </button>
@@ -120,7 +119,6 @@
                                 <form class="shop__form--favorite" action="/favorite" method="post">
                                     @csrf
                                     <input type="hidden" name="shop_id" value="{{ $shop->id }}">
-                                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                                     <button type="submit">
                                         <div class="heart"></div>
                                     </button>
