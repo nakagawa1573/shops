@@ -9,6 +9,9 @@
             メール送信
         </h2>
         <article class="content__mail">
+            <p class="message">
+                {{ session('message') }}
+            </p>
             <form action="" method="post">
                 @csrf
                 <div class="content__mail--item" id="subject">

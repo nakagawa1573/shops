@@ -56,3 +56,15 @@
     color: red;
     font-size: 14px;
 }
+
+.owner__wrapper{
+    width: 400px;
+    margin: 0 auto;
+    margin-top: 5px;
+    text-align: right;
+}
+
+.owner__link{
+    color: #3560F6;
+    text-decoration: none;
+}

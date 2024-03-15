@@ -48,3 +48,8 @@
     margin: 0 0 30px auto;
     cursor: pointer;
 }
+
+.message{
+    width: 80%;
+    margin-left: auto;
+}

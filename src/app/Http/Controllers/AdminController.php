@@ -10,11 +10,13 @@ use App\Http\Requests\CreateOwnerRequest;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NotificationEmail;
 use App\Models\User;
+use Endroid\QrCode\QrCode;
 
 class AdminController extends Controller
 {
     public function index()
     {
+        $qrCode = new QrCode('こんにちは、QRコード');
         return view('auth.admin');
     }
 
@@ -68,6 +70,6 @@ class AdminController extends Controller
             Mail::to($address)->send(new NotificationEmail($subject, $content));
         }
 
-        return redirect('/admin/mail');
+        return redirect('/admin/mail')->with('message', 'メールを送信しました');
     }
 }

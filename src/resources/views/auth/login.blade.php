@@ -37,4 +37,9 @@
             </form>
         </div>
     </section>
+    <div class="owner__wrapper">
+        <a class="owner__link" href="/admin/login">
+            for owner
+        </a>
+    </div>
 @endsection

@@ -95,6 +95,11 @@
                             Registration for owner
                         </a>
                     </p>
+                    <p>
+                        <a class="modal__link" href="/admin/mail">
+                            Mail
+                        </a>
+                    </p>
                 </div>
             @else
                 <div class="modal__box--link">
