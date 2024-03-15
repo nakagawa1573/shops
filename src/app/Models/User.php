@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -52,5 +53,10 @@ class User extends Authenticatable
     public function reservation()
     {
         return $this->belongsToMany(Shop::class, 'reservations')->withPivot('id', 'date', 'time', 'number');
+    }
+
+    public function evaluation()
+    {
+        return $this->belongsToMany(Shop::class, 'evaluations');
     }
 }

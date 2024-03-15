@@ -11,10 +11,16 @@ class Shop extends Model
 
     protected $fillable = [
         'area_id',
+        'owner_id',
         'shop',
         'overview',
         'img',
     ];
+
+    public function owner()
+    {
+        return $this->belongsTo(Owner::class);
+    }
 
     public function area()
     {
@@ -36,9 +42,14 @@ class Shop extends Model
         return $this->belongsToMany(User::class, 'reservations')->withPivot('id', 'date', 'time', 'number');
     }
 
+    public function evaluation()
+    {
+        return $this->belongsToMany(User::class, 'evaluations')->withPivot('evaluation');
+    }
+
     public function scopeShopSearch($query, $keyword)
     {
-        $query->where('shop','LIKE', '%'. $keyword. '%');
+        $query->where('shop', 'LIKE', '%' . $keyword . '%');
     }
 
     public function scopeAreaSearch($query, $area)
@@ -51,7 +62,7 @@ class Shop extends Model
     public function scopeGenreSearch($query, $genre)
     {
         if ($genre) {
-            $query->whereHas('genre', function($query) use($genre){
+            $query->whereHas('genre', function ($query) use ($genre) {
                 $query->where('genre_id', $genre);
             });
         }

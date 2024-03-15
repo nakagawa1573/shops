@@ -22,7 +22,6 @@ class FavoriteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['required', 'numeric'],
             'shop_id' => ['required', 'numeric'],
         ];
     }
@@ -30,8 +29,6 @@ class FavoriteRequest extends FormRequest
     public function messages()
     {
         return[
-            'user_id.required' => 'お気に入り登録に失敗しました',
-            'user_id.numeric' => 'お気に入り登録に失敗しました',
             'shop_id.required' => 'お気に入り登録に失敗しました',
             'shop_id.numeric' => 'お気に入り登録に失敗しました',
         ];
