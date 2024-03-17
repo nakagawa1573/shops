@@ -4,7 +4,6 @@
 }
 
 .content__mail {
-    width: 800px;
     margin: 50px auto 0;
 }
 
@@ -29,7 +28,7 @@
 }
 
 #item {
-    width: 80%;
+    width: 640px;
     border: none;
     border-radius: 6px;
     resize: none;
@@ -52,4 +51,14 @@
 .message{
     width: 80%;
     margin-left: auto;
+}
+
+@media screen and (max-width:768px) {
+    .content{
+        width: 730px;
+    }
+
+    #ttl{
+        margin-right: 0;
+    }
 }

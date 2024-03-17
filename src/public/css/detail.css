@@ -1,13 +1,13 @@
 .content,
 .evaluation {
-    width: 1360px;
+    width: 1342px;
     margin: 50px auto 0;
     display: flex;
     justify-content: space-between;
 }
 
 .detail {
-    width: 45%;
+    width: 612px;
 }
 
 .detail__box {
@@ -58,7 +58,7 @@
 }
 
 .wrapper {
-    width: 45%;
+    width: 612px;
     position: relative;
 }
 
@@ -68,7 +68,6 @@
     padding-top: 20px;
     background-color: #3560F6;
     border-radius: 6px;
-    position: relative;
     position: absolute;
     top: -15%;
 }
@@ -300,3 +299,32 @@
 .error__evaluation{
     text-align: center;
 }
+
+@media screen and (max-width:1439px) {
+    .content,
+    .evaluation {
+        width: 1010px;
+    }
+
+    .detail,
+    .wrapper,
+    .evaluation__comment{
+        width: 500px;
+    }
+}
+
+@media screen and (max-width:1023px) {
+    .content,
+    .evaluation {
+        width: 768px;
+        display: grid;
+        place-items: center;
+        grid-template-columns:768px;
+    }
+
+    .reservation{
+        position: static;
+        height: 500px;
+    }
+}
+

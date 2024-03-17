@@ -39,6 +39,7 @@ class ReservationController extends Controller
 
     public function showUpdate(Request $request)
     {
+        session(['url' => route('mypage')]);
         $reservation = Reservation::with('shop')->where('id', $request->id)->first();
         return view('updateReservation', compact('reservation'));
     }

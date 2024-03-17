@@ -39,7 +39,7 @@
                                 </p>
                             </div>
                             <div id="box__2">
-                                <form action="/reservation/change" method="get">
+                                <form action="/reservation/update" method="get">
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $reservation->pivot->id }}">
                                     <button class="reservation__change">

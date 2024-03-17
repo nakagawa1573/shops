@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/reservation', [ReservationController::class, 'store']);
     Route::delete('/reservation/delete', [ReservationController::class, 'destroy']);
-    Route::get('/reservation/update', [ReservationController::class, 'showChange']);
+    Route::get('/reservation/update', [ReservationController::class, 'showUpdate']);
     Route::patch('/reservation/update', [ReservationController::class, 'update']);
     Route::get('/done', [ReservationController::class, 'showDone']);
 

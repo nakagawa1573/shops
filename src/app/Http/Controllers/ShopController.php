@@ -14,6 +14,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+
+
 class ShopController extends Controller
 {
     public function index(Request $request)
@@ -35,6 +37,8 @@ class ShopController extends Controller
             $favorites = Favorite::where('user_id', $user->id)->get();
             return view('index', compact('shops', 'areas', 'genres', 'favorites', 'keyword', 'area_id', 'genre_id'));
         }
+
+
         return view('index', compact('shops', 'areas', 'genres', 'keyword', 'area_id', 'genre_id'));
     }
 

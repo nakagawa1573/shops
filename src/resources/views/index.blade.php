@@ -71,7 +71,7 @@
                             @endphp
                         @endif
                         <div class="total__star">
-                            ★★★★★ <span id="count">({{$countDate}})</span>
+                            ★★★★★ <span id="count">({{ $countDate }})</span>
                         </div>
                         <div class="total__star--check" style="width: {{ $stars ?? 0 }}px">
                             ★★★★★
@@ -81,10 +81,22 @@
                         <li class="shop__category--item">
                             #{{ $shop->area->area }}
                         </li>
+                        @php
+                            $count = 0;
+                        @endphp
                         @foreach ($shop->genre as $genre)
                             <li class="shop__category--item">
                                 #{{ $genre->genre }}
                             </li>
+                            @php
+                                $count++;
+                            @endphp
+                            @if ($count == 2)
+                                <li class="shop__category--item">
+                                    ...
+                                </li>
+                            @break
+                            @endif
                         @endforeach
                     </ul>
                     <div class="shop__form">

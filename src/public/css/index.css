@@ -1,6 +1,5 @@
 .search {
-    width: 50%;
-    margin-right: 10px;
+    width: 668px;
 }
 
 .search__form,
@@ -67,16 +66,17 @@
 }
 
 .content {
-    width: 1360px;
+    width: 1350px;
     margin: 30px auto 0;
     display: grid;
+    place-items: center;
     grid-template-columns: repeat(20, 1fr);
-    flex-wrap: wrap;
 }
 
 .content__item {
     background-color: #fff;
     width: 330px;
+    height: 320px;
     border-radius: 6px;
     box-shadow: 2px 2px 4px #959595;
     margin-bottom: 30px;
@@ -122,7 +122,7 @@
 .shop__form {
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
+    margin-top: 5px;
 }
 
 .shop__form--detail>button {
@@ -207,7 +207,40 @@
     top: 0;
 }
 
-#count{
+#count {
     font-size: 16px;
     color: #959595;
+}
+
+@media screen and (max-width:1439px) {
+    .content {
+        grid-template-columns: repeat(15, 1fr);
+        width: 1024px;
+    }
+}
+
+@media screen and (max-width:1023px) {
+    .header {
+        width: 840px;
+    }
+
+    .search {
+        width: 512px;
+    }
+
+    .content {
+        grid-template-columns: repeat(10, 1fr);
+        width: 1020px;
+    }
+}
+
+@media screen and (max-width:768px) {
+    .header,
+    .modal__box--btn {
+        width: 714px;
+    }
+
+    .content {
+        width: 768px;
+    }
 }
