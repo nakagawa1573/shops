@@ -23,3 +23,36 @@
     font-size: 14px;
     cursor: pointer;
 }
+
+@media screen and (max-width:1439px) {
+
+    .header,
+    .modal__box--btn {
+        width: 1024px;
+    }
+}
+
+@media screen and (max-width:768px) {
+
+    .header,
+    .modal__box--btn {
+        width: 714px;
+    }
+}
+
+@media screen and (max-width:425px) {
+
+    .header,
+    .modal__box--btn {
+        width: 350px;
+    }
+
+    .content{
+        width: 350px;
+        padding: 50px 20px;
+    }
+
+    .content__txt{
+        font-size: 22px;
+    }
+}

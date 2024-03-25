@@ -12,9 +12,11 @@ class Reservation extends Model
     protected $fillable = [
         'user_id',
         'shop_id',
+        'product_id',
         'date',
         'time',
         'number',
+        'pay',
     ];
 
     public function shop()
@@ -25,5 +27,19 @@ class Reservation extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function scopeSearchKeyword($query, $keyword)
+    {
+        $query->where('id', $keyword)
+            ->orWhere('date', 'LIKE', '%' . $keyword . '%')
+            ->orWhereHas('user', function ($q) use ($keyword) {
+                $q->where('name', 'LIKE', '%' . $keyword . '%');
+            });
     }
 }

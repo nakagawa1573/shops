@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateOwnerRequest extends FormRequest
+class CreateAccountRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,7 @@ class CreateOwnerRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:191'],
-            'email' => ['required', 'string', 'email:filter,dns', 'max:191','unique:owners,email'],
+            'email' => ['required', 'string', 'email:filter,dns', 'max:191','unique:users,email','unique:admins,email', 'unique:owners,email'],
             'password' => ['required', 'string', 'min:8'],
         ];
     }

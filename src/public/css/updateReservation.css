@@ -58,7 +58,7 @@
 }
 
 .reservation__form--date {
-    width: 30%;
+    width: 171px;
     position: relative;
     cursor: pointer;
 }
@@ -114,7 +114,7 @@
 }
 
 .form__result--item:first-child {
-    width: 20%;
+    width: 100px;
 }
 
 .form__btn {
@@ -129,4 +129,33 @@
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
     cursor: pointer;
+}
+
+@media screen and (max-width:1024px) {
+
+    .header,
+    .modal__box--btn {
+        width: 970px;
+    }
+}
+
+@media screen and (max-width:768px) {
+
+    .header,
+    .modal__box--btn {
+        width: 714px;
+    }
+}
+
+@media screen and (max-width:425px) {
+
+    .header,
+    .modal__box--btn {
+        width: 365px;
+    }
+
+    .content {
+        width: 360px;
+        height: 500px;
+    }
 }

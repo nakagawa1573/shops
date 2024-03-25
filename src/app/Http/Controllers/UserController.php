@@ -15,7 +15,7 @@ class UserController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $favorites = User::with('favorite.genre', 'favorite.area')->where('id', $user->id)->get();
+        $favorites = User::with('favorite.genre', 'favorite.area', 'favorite.evaluation')->where('id', $user->id)->get();
         $reservations = User::with('reservation.genre', 'reservation.area')->where('id', $user->id)->get();
 
         return view('mypage', compact('user', 'favorites', 'reservations'));
@@ -34,7 +34,7 @@ class UserController extends Controller
     public function destroy(Request $request)
     {
         Favorite::where([
-            ['user_id', '=', $request->user_id],
+            ['user_id', '=', Auth::user()->id],
             ['shop_id', '=', $request->shop_id],
         ])->delete();
 

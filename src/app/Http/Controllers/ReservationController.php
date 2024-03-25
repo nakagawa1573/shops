@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReservationRequest;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
 use Carbon\Carbon;
@@ -59,6 +60,38 @@ class ReservationController extends Controller
             return back()->with('message', '予約手続きに失敗しました');
         }
 
+        return redirect('/mypage');
+    }
+
+    public function create(Reservation $reservation)
+    {
+        $this->authorize('create', $reservation);
+        $priceId = Product::find($reservation->product_id)->product;
+        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+        $response = $stripe->checkout->sessions->create(
+            [
+                'line_items' => [
+                    [
+                        'price' => $priceId,
+                        'quantity' => 1,
+                    ],
+                ],
+                'automatic_tax' => ['enabled' => true],
+                'mode' => 'payment',
+                'success_url' => route('success', ['reservation' => $reservation->id]) . '?session_id={CHECKOUT_SESSION_ID}',
+                'cancel_url' => route('mypage'),
+            ],
+            ['stripe_account' => 'acct_1OwaFqIAfOPo2c24'],
+        );
+        return redirect($response['url']);
+    }
+
+    public function success(Reservation $reservation, Request $request)
+    {
+        if (!$request->get('session_id')) {
+            return redirect('/mypage');
+        }
+        $reservation->update(['pay' => 'done']);
         return redirect('/mypage');
     }
 }

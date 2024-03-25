@@ -2,23 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Genre;
 use App\Models\Area;
 use App\Models\Shop;
 use App\Models\ShopGenre;
 use App\Http\Requests\CreateShopRequest;
+use App\Http\Requests\KeywordRequest;
 use App\Models\Reservation;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-
-use function Laravel\Prompts\error;
+use Carbon\Carbon;
 
 class OwnerController extends Controller
 {
 
-    public function index()
+    public function index(keywordRequest $request)
     {
         $genres = Genre::all();
         $areas = Area::all();
@@ -26,40 +25,27 @@ class OwnerController extends Controller
         $shopData = Shop::with('genre')->where('owner_id', $id)->first();
         if ($shopData) {
             $genreDatas = ShopGenre::where('shop_id', $shopData->id)->get();
-            $reservations = Reservation::with('user')->where('shop_id', $shopData->id)->oldest('Date')->get();
-            return view('owner', compact('genres', 'areas', 'shopData', 'genreDatas', 'reservations'));
+            $now = Carbon::now()->format('Y-m-d');
+            $filter = $request->filter ?? 1;
+            $keyword = $request->keyword;
+            if ($filter == 1) {
+                $reservations = Reservation::with('user')
+                    ->where('shop_id', $shopData->id)
+                    ->where('date', '>=', $now)
+                    ->searchKeyword($keyword)
+                    ->oldest('Date')
+                    ->get();
+            } else {
+                $reservations = Reservation::with('user')
+                    ->where('shop_id', $shopData->id)
+                    ->searchKeyword($keyword)
+                    ->oldest('Date')
+                    ->get();
+            }
+            return view('owner', compact('genres', 'areas', 'shopData', 'genreDatas', 'reservations', 'filter', 'keyword'));
         }
 
         return view('owner', compact('genres', 'areas'));
-    }
-
-    public function create()
-    {
-        if (Auth::guard('owners')->user()) {
-            return redirect('/owner');
-        }
-
-        return view('auth.ownerLogin');
-    }
-
-    public function login(Request $request)
-    {
-        $credentials = $request->only(['email', 'password']);
-        if (Auth::guard('owners')->attempt($credentials)) {
-            $request->session()->regenerate();
-
-            return redirect()->intended('/owner');
-        } else {
-            return back()->withErrors([
-                'error' => 'ログインに失敗しました'
-            ]);
-        }
-    }
-
-    public function logout()
-    {
-        Auth::guard('owners')->logout();
-        return redirect('/owner/login');
     }
 
     public function store(CreateShopRequest $request)

@@ -9,7 +9,8 @@
         本日、「{{$shop}}」にて予約があります。<br>
         予約時間：{{$time}}<br>
         予約人数：{{$number == 'over_10' ? '10人以上' : $number.'人'}}<br>
-        <img src="data:image/gif;base64,<?= $qrCode ?>" alt="">
+        <認証用QRコード><br>
+        {!! QrCode::generate($qrCode) !!}
     </div>
 </body>
 </html>
