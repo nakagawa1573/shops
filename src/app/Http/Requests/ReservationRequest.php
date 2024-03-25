@@ -3,11 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Rules\CustomRules;
 use App\Rules\NumberFields;
 use App\Rules\DateFields;
-use App\Rules\TimeFields;
-
 
 class ReservationRequest extends FormRequest
 {

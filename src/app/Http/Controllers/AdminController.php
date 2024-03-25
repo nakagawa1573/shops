@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Owner;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\CreateOwnerRequest;
+use App\Http\Requests\CreateAccountRequest;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NotificationEmail;
 use App\Models\User;
+use App\Http\Requests\EmailRequest;
+use Illuminate\Auth\Events\Registered;
 
 class AdminController extends Controller
 {
@@ -18,40 +18,12 @@ class AdminController extends Controller
         return view('auth.admin');
     }
 
-    public function create()
-    {
-        if (Auth::guard('admins')->user()) {
-            return redirect('/admin');
-        }
-
-        return view('auth.adminLogin');
-    }
-
-    public function login(Request $request)
-    {
-        $credentials = $request->only(['email', 'password']);
-        if (Auth::guard('admins')->attempt($credentials)) {
-            $request->session()->regenerate();
-
-            return redirect()->intended('/admin');
-        } else {
-            return back()->withErrors([
-                'error' => 'ログインに失敗しました'
-            ]);
-        }
-    }
-
-    public function logout()
-    {
-        Auth::guard('admins')->logout();
-        return redirect('/admin/login');
-    }
-
-    public function store(CreateOwnerRequest $request)
+    public function store(CreateAccountRequest $request)
     {
         $owner = $request->only(['name', 'email']);
         $owner['password'] = Hash::make($request->password);
-        Owner::create($owner);
+        $user = Owner::create($owner);
+        event(new Registered($user));
         return redirect('/admin')->with('message', 'アカウントを作成しました');
     }
 
@@ -60,7 +32,7 @@ class AdminController extends Controller
         return view('mail');
     }
 
-    public function send(Request $request){
+    public function send(EmailRequest $request){
         $subject = $request->input('subject');
         $content = $request->input('content');
         $addresses = User::all();
@@ -68,6 +40,6 @@ class AdminController extends Controller
             Mail::to($address)->send(new NotificationEmail($subject, $content));
         }
 
-        return redirect('/admin/mail');
+        return redirect('/admin/mail')->with('message', 'メールを送信しました');
     }
 }

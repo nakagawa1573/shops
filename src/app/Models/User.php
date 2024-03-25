@@ -2,17 +2,16 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, Billable;
 
     /**
      * The attributes that are mass assignable.
@@ -52,11 +51,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function reservation()
     {
-        return $this->belongsToMany(Shop::class, 'reservations')->withPivot('id', 'date', 'time', 'number');
+        return $this->belongsToMany(Shop::class, 'reservations')->withPivot('id','product_id', 'date', 'time', 'number', 'pay');
     }
 
     public function evaluation()
     {
-        return $this->belongsToMany(Shop::class, 'evaluations');
+        return $this->belongsToMany(Shop::class, 'evaluations')->withPivot('evaluation');
     }
 }

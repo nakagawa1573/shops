@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Rules\GenreIdFields;
 
 class CreateShopRequest extends FormRequest
 {
@@ -23,9 +22,10 @@ class CreateShopRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'shop' => ['required', 'string'],
+            'shop' => ['required', 'string', 'max:191'],
             'area_id' => ['required', 'numeric', 'between:1,47'],
-            'genre_id' => ['required', 'array', 'max:3', new GenreIdFields],
+            'genre_id' => ['required', 'array', 'max:3'],
+            'genre_id.*' => ['numeric', 'between:1,5'],
             'overview' => ['required', 'max:200'],
             'img' => ['image', 'max:5000'],
         ];
@@ -36,6 +36,7 @@ class CreateShopRequest extends FormRequest
         return [
             'shop.required' => '店名を入力してください',
             'shop.string' => '店名を文字列で入力してください',
+            'shop.max' => '店名は191文字以内で入力してください',
             'area_id.required' => 'エリアを選択してください',
             'area_id.numeric' => 'エリアを選択してください',
             'area_id.between' => 'エリアを選択してください',

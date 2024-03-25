@@ -17,6 +17,11 @@ class Shop extends Model
         'img',
     ];
 
+    public function product()
+    {
+        return $this->hasMany(Product::class);
+    }
+
     public function owner()
     {
         return $this->belongsTo(Owner::class);

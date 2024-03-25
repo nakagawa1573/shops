@@ -65,7 +65,7 @@
                             Home
                         </a>
                     </p>
-                    <form class="modal__logout" action="/owner/logout" method="post">
+                    <form class="modal__logout" action="/logout" method="post">
                         @csrf
                         <button type="submit">
                             Logout
@@ -84,15 +84,20 @@
                             Home
                         </a>
                     </p>
-                    <form class="modal__logout" action="/admin/logout" method="post">
+                    <form class="modal__logout" action="/logout" method="post">
                         @csrf
                         <button type="submit">
                             Logout
                         </button>
                     </form>
-                    <p>
+                    <p id="registration__owner">
                         <a class="modal__link" href="/admin">
                             Registration for owner
+                        </a>
+                    </p>
+                    <p>
+                        <a class="modal__link" href="/admin/mail">
+                            Mail
                         </a>
                     </p>
                 </div>
