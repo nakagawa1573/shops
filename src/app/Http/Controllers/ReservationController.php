@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ReservationRequest;
 use App\Models\Product;
+use App\Models\Shop;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
 use Carbon\Carbon;
@@ -16,10 +17,11 @@ class ReservationController extends Controller
         return view('done');
     }
 
-    public function store(ReservationRequest $request)
+    public function store(ReservationRequest $request, Shop $shop)
     {
-        $reservation = $request->only(['shop_id', 'date', 'time', 'number']);
+        $reservation = $request->only(['date', 'time', 'number']);
         $reservation['user_id'] = Auth::user()->id;
+        $reservation['shop_id'] = $shop->id;
         $date = $request->date;
         $time = $request->time;
 
@@ -31,27 +33,28 @@ class ReservationController extends Controller
         }
     }
 
-    public function destroy(Request $request)
+    public function destroy(Reservation $reservation)
     {
-        Reservation::find($request->id)->delete();
+        $this->authorize('create', $reservation);
+        Reservation::find($reservation->id)->delete();
 
         return back();
     }
 
-    public function showUpdate(Request $request)
+    public function showUpdate(Reservation $reservation)
     {
+        $this->authorize('create', $reservation);
         session(['url' => route('mypage')]);
-        $reservation = Reservation::with('shop')->where('id', $request->id)->first();
         return view('updateReservation', compact('reservation'));
     }
 
-    public function update(ReservationRequest $request)
+    public function update(ReservationRequest $request, Reservation $reservation)
     {
+        $this->authorize('create', $reservation);
         $date = $request->date;
         $time = $request->time;
-        $data = Reservation::find($request->id);
-        if (!is_null($data) && $data->shop_id == $request->shop_id && Carbon::parse($date . ' ' . $time) > Carbon::now()) {
-            $data->update([
+        if (Carbon::parse($date . ' ' . $time) > Carbon::now()) {
+            $reservation->update([
                 'date' => $date,
                 'time' => $time,
                 'number' => $request->number,
@@ -65,14 +68,14 @@ class ReservationController extends Controller
 
     public function create(Reservation $reservation)
     {
-        $this->authorize('create', $reservation);
-        $priceId = Product::find($reservation->product_id)->product;
+        $this->authorize($reservation);
+        $product = Product::with('shop')->find($reservation->product_id);
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
         $response = $stripe->checkout->sessions->create(
             [
                 'line_items' => [
                     [
-                        'price' => $priceId,
+                        'price' => $product->product,
                         'quantity' => 1,
                     ],
                 ],
@@ -81,7 +84,7 @@ class ReservationController extends Controller
                 'success_url' => route('success', ['reservation' => $reservation->id]) . '?session_id={CHECKOUT_SESSION_ID}',
                 'cancel_url' => route('mypage'),
             ],
-            ['stripe_account' => 'acct_1OwaFqIAfOPo2c24'],
+            ['stripe_account' => $product->shop->stripe_account],
         );
         return redirect($response['url']);
     }

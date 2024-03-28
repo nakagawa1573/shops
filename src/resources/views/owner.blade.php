@@ -82,10 +82,9 @@
                 店舗情報の更新
             </h2>
             <article class="content__form">
-                <form action="/owner/update" method="post" enctype="multipart/form-data">
+                <form action="/owner/update/{{ $shopData->id }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('patch')
-                    <input type="hidden" name="id" value="{{ $shopData->id }}">
                     <div class="content__form--box" id="box__1">
                         <div class="content__form--item">
                             <h3>店名</h3>

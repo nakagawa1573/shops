@@ -11,7 +11,7 @@ use App\Models\Genre;
 use App\Models\Favorite;
 use Illuminate\Support\Facades\Auth;
 
-
+use function PHPUnit\Framework\isNull;
 
 class ShopController extends Controller
 {
@@ -56,14 +56,17 @@ class ShopController extends Controller
     public function back()
     {
         $url = session('url');
-
+        if (isNull($url)) {
+            return redirect('/');
+        }
         return redirect($url);
     }
 
-    public function store(EvaluationRequest $request)
+    public function store(EvaluationRequest $request, Shop $shop_id)
     {
-        $evaluations = $request->only(['shop_id', 'evaluation', 'comment']);
+        $evaluations = $request->only(['evaluation', 'comment']);
         $evaluations['user_id'] = Auth::user()->id;
+        $evaluations['shop_id'] = $shop_id->id;
         Evaluation::create($evaluations);
 
         return back();

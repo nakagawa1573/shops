@@ -134,28 +134,7 @@ body {
     margin-top: 0;
 }
 
-@media screen and (max-width:1025px) {
-
-    .header,
-    .modal__box--btn {
-        
-    }
-}
-
-@media screen and (max-width:768px) {
-
-    .header,
-    .modal__box--btn {
-       
-    }
-}
-
 @media screen and (max-width:425px) {
-
-    .header,
-    .modal__box--btn {
-        
-    }
 
     .modal__box--link {
         margin-top: 100px;

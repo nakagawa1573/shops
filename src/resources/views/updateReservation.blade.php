@@ -21,11 +21,9 @@
                     {{ $errors->first() ?: session('message') }}
                 </p>
             @endif
-            <form class="reservation__form" action="/reservation/change" method="post">
+            <form class="reservation__form" action="/reservation/update/{{$reservation->id}}" method="post">
                 @csrf
                 @method('PATCH')
-                <input type="hidden" name="shop_id" value="{{ $reservation->shop_id }}">
-                <input type="hidden" name="id" value="{{ $reservation->id }}">
                 <input class="reservation__form--date" type="date" name="date" id="date"
                     value="{{ $reservation->date }}">
                 <div class="wrapper__input">

@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Http\Requests\FavoriteRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Favorite;
 use App\Models\User;
+use App\Models\Shop;
 
 
 class UserController extends Controller
@@ -21,21 +19,20 @@ class UserController extends Controller
         return view('mypage', compact('user', 'favorites', 'reservations'));
     }
 
-    public function store(FavoriteRequest $request)
+    public function store(Shop $shop)
     {
-        $user = Auth::user();
-        $favorite = $request->only('shop_id');
-        $favorite['user_id'] = $user->id;
+        $favorite['shop_id'] = $shop->id;
+        $favorite['user_id'] = Auth::user()->id;
         Favorite::create($favorite);
 
         return back();
     }
 
-    public function destroy(Request $request)
+    public function destroy(Shop $shop)
     {
         Favorite::where([
             ['user_id', '=', Auth::user()->id],
-            ['shop_id', '=', $request->shop_id],
+            ['shop_id', '=', $shop->id],
         ])->delete();
 
         return back();

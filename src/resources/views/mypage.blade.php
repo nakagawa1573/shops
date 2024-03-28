@@ -32,17 +32,15 @@
                                         </p>
                                     </div>
                                     <div id="box__2">
-                                        <form action="/reservation/update" method="get">
+                                        <form action="/reservation/update/{{ $reservation->pivot->id }}" method="get">
                                             @csrf
-                                            <input type="hidden" name="id" value="{{ $reservation->pivot->id }}">
                                             <button class="reservation__change">
                                                 変更
                                             </button>
                                         </form>
-                                        <form action="/reservation/delete" method="post">
+                                        <form action="/reservation/{{$reservation->pivot->id}}/delete" method="post">
                                             @csrf
                                             @method('delete')
-                                            <input type="hidden" name="id" value="{{ $reservation->pivot->id }}">
                                             <button class="reservation__cancel--btn" type="submit">
                                                 <img class="reservation__cancel--img" src="{{ asset('storage/cross.svg') }}"
                                                     alt="">
@@ -169,7 +167,7 @@
                                                 詳しくみる
                                             </button>
                                         </form>
-                                        <form class="shop__form--favorite" action="/favorite/delete" method="post">
+                                        <form class="shop__form--favorite" action="/favorite/{{$favorite->id}}/delete" method="post">
                                             @csrf
                                             @method('delete')
                                             <input type="hidden" name="shop_id" value="{{ $favorite->id }}">

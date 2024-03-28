@@ -2,12 +2,14 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Models\User;
 
 class LoginTest extends TestCase
 {
+    use DatabaseTransactions;
     /**
      * A basic feature test example.
      */
@@ -70,4 +72,17 @@ class LoginTest extends TestCase
         ]);
         $response->assertSessionHasErrors();
     }
+
+    public function testLoginChange()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user)
+        ->post('/login', [
+            'email' => 'owner@test.com',
+            'password' => '123456789',
+        ]);
+        $this->assertFalse(Auth::guard('web')->check());
+        $this->assertTrue(Auth::guard('owners')->check());
+    }
+
 }

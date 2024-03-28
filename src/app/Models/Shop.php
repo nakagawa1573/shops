@@ -12,6 +12,7 @@ class Shop extends Model
     protected $fillable = [
         'area_id',
         'owner_id',
+        'stripe_account',
         'shop',
         'overview',
         'img',

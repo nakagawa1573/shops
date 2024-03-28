@@ -7,7 +7,6 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthenticatedSessionController;
 use App\Http\Controllers\OwnerController;
-use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -35,16 +34,16 @@ Route::get('/register/verify/{id}/{hash}', [RegisterController::class, 'confirm'
 Route::post('/register/verify/send', [RegisterController::class, 'send'])->middleware(['auth:web,owners', 'throttle:6,1'])->name('verification.send');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::post('/reservation', [ReservationController::class, 'store']);
-    Route::delete('/reservation/delete', [ReservationController::class, 'destroy']);
-    Route::get('/reservation/update', [ReservationController::class, 'showUpdate']);
-    Route::patch('/reservation/update', [ReservationController::class, 'update']);
+    Route::post('/reservation/{shop}', [ReservationController::class, 'store']);
+    Route::delete('/reservation/delete/{reservation}', [ReservationController::class, 'destroy']);
+    Route::get('/reservation/update/{reservation}', [ReservationController::class, 'showUpdate']);
+    Route::patch('/reservation/update/{reservation}', [ReservationController::class, 'update']);
     Route::get('/reservation/payment/{reservation}', [ReservationController::class, 'create']);
     Route::get('/reservation/payment/{reservation}/success', [ReservationController::class, 'success'])->name('success');
     Route::get('/done', [ReservationController::class, 'showDone'])->name('cancel');
     Route::get('/mypage', [UserController::class, 'index'])->name('mypage');
-    Route::post('/favorite', [UserController::class, 'store']);
-    Route::delete('/favorite/delete', [UserController::class, 'destroy']);
+    Route::post('/favorite/{shop}', [UserController::class, 'store']);
+    Route::delete('/favorite/{shop}/delete', [UserController::class, 'destroy']);
     Route::post('/detail/{shop_id}/evaluation', [ShopController::class, 'store']);
 });
 
@@ -58,7 +57,7 @@ Route::middleware('auth:admins')->group(function() {
 Route::middleware(['auth:owners', 'verified'])->group(function () {
     Route::get('/owner', [OwnerController::class, 'index']);
     Route::post('/owner', [OwnerController::class, 'store']);
-    Route::patch('/owner/update', [OwnerController::class, 'update']);
+    Route::patch('/owner/update/{shop}', [OwnerController::class, 'update']);
 });
 
 

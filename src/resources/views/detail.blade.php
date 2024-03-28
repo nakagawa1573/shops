@@ -46,9 +46,8 @@
                         {{ $errors->first() ?: session('message') }}
                     </p>
                 @endif
-                <form class="reservation__form" action="/reservation" method="post">
+                <form class="reservation__form" action="/reservation/{{$shop->id}}" method="post">
                     @csrf
-                    <input type="hidden" name="shop_id" value="{{ $shop->id }}">
                     <input class="reservation__form--date" type="date" name="date" id="date"
                         value="{{ old('date') ?: date('Y-m-d') }}">
                     <div class="wrapper__input">
@@ -229,7 +228,6 @@
             @endforeach
         </article>
         <article class="evaluation__form">
-            {{-- {{dd($errors)}} --}}
             @if ($errors->has('shop_id') || $errors->has('evaluation') || $errors->has('comment'))
                 <p class="error__evaluation">
                     {{ $errors->first() ?: session('message') }}
@@ -254,7 +252,6 @@
             </div>
             <form action="/detail/{{ $shop->id }}/evaluation" method="post">
                 @csrf
-                <input type="hidden" name="shop_id" value="{{ $shop->id }}">
                 <input type="hidden" id="evaluation" name="evaluation" value="">
                 <textarea class="evaluation__comment" name="comment" cols="20" rows="10" placeholder="コメントを入力してください" >{{old('comment')}}</textarea>
                 <button class="evaluation__comment__btn" type="submit">

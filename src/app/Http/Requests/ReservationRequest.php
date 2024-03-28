@@ -24,7 +24,6 @@ class ReservationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'shop_id' => ['required', 'numeric'],
             'date' => ['required', 'date', new DateFields],
             'time' => ['required', 'date_format:H:i'],
             'number' => ['required', new NumberFields ],
@@ -34,8 +33,6 @@ class ReservationRequest extends FormRequest
     public function messages()
     {
         return[
-            'shop_id.required' => '予約手続きに失敗しました',
-            'shop_id.numeric' => '予約手続きに失敗しました',
             'date.required' => '予約手続きに失敗しました',
             'date.date' => '予約手続きに失敗しました',
             'time.required' => '予約手続きに失敗しました',

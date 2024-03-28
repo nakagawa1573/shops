@@ -31,7 +31,7 @@ class OwnersTableSeeder extends Seeder
             ];
             DB::table('owners')->insert($param);
         }
-        
+
         DB::table('owners')->insert([
             'name' => fake()->name(),
             'email' => 'owner@test.com',

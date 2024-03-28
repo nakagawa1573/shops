@@ -72,14 +72,9 @@ class OwnerController extends Controller
         return redirect('/owner');
     }
 
-    public function update(CreateShopRequest $request)
+    public function update(CreateShopRequest $request, Shop $shop)
     {
-        $shop = Shop::with('genre')->where('id', $request->id)->first();
-
-        if (Auth::guard('owners')->user()->id !== $shop->owner_id) {
-            return redirect('/owner');
-        }
-
+        $this->authorize($shop);
         $shopData = $request->only(['shop', 'area_id', 'overview']);
         $img = $request->file('img');
         if ($img) {

@@ -2,11 +2,11 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Models\User;
+use App\Models\Shop;
+use App\Models\Favorite;
 
 class FavoriteTest extends TestCase
 {
@@ -15,16 +15,53 @@ class FavoriteTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function testErrorShopIdNull(): void
+    public function testFavoriteSuccess(): void
     {
         $user = User::factory()->create();
-
-        $this->actingAs($user)->post('/favorite', [
-            'shop_id' => '',
+        $shop = Shop::inRandomOrder()->first();
+        $this->actingAs($user)->post('/favorite/'. $shop->id);
+        $this->assertDatabaseHas('favorites', [
+            'user_id' => $user->id,
+            'shop_id' => $shop->id,
         ]);
+    }
 
+    public function testFavoriteNotLogin(): void
+    {
+        $user = User::factory()->create();
+        $shop = Shop::inRandomOrder()->first();
+        $this->post('/favorite/' . $shop->id);
         $this->assertDatabaseMissing('favorites', [
             'user_id' => $user->id,
+            'shop_id' => $shop->id,
+        ]);
+    }
+
+    public function testFavoriteDeleteSuccess(): void
+    {
+        $user = User::factory()->create();
+        $shop = Shop::inRandomOrder()->first();
+        $favorite = Favorite::create([
+            'user_id' => $user->id,
+            'shop_id' => $shop->id,
+        ]);
+        $this->actingAs($user)->post('/favorite/'. $shop->id. '/delete');
+        $this->assertDatabaseHas('favorites', [
+            'id' => $favorite->id,
+        ]);
+    }
+
+    public function testFavoriteDeleteNotLogin(): void
+    {
+        $user = User::factory()->create();
+        $shop = Shop::inRandomOrder()->first();
+        $favorite = Favorite::create([
+            'user_id' => $user->id,
+            'shop_id' => $shop->id,
+        ]);
+        $this->post('/favorite/' . $shop->id . '/delete');
+        $this->assertDatabaseHas('favorites', [
+            'id' => $favorite->id,
         ]);
     }
 }

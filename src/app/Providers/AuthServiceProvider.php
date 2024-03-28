@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Reservation;
+use App\Models\Shop;
 use App\Policies\ReservationPolicy;
+use App\Policies\ShopPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -17,6 +19,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Reservation::class => ReservationPolicy::class,
+        Shop::class => ShopPolicy::class,
     ];
 
     /**

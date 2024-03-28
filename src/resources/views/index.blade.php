@@ -119,18 +119,16 @@
                                 }
                             @endphp
                             @if ($flag)
-                                <form class="shop__form--favorite" action="/favorite/delete" method="post">
+                                <form class="shop__form--favorite" action="/favorite/{{$shop->id}}/delete" method="post">
                                     @csrf
                                     @method('delete')
-                                    <input type="hidden" name="shop_id" value="{{ $shop->id }}">
                                     <button type="submit">
                                         <div class="heart_favorite"></div>
                                     </button>
                                 </form>
                             @else
-                                <form class="shop__form--favorite" action="/favorite" method="post">
+                                <form class="shop__form--favorite" action="/favorite/{{$shop->id}}" method="post">
                                     @csrf
-                                    <input type="hidden" name="shop_id" value="{{ $shop->id }}">
                                     <button type="submit">
                                         <div class="heart"></div>
                                     </button>

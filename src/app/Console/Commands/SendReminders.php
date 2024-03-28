@@ -29,7 +29,7 @@ class SendReminders extends Command
      */
     public function handle()
     {
-        $reservations = Reservation::with('user', 'shop')->where('date', Carbon::now()->format('Y-m-d'))->get();
+        $reservations = Reservation::with('user', 'shop')->whereDate('date', Carbon::now()->format('Y-m-d'))->get();
         foreach ($reservations as $reservation) {
             $name = $reservation->user->name;
             $shop = $reservation->shop->shop;

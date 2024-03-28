@@ -19,4 +19,5 @@ class ReservationPolicy
     {
         return $user->id === $reservation->user_id;
     }
+
 }

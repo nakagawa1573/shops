@@ -43,6 +43,8 @@ class CreateShopRequest extends FormRequest
             'genre_id.required' => 'ジャンルを選択してください',
             'genre_id.array' => 'ジャンルを選択してください',
             'genre_id.max' => 'ジャンルは3個まで選択できます',
+            'genre_id.*.numeric' => 'ジャンルを選択してください',
+            'genre_id.*.between' => 'ジャンルを選択してください',
             'overview.required' => '店舗概要を入力してください',
             'overview.max' => '店舗概要は200文字以内で入力してください',
             'img.image' => '画像ファイルを選択してください',

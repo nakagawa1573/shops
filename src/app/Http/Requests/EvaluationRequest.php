@@ -22,7 +22,6 @@ class EvaluationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'shop_id' => ['required', 'numeric'],
             'evaluation' => ['required', 'numeric','between:1,5'],
             'comment' => ['required', 'string', 'max:200'],
         ];
@@ -31,8 +30,6 @@ class EvaluationRequest extends FormRequest
     public function messages()
     {
         return [
-            'shop_id.required' => '投稿に失敗しました',
-            'shop_id.numeric' => '投稿に失敗しました',
             'evaluation.required' => '★の数を指定してください',
             'evaluation.numeric' => '投稿に失敗しました',
             'evaluation.between' => '投稿に失敗しました',
