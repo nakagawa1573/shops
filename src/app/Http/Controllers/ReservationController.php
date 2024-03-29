@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use App\Models\Reservation;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Cashier\Cashier;
 
 class ReservationController extends Controller
 {
