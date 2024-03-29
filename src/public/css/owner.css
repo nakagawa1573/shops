@@ -1,0 +1,292 @@
+.content {
+    width: 1000px;
+    margin: 30px auto 0;
+}
+
+.content__form>form {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.content__form--item {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.content__form--item>h3 {
+    margin: 0;
+    width: 140px;
+}
+
+#name {
+    padding-left: 10px;
+}
+
+#area {
+    appearance: none;
+    padding-left: 10px;
+}
+
+fieldset {
+    width: 400px;
+}
+
+legend {
+    text-align: center;
+}
+
+.genre__wrapper {
+    display: grid;
+    grid-template-columns: repeat(18, 1fr);
+}
+
+.genre__item {
+    grid-column: auto/span 6;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#name {
+    height: 30px;
+}
+
+#area__wrapper {
+    height: 30px;
+    position: relative;
+}
+
+#area__wrapper::after {
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 9px 9px 0 9px;
+    border-color: #E2E2E2 transparent transparent transparent;
+    position: absolute;
+    top: 50%;
+    right: 9%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+#area {
+    height: 100%;
+}
+
+#overview {
+    resize: none;
+    width: 350px;
+    height: 230px;
+    margin-bottom: 50px;
+    padding: 10px 10px;
+}
+
+#btn {
+    background-color: #3560F6;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    padding: 7px 15px;
+    font-size: 14px;
+    display: block;
+    margin: 0 0 0 auto;
+}
+
+#img {
+    background-color: #fff;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 6px;
+    padding: 0 10px;
+    width: 350px;
+}
+
+#img::-webkit-file-upload-button {
+    border: none;
+    background-color: #fff;
+}
+
+#name,
+#area {
+    width: 200px;
+}
+
+#name,
+#area,
+#overview {
+    border: none;
+    border-radius: 6px;
+}
+
+#area,
+.genre__item--check,
+.genre__item>label,
+#overview,
+#img,
+#img::-webkit-file-upload-button,
+#btn {
+    cursor: pointer;
+}
+
+.error {
+    margin-left: 140px;
+}
+
+.content__reservation {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 850px;
+    margin: 0 auto;
+}
+
+.content__reservation--form {
+    width: 600px;
+    height: 40px;
+    margin: 0 auto;
+    margin-bottom: 50px;
+}
+
+.content__reservation--form>form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#filter {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    padding-left: 8px;
+}
+
+#search {
+    width: 70%;
+}
+
+#search__btn {
+    background-color: #3560F6;
+    color: #fff;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+#filter,
+#search__btn {
+    width: 90px;
+    cursor: pointer;
+}
+
+#filter,
+#date,
+#search,
+#search__btn {
+    height: 100%;
+    border: none;
+}
+
+.content__reservation--item {
+    width: 400px;
+}
+
+.content__reservation--table {
+    width: 100%;
+    background-color: #fff;
+    margin-bottom: 30px;
+    border-radius: 6px;
+}
+
+.content__reservation--row:first-child>th {
+    padding-top: 5px;
+    width: 100px;
+}
+
+.content__reservation--row:last-child>th {
+    padding-bottom: 5px;
+}
+
+.content__reservation--header {
+    text-align: left;
+    padding-left: 10px;
+}
+
+#reservation__id {
+    width: 75%;
+    padding-top: 5px;
+}
+
+#reservation__pay{
+    padding-bottom: 5px;
+}
+
+.error {
+    color: red;
+}
+
+@media screen and (max-width:768px) {
+
+    .header,
+    .modal__box--btn {
+        width: 738px;
+    }
+
+    .content {
+        width: 500px;
+    }
+
+    .content__ttl {
+        width: 100%;
+        margin: 20px auto;
+    }
+
+    .content__form {
+        width: 500px;
+        margin: 0 auto;
+    }
+
+    .content__form>form {
+        display: block;
+    }
+
+    #box__2 {
+        margin-top: 30px;
+    }
+
+    .content__reservation {
+        display: block;
+        width: 500px;
+        margin: 0 auto;
+    }
+
+    .content__reservation--form {
+        width: 100%;
+    }
+
+    .content__reservation--item {
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width:425px) {
+
+    .header,
+    .modal__box--btn {
+        width: 350px;
+        display: block;
+    }
+
+
+    .content,
+    .content__form,
+    .content__form--item,
+    fieldset,
+    .content__reservation,
+    .content__reservation--item {
+        width: 350px;
+    }
+
+    #reservation__id {
+        width: 71%;
+    }
+}

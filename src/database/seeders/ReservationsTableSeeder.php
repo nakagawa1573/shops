@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Models\Reservation;
+use Carbon\Carbon;
 
 class ReservationsTableSeeder extends Seeder
 {
@@ -17,7 +17,8 @@ class ReservationsTableSeeder extends Seeder
         $param = [
             'user_id' => 1,
             'shop_id' => 1,
-            'date' => '2024-03-10',
+            'product_id' => 1,
+            'date' => now()->addDay(),
             'time' => '12:30',
             'number' => '1',
             'created_at' => now(),
@@ -28,7 +29,8 @@ class ReservationsTableSeeder extends Seeder
         $param = [
             'user_id' => 1,
             'shop_id' => 2,
-            'date' => '2024-03-11',
+            'product_id' => null,
+            'date' => now()->addDay(),
             'time' => '12:30',
             'number' => '1',
             'created_at' => now(),
@@ -39,7 +41,8 @@ class ReservationsTableSeeder extends Seeder
         $param = [
             'user_id' => 1,
             'shop_id' => 3,
-            'date' => '2024-03-12',
+            'product_id' => null,
+            'date' => now()->addDay(),
             'time' => '12:30',
             'number' => '1',
             'created_at' => now(),

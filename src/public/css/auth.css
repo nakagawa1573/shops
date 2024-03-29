@@ -49,9 +49,51 @@
     color: #fff;
     padding: 7px 15px;
     font-size: 14px;
+    cursor: pointer;
 }
 
-.error{
+.error {
     color: red;
     font-size: 14px;
+    margin: 0;
+}
+
+.owner__wrapper {
+    width: 400px;
+    margin: 0 auto;
+    margin-top: 5px;
+    text-align: right;
+}
+
+.owner__link {
+    color: #3560F6;
+    text-decoration: none;
+}
+
+@media screen and (max-width:1439px) {
+
+    .header,
+    .modal__box--btn {
+        width: 970px;
+    }
+}
+
+@media screen and (max-width:768px) {
+
+    .header,
+    .modal__box--btn {
+        width: 714px;
+    }
+}
+
+@media screen and (max-width:425px) {
+
+    .header,
+    .modal__box--btn {
+        width: 350px;
+    }
+
+    .content{
+        width: 350px;
+    }
 }

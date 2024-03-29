@@ -5,7 +5,7 @@ body {
 .header {
     display: flex;
     justify-content: space-between;
-    width: 1360px;
+    width: 1342px;
     margin: 50px auto 0 auto;
 }
 
@@ -64,10 +64,9 @@ body {
     bottom: 0;
     left: 0;
     transition: all .3s;
-}
-
-.modal {
+    overflow: hidden;
     background-color: #fff;
+    position: fixed;
 }
 
 .modal:target {
@@ -103,7 +102,7 @@ body {
 }
 
 .modal__box--btn {
-    width: 1360px;
+    max-width: 1342px;
     margin: 0 auto;
     padding-top: 50px;
 }
@@ -127,4 +126,17 @@ body {
     background-color: transparent;
     border: none;
     cursor: pointer;
+    height: 48px;
+    margin-bottom: 16px;
+}
+
+.modal__box--link>p {
+    margin-top: 0;
+}
+
+@media screen and (max-width:425px) {
+
+    .modal__box--link {
+        margin-top: 100px;
+    }
 }

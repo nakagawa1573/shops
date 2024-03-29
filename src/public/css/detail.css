@@ -1,12 +1,13 @@
-.content {
-    width: 1360px;
+.content,
+.evaluation {
+    width: 1342px;
     margin: 50px auto 0;
     display: flex;
     justify-content: space-between;
 }
 
 .detail {
-    width: 45%;
+    width: 612px;
 }
 
 .detail__box {
@@ -57,7 +58,7 @@
 }
 
 .wrapper {
-    width: 45%;
+    width: 612px;
     position: relative;
 }
 
@@ -67,7 +68,6 @@
     padding-top: 20px;
     background-color: #3560F6;
     border-radius: 6px;
-    position: relative;
     position: absolute;
     top: -15%;
 }
@@ -94,7 +94,7 @@
 }
 
 .reservation__form--date {
-    width: 30%;
+    width: 171px;
     position: relative;
     cursor: pointer;
 }
@@ -112,13 +112,13 @@
     cursor: pointer;
 }
 
-.wrapper__input{
+.wrapper__input {
     position: relative;
     height: 40px;
     margin-top: 20px;
 }
 
-.wrapper__input::before{
+.wrapper__input::before {
     content: "";
     width: 0;
     height: 0;
@@ -150,7 +150,7 @@
 }
 
 .form__result--item:first-child {
-    width: 20%;
+    width: 100px;
 }
 
 .form__btn {
@@ -167,7 +167,200 @@
     cursor: pointer;
 }
 
-.error{
+.error {
     color: #fff;
     padding-left: 20px;
+}
+
+.evaluation__total {
+    margin-bottom: 15px;
+    display: flex;
+}
+
+.evaluation__total--number {
+    font-size: 52px;
+    margin: 0;
+    height: 52px;
+    line-height: 52px;
+}
+
+.evaluation__total--star {
+    height: 52px;
+    line-height: 65px;
+    margin: 0 10px;
+    position: relative;
+}
+
+.total__star,
+.total__star--check {
+    font-size: 30px;
+    height: 100%;
+}
+
+.total__star--check {
+    position: absolute;
+    top: 0;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.total__star,
+.evaluation__star {
+    color: #dededc;
+}
+
+.total__star--check,
+.evaluation__star--check {
+    color: #fbbc04;
+}
+
+.evaluation__total--count {
+    font-size: 20px;
+    margin: 0;
+    height: 52px;
+    line-height: 65px;
+}
+
+.comment__item {
+    width: 400px;
+    background-color: #fff;
+    border-radius: 6px;
+    padding: 20px 20px;
+    margin-bottom: 40px;
+}
+
+.star__box {
+    height: 20px;
+    display: flex;
+    position: relative;
+}
+
+.star {
+    font-size: 20px;
+    color: #dededc;
+    height: 20px;
+    line-height: 20px;
+}
+
+.star__check--group {
+    position: absolute;
+    display: flex;
+}
+
+.star__check {
+    font-size: 20px;
+    height: 20px;
+    line-height: 20px;
+    color: #fbbc04;
+}
+
+.user {
+    margin: 0;
+    font-size: 20px;
+}
+
+.evaluation__stars {
+    display: flex;
+    justify-content: center;
+}
+
+.evaluation__star,
+.evaluation__star--check {
+    border: none;
+    padding: 0;
+    font-size: 50px;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.evaluation__comment {
+    border: none;
+    border-radius: 6px;
+    resize: none;
+    font-size: 16px;
+    width: 520px;
+    padding: 20px 10px;
+    margin-top: 30px;
+}
+
+.evaluation__comment__btn {
+    font-size: 16px;
+    width: 80px;
+    height: 45px;
+    background-color: #003FF5;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    display: block;
+    margin: 20px 0 40px auto;
+    cursor: pointer;
+}
+
+.error__evaluation {
+    text-align: center;
+}
+
+@media screen and (max-width:768px) {
+
+    .header,
+    .modal__box--btn {
+        width: 612px;
+        margin-left: 78px;
+    }
+
+    .content,
+    .evaluation {
+        width: 768px;
+        display: grid;
+        place-items: center;
+        grid-template-columns: 768px;
+    }
+
+    .reservation {
+        position: static;
+        height: 600px;
+    }
+}
+
+@media screen and (max-width:425px) {
+
+    .header,
+    .modal__box--btn {
+        width: 360px;
+        margin-left: auto;
+    }
+
+    .content,
+    .evaluation {
+        width: 360px;
+        display: grid;
+        place-items: center;
+        grid-template-columns: 360px;
+    }
+
+    .reservation {
+        margin: 0 auto;
+        height: 500px;
+    }
+
+    .reservation,
+    .form__btn {
+        width: 360px;
+    }
+
+    .detail {
+        width: 360px;
+    }
+
+    .wrapper {
+        width: 360px;
+    }
+
+    .comment__item{
+        width: 350px;
+    }
+
+    .evaluation__comment {
+        width: 360px;
+    }
 }

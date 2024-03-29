@@ -1,6 +1,5 @@
 .search {
-    width: 50%;
-    margin-right: 10px;
+    width: 668px;
 }
 
 .search__form,
@@ -67,17 +66,17 @@
 }
 
 .content {
-    width: 1360px;
+    width: 1350px;
     margin: 30px auto 0;
     display: grid;
+    place-items: center;
     grid-template-columns: repeat(20, 1fr);
-    flex-wrap: wrap;
 }
 
 .content__item {
     background-color: #fff;
     width: 330px;
-    height: 300px;
+    height: 320px;
     border-radius: 6px;
     box-shadow: 2px 2px 4px #959595;
     margin-bottom: 30px;
@@ -99,6 +98,7 @@
 
 .shop__txt {
     padding: 20px;
+    padding-bottom: 0;
 }
 
 .shop__name {
@@ -107,6 +107,7 @@
 
 .shop__category {
     display: flex;
+    flex-wrap: wrap;
     justify-content: left;
     padding-left: 0;
     list-style: none;
@@ -121,7 +122,7 @@
 .shop__form {
     display: flex;
     justify-content: space-between;
-    margin-top: 15px;
+    margin-top: 5px;
 }
 
 .shop__form--detail>button {
@@ -183,4 +184,93 @@
 .heart_favorite::after {
     transform: rotate(45deg);
     right: 14%;
+}
+
+.shop__evaluation {
+    position: relative;
+}
+
+.total__star,
+.total__star--check {
+    font-size: 20px;
+}
+
+.total__star {
+    color: #dededc;
+}
+
+.total__star--check {
+    color: #fbbc04;
+    position: absolute;
+    white-space: nowrap;
+    overflow: hidden;
+    top: 0;
+}
+
+#count {
+    font-size: 16px;
+    color: #959595;
+}
+
+@media screen and (max-width:1439px) {
+    .content {
+        grid-template-columns: repeat(15, 1fr);
+        width: 1024px;
+    }
+
+    .header,
+    .modal__box--btn {
+        width: 1024px;
+    }
+}
+
+@media screen and (max-width:768px) {
+
+    .header,
+    .modal__box--btn {
+        width: 714px;
+    }
+
+    .search {
+        width: 512px;
+    }
+
+    .content {
+        width: 714px;
+        grid-template-columns: repeat(10, 1fr);
+    }
+}
+
+@media screen and (max-width:425px) {
+
+    .header,
+    .modal__box--btn {
+        width: 350px;
+        display: block;
+    }
+
+    .search {
+        width: 100%;
+        margin: 0 auto;
+        margin-top: 30px;
+    }
+
+    .search__word {
+        width: 43%;
+    }
+
+    .search__area,
+    .search__genre {
+        width: 23%;
+    }
+
+    .search__btn {
+        padding: 0;
+        width: 18px;
+    }
+
+    .content {
+        grid-template-columns: none;
+        width: 350px;
+    }
 }

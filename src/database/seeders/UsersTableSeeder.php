@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +17,7 @@ class UsersTableSeeder extends Seeder
         $param = [
             'name' => '山田太郎',
             'email' => 'test@test.com',
+            'email_verified_at' => now(),
             'password' => Hash::make(123456789),
             'created_at' => now(),
             'updated_at' => now(),

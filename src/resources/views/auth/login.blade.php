@@ -9,7 +9,7 @@
             Login
         </p>
         <div class="content__auth">
-            <form class="auth__form" action="" method="post">
+            <form class="auth__form" action="/login" method="post">
                 @csrf
                 <p class="error">
                     @error('email')

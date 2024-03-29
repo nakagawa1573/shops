@@ -13,8 +13,8 @@
                         All area
                     </option>
                     @foreach ($areas as $area)
-                        <option value="{{$area->id}}" {{$area->id == $area_id ? 'selected' : ''}}>
-                            {{$area->area}}
+                        <option value="{{ $area->id }}" {{ $area->id == $area_id ? 'selected' : '' }}>
+                            {{ $area->area }}
                         </option>
                     @endforeach
                 </select>
@@ -25,8 +25,8 @@
                         All genre
                     </option>
                     @foreach ($genres as $genre)
-                        <option value="{{$genre->id}}" {{$genre->id == $genre_id ? 'selected' : ''}}>
-                            {{$genre->genre}}
+                        <option value="{{ $genre->id }}" {{ $genre->id == $genre_id ? 'selected' : '' }}>
+                            {{ $genre->genre }}
                         </option>
                     @endforeach
                 </select>
@@ -35,7 +35,8 @@
                 <button class="search__btn" type="submit">
                     <img src="{{ asset('storage/search.svg') }}" alt="search">
                 </button>
-                <input class="search__word" type="text" name="keyword" value="{{$keyword ?? ''}}" placeholder="Search ...">
+                <input class="search__word" type="text" name="keyword" value="{{ $keyword ?? '' }}"
+                    placeholder="Search ...">
             </div>
         </form>
     </section>
@@ -52,14 +53,50 @@
                     <h2 class="shop__name">
                         {{ $shop->shop }}
                     </h2>
+                    <div class="shop__evaluation">
+                        @if ($shop->evaluation->count() !== 0)
+                            @php
+                                $countDate = $shop->evaluation->count();
+                                $count = 0;
+                                foreach ($shop->evaluation as $evaluation) {
+                                    $count += $evaluation->pivot->evaluation;
+                                }
+                                $average = number_format($count / $countDate, 1);
+                                $stars = number_format($average * 2) * 10;
+                            @endphp
+                        @else
+                            @php
+                                $stars = 0;
+                                $countDate = 0;
+                            @endphp
+                        @endif
+                        <div class="total__star">
+                            ★★★★★ <span id="count">({{ $countDate }})</span>
+                        </div>
+                        <div class="total__star--check" style="width: {{ $stars ?? 0 }}px">
+                            ★★★★★
+                        </div>
+                    </div>
                     <ul class="shop__category">
                         <li class="shop__category--item">
                             #{{ $shop->area->area }}
                         </li>
+                        @php
+                            $count = 0;
+                        @endphp
                         @foreach ($shop->genre as $genre)
                             <li class="shop__category--item">
                                 #{{ $genre->genre }}
                             </li>
+                            @php
+                                $count++;
+                            @endphp
+                            @if ($count == 2)
+                                <li class="shop__category--item">
+                                    ...
+                                </li>
+                            @break
+                            @endif
                         @endforeach
                     </ul>
                     <div class="shop__form">
@@ -82,20 +119,16 @@
                                 }
                             @endphp
                             @if ($flag)
-                                <form class="shop__form--favorite" action="/favorite/delete" method="post">
+                                <form class="shop__form--favorite" action="/favorite/{{$shop->id}}/delete" method="post">
                                     @csrf
                                     @method('delete')
-                                    <input type="hidden" name="shop_id" value="{{ $shop->id }}">
-                                    <input type="hidden" name="user_id" value="{{ $user->id }}">
                                     <button type="submit">
                                         <div class="heart_favorite"></div>
                                     </button>
                                 </form>
                             @else
-                                <form class="shop__form--favorite" action="/favorite" method="post">
+                                <form class="shop__form--favorite" action="/favorite/{{$shop->id}}" method="post">
                                     @csrf
-                                    <input type="hidden" name="shop_id" value="{{ $shop->id }}">
-                                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                                     <button type="submit">
                                         <div class="heart"></div>
                                     </button>
