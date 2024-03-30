@@ -18,7 +18,7 @@
                 </p>
                 <div class="auth__form--item">
                     <img src="{{ asset('storage/mail.svg') }}" alt="mail" width="25px">
-                    <input class="auth__form--item__input" type="text" name="email" placeholder="Email">
+                    <input class="auth__form--item__input" type="text" name="email" placeholder="Email" value="">
                 </div>
                 <p class="error">
                     @error('password')
