@@ -29,7 +29,7 @@ class ReservationsTableSeeder extends Seeder
         $param = [
             'user_id' => 1,
             'shop_id' => 2,
-            'product_id' => null,
+            'product_id' => 1,
             'date' => now()->addDay(),
             'time' => '12:30',
             'number' => '1',
@@ -41,7 +41,7 @@ class ReservationsTableSeeder extends Seeder
         $param = [
             'user_id' => 1,
             'shop_id' => 3,
-            'product_id' => null,
+            'product_id' => 1,
             'date' => now()->addDay(),
             'time' => '12:30',
             'number' => '1',
