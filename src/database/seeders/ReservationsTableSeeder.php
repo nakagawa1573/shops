@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Models\Reservation;
-use Carbon\Carbon;
 
 class ReservationsTableSeeder extends Seeder
 {
