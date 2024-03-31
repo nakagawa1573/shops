@@ -6,6 +6,7 @@
 
 ## アプリケーションURL
 - 開発環境：http://localhost/
+- 本番環境：http://18.182.80.119/
 - phpMyAdmin：http://localhost:8080/
 - MailHog：http://localhost:8025/
 
@@ -371,17 +372,24 @@ Git , GitHub
 
 ## 環境構築
 ### Dockerビルド
-1. git clone git@github.com:nakagawa1573/shops.git
-2. docker-compose up -d --build
+1.         git clone git@github.com:nakagawa1573/shops.git
+2.         docker-compose up -d --build
 
 ＊MySQLは、OSによって起動しない場合があるのでそれぞれのPCに合わせて docker-compose.ymlファイルを編集してください。
 
 ### Laravel環境構築
-1. docker-compose exec php bash
-2. composer install
+1.         docker-compose exec php bash
+2.         composer install
 3. .env.exampleファイルから.envを作成
 4. .envを編集
 
+        DB_CONNECTION=mysql
+        DB_HOST=mysql
+        DB_PORT=3306
+        DB_DATABASE=laravel_db
+        DB_USERNAME=laravel_user
+        DB_PASSWORD=laravel_pass
+   
         MAIL_MAILER=smtp
         MAIL_HOST=mailhog
         MAIL_PORT=1025
@@ -394,6 +402,7 @@ Git , GitHub
         STRIPE_KEY=pk_test_51OwaF1Ej4thKGBpLnvdTzxna6urrkUm2AqtJLfvgpmwcnn9elUJORyof8iPnPtHQzs6aqgBuRaHLrG5V2KVxXSCl00umi16ofV
 
         STRIPE_SECRET=sk_test_51OwaF1Ej4thKGBpLFeajzbDVcZ0zt6FdKp8OLozLYyCqbyslLTN2pMYKW85yr9VgMIxJSQfl7C0FasgZLVYVyp2C00jdTkefhY
-1. php artisan key:generate
-2. php artisan migrate
-3. php artisan db:seed
+1.         php artisan key:generate
+2.         php artisan migrate
+3.         php artisan db:seed
+4.         php artisan storage:link
