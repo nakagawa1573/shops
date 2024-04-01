@@ -406,3 +406,32 @@ Git , GitHub
 2.         php artisan migrate
 3.         php artisan db:seed
 4.         php artisan storage:link
+
+## 本番環境
+AWSを利用して構築
+<table>
+<tr>
+<td>
+バックエンド
+</td>
+<td>
+EC2（Amazon Linux2）
+</td>
+</tr>
+<tr>
+<td>
+データベース
+</td>
+<td>
+RDS（MySQL）
+</td>
+</tr>
+<tr>
+<td>
+ストレージ
+</td>
+<td>
+S3
+</td>
+</tr>
+</table>
