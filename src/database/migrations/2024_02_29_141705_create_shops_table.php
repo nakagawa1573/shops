@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('shop');
             $table->string('overview');
             $table->string('img');
+            $table->decimal('average', 2, 1)->nullable();
             $table->timestamps();
         });
     }
