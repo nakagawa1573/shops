@@ -50,6 +50,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware('auth:admins')->group(function() {
     Route::get('/admin', [AdminController::class, 'index']);
     Route::post('/admin', [AdminController::class, 'store']);
+    Route::get('/admin/import', [AdminController::class, 'create']);
+    Route::post('/admin/import', [AdminController::class, 'storeShop']);
     Route::get('/admin/mail', [AdminController::class, 'showMail']);
     Route::post('/admin/mail', [AdminController::class, 'send']);
 });

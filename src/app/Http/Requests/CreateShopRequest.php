@@ -22,11 +22,11 @@ class CreateShopRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'shop' => ['required', 'string', 'max:191'],
+            'shop' => ['required', 'string', 'max:50'],
             'area_id' => ['required', 'numeric', 'between:1,47'],
             'genre_id' => ['required', 'array', 'max:3'],
             'genre_id.*' => ['numeric', 'between:1,5'],
-            'overview' => ['required', 'max:200'],
+            'overview' => ['required', 'max:400'],
             'img' => ['image', 'max:5000'],
         ];
     }

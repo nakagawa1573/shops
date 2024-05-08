@@ -100,6 +100,11 @@
                             Mail
                         </a>
                     </p>
+                    <p>
+                        <a class="modal__link" href="/admin/import">
+                            Import Shop Data
+                        </a>
+                    </p>
                 </div>
             @else
                 <div class="modal__box--link">
