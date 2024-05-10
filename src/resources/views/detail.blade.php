@@ -228,7 +228,7 @@
                         </div>
                     </div>
                     <p>
-                        {{ $evaluation->comment }}
+                        {!! nl2br(htmlspecialchars($evaluation->comment)) !!}
                     </p>
                     @if (isset($evaluation->img))
                         <img class="evaluation__img" src="{{ Storage::disk('public')->url('/evaluation/' . $evaluation->img) }}">

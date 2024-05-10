@@ -34,7 +34,7 @@ Route::get('/register/verify', [RegisterController::class, 'showVerify'])->middl
 Route::get('/register/verify/{id}/{hash}', [RegisterController::class, 'confirm'])->middleware(['auth:web,owners', 'signed'])->name('verification.verify');
 Route::post('/register/verify/send', [RegisterController::class, 'send'])->middleware(['auth:web,owners', 'throttle:6,1'])->name('verification.send');
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::post('/reservation/{shop}', [ReservationController::class, 'store']);
     Route::delete('/reservation/delete/{reservation}', [ReservationController::class, 'destroy']);
     Route::get('/reservation/update/{reservation}', [ReservationController::class, 'showUpdate']);

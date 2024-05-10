@@ -62,7 +62,7 @@ class AdminController extends Controller
                 $csv = IOFactory::load($file->getPathName());
                 $csvData = $csv->getActiveSheet()->toArray();
                 foreach ($csvData as $data) {
-                    //配列のバリデート
+                    //$dataのバリデート
                     $result = Validator::make($data, $validateRule);
                     if ($result->fails()) {
                         throw new Exception('要件を満たしていないデータがあります');
@@ -99,17 +99,16 @@ class AdminController extends Controller
                     $shop['shop'] = $data[0];
                     $shop['overview'] = $data[3];
                     $shopId = Shop::create($shop)->id;
-                    $genreData['shop_id'] = $shopId;
-                    $genres = explode('、', $data[2]);
-                    foreach ($genres as $genre) {
-                        $genre = Genre::where('genre', $genre)->first();
-                        //ジャンルのバリデート
-                        if ($genre === null) {
-                            throw new Exception('正しいジャンルを入力してください');
-                        }
-                        $genreData['genre_id'] = $genre->id;
-                        ShopGenre::create($genreData);
+
+                    //ジャンルのバリデート
+                    $genre = Genre::where('genre', $data[2])->first();
+                    if (is_null($genre)) {
+                        throw new Exception('正しいジャンルを入力してください');
                     }
+                    $genreData['genre_id'] = $genre->id;
+                    $genreData['shop_id'] = $shopId;
+                    ShopGenre::create($genreData);
+
                     $count++;
                 }
                 $message = $count . '個の店舗を作成しました';

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('owner_id')->nullable()->constrained()->cascadeOnDelete();
             $table->string('stripe_account')->nullable();
             $table->string('shop');
-            $table->string('overview');
+            $table->string('overview', 400);
             $table->string('img');
             $table->decimal('average', 2, 1)->nullable();
             $table->timestamps();
