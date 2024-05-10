@@ -6,6 +6,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthenticatedSessionController;
+use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\OwnerController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,10 +45,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/mypage', [UserController::class, 'index'])->name('mypage');
     Route::post('/favorite/{shop}', [UserController::class, 'store']);
     Route::delete('/favorite/{shop}/delete', [UserController::class, 'destroy']);
-    Route::post('/detail/{shop_id}/evaluation', [ShopController::class, 'store']);
+    Route::post('/detail/evaluation/{shop_id}', [EvaluationController::class, 'store']);
+    Route::get('/detail/evaluation/{shop_id}', [EvaluationController::class, 'show']);
+    Route::patch('/detail/evaluation/{shop_id}/{evaluation_id}', [EvaluationController::class, 'update']);
 });
 
-Route::middleware('auth:admins')->group(function() {
+Route::middleware('user_or_admin')->group(function () {
+    Route::delete('/detail/evaluation/delete/{evaluation_id}', [EvaluationController::class, 'destroy']);
+});
+
+Route::middleware('auth:admins')->group(function () {
     Route::get('/admin', [AdminController::class, 'index']);
     Route::post('/admin', [AdminController::class, 'store']);
     Route::get('/admin/import', [AdminController::class, 'create']);
@@ -61,7 +68,3 @@ Route::middleware(['auth:owners', 'verified'])->group(function () {
     Route::post('/owner', [OwnerController::class, 'store']);
     Route::patch('/owner/update/{shop}', [OwnerController::class, 'update']);
 });
-
-
-
-

@@ -16,7 +16,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('shop_id')->constrained()->cascadeOnDelete();
             $table->tinyInteger('evaluation');
-            $table->string('comment');
+            $table->string('comment', 400);
+            $table->string('img')->nullable();
             $table->timestamps();
         });
     }

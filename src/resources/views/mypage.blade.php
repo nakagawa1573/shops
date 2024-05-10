@@ -38,7 +38,7 @@
                                                 変更
                                             </button>
                                         </form>
-                                        <form action="/reservation/{{$reservation->pivot->id}}/delete" method="post">
+                                        <form action="/reservation/{{ $reservation->pivot->id }}/delete" method="post">
                                             @csrf
                                             @method('delete')
                                             <button class="reservation__cancel--btn" type="submit">
@@ -128,12 +128,8 @@
                                         @if ($favorite->evaluation->count() !== 0)
                                             @php
                                                 $countDate = $favorite->evaluation->count();
-                                                $count = 0;
-                                                foreach ($favorite->evaluation as $evaluation) {
-                                                    $count += $evaluation->pivot->evaluation;
-                                                }
-                                                $average = number_format($count / $countDate, 1);
-                                                $stars = number_format($average * 2) * 10;
+                                                $width = $favorite->average * 10;
+                                                $stars = ($width - ($width % 5)) * 2;
                                             @endphp
                                         @else
                                             @php
@@ -152,36 +148,48 @@
                                         <li class="shop__category--item">
                                             #{{ $favorite->area->area }}
                                         </li>
+                                        @php
+                                            $count = 0;
+                                        @endphp
                                         @foreach ($favorite->genre as $genre)
                                             <li class="shop__category--item">
                                                 #{{ $genre->genre }}
                                             </li>
-                                        @endforeach
-                                    </ul>
-                                    <div class="shop__form">
-                                        <form class="shop__form--detail" action="/detail/{{ $favorite->id }}"
-                                            method="get">
-                                            @csrf
-                                            <input type="hidden" name="id" value="{{ $favorite->id }}">
-                                            <button type="submit">
-                                                詳しくみる
-                                            </button>
-                                        </form>
-                                        <form class="shop__form--favorite" action="/favorite/{{$favorite->id}}/delete" method="post">
-                                            @csrf
-                                            @method('delete')
-                                            <input type="hidden" name="shop_id" value="{{ $favorite->id }}">
-                                            <button type="submit">
-                                                <div class="heart_favorite"></div>
-                                            </button>
-                                        </form>
-                                    </div>
+                                            @php
+                                                $count++;
+                                            @endphp
+                                            @if ($count == 2)
+                                                <li class="shop__category--item">
+                                                    ...
+                                                </li>
+                                            @break
+                                        @endif
+                                    @endforeach
+                                </ul>
+                                <div class="shop__form">
+                                    <form class="shop__form--detail" action="/detail/{{ $favorite->id }}"
+                                        method="get">
+                                        @csrf
+                                        <button type="submit">
+                                            詳しくみる
+                                        </button>
+                                    </form>
+                                    <form class="shop__form--favorite" action="/favorite/{{ $favorite->id }}/delete"
+                                        method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <input type="hidden" name="shop_id" value="{{ $favorite->id }}">
+                                        <button type="submit">
+                                            <div class="heart_favorite"></div>
+                                        </button>
+                                    </form>
                                 </div>
-                            </article>
-                        @endforeach
+                            </div>
+                        </article>
                     @endforeach
-                </div>
-            </section>
-        </div>
-    </section>
+                @endforeach
+            </div>
+        </section>
+    </div>
+</section>
 @endsection

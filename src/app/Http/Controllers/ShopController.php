@@ -10,7 +10,6 @@ use App\Models\Evaluation;
 use App\Models\Genre;
 use App\Models\Favorite;
 use Illuminate\Support\Facades\Auth;
-
 use function PHPUnit\Framework\isNull;
 
 class ShopController extends Controller
@@ -33,7 +32,8 @@ class ShopController extends Controller
 
         foreach ($shops as $shop) {
             if ($shop->average == null) {
-                $this->average($shop);
+                $evaluationController = new EvaluationController();
+                $evaluationController->average($shop);
             }
         }
 
@@ -42,22 +42,22 @@ class ShopController extends Controller
         } elseif ($sort === "high") {
             $shops = $shops->sortByDesc('average');
         } elseif ($sort === "low") {
-            $shops = $shops->sortBy(function($shop){
+            $shops = $shops->sortBy(function ($shop) {
                 return $shop->average == 0 ? PHP_FLOAT_MAX : $shop->average;
             });
         }
 
         if ($user) {
             $favorites = Favorite::where('user_id', $user->id)->get();
-            return view('index', compact('shops', 'areas', 'genres', 'favorites', 'keyword', 'area_id','genre_id', 'sort'));
+            return view('index', compact('shops', 'areas', 'genres', 'favorites', 'keyword', 'area_id', 'genre_id', 'sort'));
         }
 
         return view('index', compact('shops', 'areas', 'genres', 'keyword', 'area_id', 'genre_id', 'sort'));
     }
 
-    public function show(Request $request)
+    public function show(Shop $shop_id)
     {
-        $shop = Shop::find($request->id);
+        $shop = Shop::find($shop_id->id);
         $url = url()->previous();
         $mypage = route('mypage');
         $home = route('home') . '/';
@@ -77,32 +77,5 @@ class ShopController extends Controller
             return redirect('/');
         }
         return redirect($url);
-    }
-
-    public function store(EvaluationRequest $request, Shop $shop_id)
-    {
-        $evaluations = $request->only(['evaluation', 'comment']);
-        $evaluations['user_id'] = Auth::user()->id;
-        $evaluations['shop_id'] = $shop_id->id;
-        Evaluation::create($evaluations);
-        $shop = Shop::find($shop_id->id);
-        $this->average($shop);
-        return back();
-    }
-
-    public function average($shop)
-    {
-        $count = 0;
-        $countData = $shop->evaluation->count();
-        foreach ($shop->evaluation as $evaluation) {
-            $count += $evaluation->pivot->evaluation;
-        }
-        if ($countData == 0) {
-            $average = 0;
-        } else {
-            $average = number_format($count / $countData, 1);
-        }
-        $shop->average = $average;
-        $shop->save();
     }
 }

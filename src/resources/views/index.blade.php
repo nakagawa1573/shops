@@ -73,7 +73,8 @@
                         @if ($shop->evaluation->count() !== 0)
                             @php
                                 $countDate = $shop->evaluation->count();
-                                $stars = number_format($shop->average * 2) * 10;
+                                $width = $shop->average * 10;
+                                $stars = ($width - $width % 5) * 2;
                             @endphp
                         @else
                             @php
@@ -106,14 +107,13 @@
                                 <li class="shop__category--item">
                                     ...
                                 </li>
-                            @break
-                        @endif
-                    @endforeach
-                </ul>
+                                @break
+                            @endif
+                        @endforeach
+                    </ul>
                 <div class="shop__form">
                     <form class="shop__form--detail" action="/detail/{{ $shop->id }}" method="get">
                         @csrf
-                        <input type="hidden" name="id" value="{{ $shop->id }}">
                         <button type="submit">
                             詳しくみる
                         </button>

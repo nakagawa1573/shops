@@ -29,7 +29,7 @@ class ReservationController extends Controller
             Reservation::create($reservation);
             return redirect('/done');
         } else {
-            return back()->with('message', '予約手続きに失敗しました');
+            return back()->with('reservation__message', '予約手続きに失敗しました');
         }
     }
 
@@ -60,7 +60,7 @@ class ReservationController extends Controller
                 'number' => $request->number,
             ]);
         } else {
-            return back()->with('message', '予約手続きに失敗しました');
+            return back()->with('reservation__message', '予約手続きに失敗しました');
         }
 
         return redirect('/mypage');
