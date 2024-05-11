@@ -24,7 +24,7 @@ class EvaluationRequest extends FormRequest
         return [
             'evaluation' => ['required','between:1,5'],
             'comment' => ['nullable', 'max:400'],
-            'img' => ['nullable','mimes:image/jpeg,image/png', 'max:5000'],
+            'img' => ['nullable','mimetypes:image/jpeg,image/png', 'max:5000'],
         ];
     }
 
