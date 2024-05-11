@@ -378,18 +378,11 @@ Git , GitHub
 ＊MySQLは、OSによって起動しない場合があるのでそれぞれのPCに合わせて docker-compose.ymlファイルを編集してください。
 
 ### Laravel環境構築
-1.         docker-compose exec php bash
-2.         composer install
+1. docker-compose exec php bash
+2. composer install
 3. .env.exampleファイルから.envを作成
 4. .envを編集
 
-        DB_CONNECTION=mysql
-        DB_HOST=mysql
-        DB_PORT=3306
-        DB_DATABASE=laravel_db
-        DB_USERNAME=laravel_user
-        DB_PASSWORD=laravel_pass
-   
         MAIL_MAILER=smtp
         MAIL_HOST=mailhog
         MAIL_PORT=1025
@@ -402,13 +395,15 @@ Git , GitHub
         STRIPE_KEY=pk_test_51OwaF1Ej4thKGBpLnvdTzxna6urrkUm2AqtJLfvgpmwcnn9elUJORyof8iPnPtHQzs6aqgBuRaHLrG5V2KVxXSCl00umi16ofV
 
         STRIPE_SECRET=sk_test_51OwaF1Ej4thKGBpLFeajzbDVcZ0zt6FdKp8OLozLYyCqbyslLTN2pMYKW85yr9VgMIxJSQfl7C0FasgZLVYVyp2C00jdTkefhY
-5.         php artisan key:generate
-6. もしマイグレーションとシーディングがされていなければ、自分で実行してください
+5.     php artisan key:generate
+1.     php artisan storage:link
+<br>
+
+- もしマイグレーションとシーディングがされていなければ、自分で実行してください
 
 
-           php artisan migrate
-           php artisan db:seed
-8.         php artisan storage:link
+       php artisan migrate
+       php artisan db:seed
 
 ## 本番環境
 AWSを利用して構築
