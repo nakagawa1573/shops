@@ -394,16 +394,16 @@ Git , GitHub
         STRIPE_KEY=pk_test_51OwaF1Ej4thKGBpLnvdTzxna6urrkUm2AqtJLfvgpmwcnn9elUJORyof8iPnPtHQzs6aqgBuRaHLrG5V2KVxXSCl00umi16ofV
 
         STRIPE_SECRET=sk_test_51OwaF1Ej4thKGBpLFeajzbDVcZ0zt6FdKp8OLozLYyCqbyslLTN2pMYKW85yr9VgMIxJSQfl7C0FasgZLVYVyp2C00jdTkefhY
-5. php artisan key:generate
-6. php artisan migrate
-7. php artisan db:seed
-8.         php artisan key:generate
-9. もしマイグレーションとシーディングがされていなければ、自分で実行してください
+5.     php artisan key:generate
+1.     php artisan storage:link
+<br>
+
+- もしマイグレーションとシーディングがされていなければ、自分で実行してください
 
 
-           php artisan migrate
-           php artisan db:seed
-10.         php artisan storage:link
+       php artisan migrate
+       php artisan db:seed
+
 
 ## 本番環境
 AWSを利用して構築
