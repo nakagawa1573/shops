@@ -10,7 +10,6 @@ use App\Models\Evaluation;
 use App\Models\Genre;
 use App\Models\Favorite;
 use Illuminate\Support\Facades\Auth;
-
 use function PHPUnit\Framework\isNull;
 
 class ShopController extends Controller
@@ -20,6 +19,7 @@ class ShopController extends Controller
         $keyword = $request->keyword;
         $area_id = $request->area_id;
         $genre_id = $request->genre_id;
+        $sort = $request->sort;
 
         $shops = Shop::with('area', 'genre', 'evaluation')
             ->shopSearch($keyword)
@@ -30,17 +30,34 @@ class ShopController extends Controller
         $areas = Area::all();
         $genres = Genre::all();
 
-        if ($user) {
-            $favorites = Favorite::where('user_id', $user->id)->get();
-            return view('index', compact('shops', 'areas', 'genres', 'favorites', 'keyword', 'area_id', 'genre_id'));
+        foreach ($shops as $shop) {
+            if ($shop->average == null) {
+                $evaluationController = new EvaluationController();
+                $evaluationController->average($shop);
+            }
         }
 
-        return view('index', compact('shops', 'areas', 'genres', 'keyword', 'area_id', 'genre_id'));
+        if ($sort === "random") {
+            $shops = $shops->shuffle();
+        } elseif ($sort === "high") {
+            $shops = $shops->sortByDesc('average');
+        } elseif ($sort === "low") {
+            $shops = $shops->sortBy(function ($shop) {
+                return $shop->average == 0 ? PHP_FLOAT_MAX : $shop->average;
+            });
+        }
+
+        if ($user) {
+            $favorites = Favorite::where('user_id', $user->id)->get();
+            return view('index', compact('shops', 'areas', 'genres', 'favorites', 'keyword', 'area_id', 'genre_id', 'sort'));
+        }
+
+        return view('index', compact('shops', 'areas', 'genres', 'keyword', 'area_id', 'genre_id', 'sort'));
     }
 
-    public function show(Request $request)
+    public function show(Shop $shop_id)
     {
-        $shop = Shop::find($request->id);
+        $shop = Shop::find($shop_id->id);
         $url = url()->previous();
         $mypage = route('mypage');
         $home = route('home') . '/';
@@ -60,15 +77,5 @@ class ShopController extends Controller
             return redirect('/');
         }
         return redirect($url);
-    }
-
-    public function store(EvaluationRequest $request, Shop $shop_id)
-    {
-        $evaluations = $request->only(['evaluation', 'comment']);
-        $evaluations['user_id'] = Auth::user()->id;
-        $evaluations['shop_id'] = $shop_id->id;
-        Evaluation::create($evaluations);
-
-        return back();
     }
 }

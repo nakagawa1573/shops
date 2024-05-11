@@ -15,7 +15,14 @@ class UserController extends Controller
         $user = Auth::user();
         $favorites = User::with('favorite.genre', 'favorite.area', 'favorite.evaluation')->where('id', $user->id)->get();
         $reservations = User::with('reservation.genre', 'reservation.area')->where('id', $user->id)->get();
-
+        foreach ($favorites as $favorite) {
+            foreach ($favorite->favorite as $favorite) {
+                if ($favorite->average === null) {
+                    $evaluationController = new EvaluationController();
+                    $evaluationController->average($favorite);
+                }
+            }
+        }
         return view('mypage', compact('user', 'favorites', 'reservations'));
     }
 

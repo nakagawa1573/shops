@@ -31,20 +31,3 @@ selectNumber.addEventListener("change", function () {
         displayNumber.textContent = value + "人";
     }
 });
-
-var stars = document.querySelectorAll(".evaluation__star");
-stars.forEach(function (star) {
-    star.addEventListener("click", function () {
-        var clickedStar = parseInt(this.id.replace("star", ""));
-        stars.forEach(function (s) {
-            s.classList.remove("evaluation__star--check");
-        });
-
-        for (var i = 1; i <= clickedStar; i++) {
-            document
-                .getElementById("star" + i)
-                .classList.add("evaluation__star--check");
-            document.getElementById("evaluation").setAttribute("value", i);
-        }
-    });
-});

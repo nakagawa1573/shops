@@ -17,9 +17,9 @@
                     @enderror
                 </p>
                 <p class="success">
-                @if (session('message'))
-                    {{ session('message') }}
-                @endif
+                    @if (session('message'))
+                        {{ session('message') }}
+                    @endif
                 </p>
                 <div class="auth__form--item">
                     <img src="{{ asset('storage/person.svg') }}" alt="person" width="25px">

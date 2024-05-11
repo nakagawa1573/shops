@@ -41,12 +41,12 @@
                         $errors->has('date') ||
                         $errors->has('time') ||
                         $errors->has('number') ||
-                        session('message'))
+                        session('reservation__message'))
                     <p class="error">
-                        {{ $errors->first() ?: session('message') }}
+                        {{ $errors->first() ?: session('reservation__message') }}
                     </p>
                 @endif
-                <form class="reservation__form" action="/reservation/{{$shop->id}}" method="post">
+                <form class="reservation__form" action="/reservation/{{ $shop->id }}" method="post">
                     @csrf
                     <input class="reservation__form--date" type="date" name="date" id="date"
                         value="{{ old('date') ?: date('Y-m-d') }}">
@@ -177,39 +177,56 @@
         </div>
     </section>
     <section class="evaluation">
-        <article class="comment__group">
-            <div class="evaluation__total">
-                @if ($evaluations->count() !== 0)
-                    @php
-                        $countDate = $evaluations->count();
-                        $count = 0;
-                        foreach ($evaluations as $evaluation) {
-                            $count += $evaluation->evaluation;
-                        }
-                        $average = number_format($count / $countDate, 1);
-                        $stars = number_format($average * 2) * 15;
-                    @endphp
-                @endif
-                <p class="evaluation__total--number">
-                    {{ $average ?? 0 }}
-                </p>
-                <div class="evaluation__total--star">
-                    <div class="total__star">
-                        ★★★★★
-                    </div>
-                    <div class="total__star--check" style="width: {{ $stars ?? 0 }}px">
-                        ★★★★★
-                    </div>
-                </div>
-                <p class="evaluation__total--count">
-                    ({{ $countDate ?? 0 }})
-                </p>
-            </div>
+        @php
+            $flag = false;
+            foreach ($evaluations as $evaluation) {
+                if (Auth::guard('web')->check() && $evaluation->user_id === Auth::user()->id) {
+                    $flag = true;
+                    break;
+                }
+            }
+        @endphp
+        @if (Auth::check() && !$flag)
+            <a href="/detail/evaluation/{{ $shop->id }}" class="evaluation__post">
+                口コミを投稿する
+            </a>
+            <br>
+        @endif
+        {{ session('message') }}
+        <p class="evaluation__ttl">
+            全ての口コミ情報
+        </p>
+        <article class="evaluation__item--group">
             @foreach ($evaluations as $evaluation)
-                <div class="comment__item">
-                    <h3 class="user">
-                        {{ $evaluation->user->name }}
-                    </h3>
+                <div class="evaluation__item">
+                    <div class="evaluation__link--wrapper">
+                        @can('update', $evaluation)
+                            <a class="evaluation__link" href="/detail/evaluation/{{ $shop->id }}">
+                                口コミを編集
+                            </a>
+                        @endcan
+                        @if (Auth::guard('admins')->check())
+                            <form class="evaluation__link--form" action="/detail/evaluation/delete/{{ $evaluation->id }}"
+                                method="post">
+                                @csrf
+                                @method('delete')
+                                <button class="evaluation__link" type="submit">
+                                    口コミを削除
+                                </button>
+                            </form>
+                        @else
+                            @can('destroy', $evaluation)
+                                <form class="evaluation__link--form" action="/detail/evaluation/delete/{{ $evaluation->id }}"
+                                    method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="evaluation__link" type="submit">
+                                        口コミを削除
+                                    </button>
+                                </form>
+                            @endcan
+                        @endif
+                    </div>
                     <div class="star__box">
                         <div class="star">★★★★★</div>
                         <div class="star__check--group">
@@ -221,43 +238,15 @@
                             @endfor
                         </div>
                     </div>
-                    <p class="comment">
-                        {{ $evaluation->comment }}
+                    <p>
+                        {!! nl2br(htmlspecialchars($evaluation->comment)) !!}
                     </p>
+                    @if (isset($evaluation->img))
+                        <img class="evaluation__img"
+                            src="{{ Storage::disk('public')->url('/evaluation/' . $evaluation->img) }}">
+                    @endif
                 </div>
             @endforeach
-        </article>
-        <article class="evaluation__form">
-            @if ($errors->has('shop_id') || $errors->has('evaluation') || $errors->has('comment'))
-                <p class="error__evaluation">
-                    {{ $errors->first() ?: session('message') }}
-                </p>
-            @endif
-            <div class="evaluation__stars">
-                <button class="evaluation__star" id="star1">
-                    ★
-                </button>
-                <button class="evaluation__star" id="star2">
-                    ★
-                </button>
-                <button class="evaluation__star" id="star3">
-                    ★
-                </button>
-                <button class="evaluation__star" id="star4">
-                    ★
-                </button>
-                <button class="evaluation__star" id="star5">
-                    ★
-                </button>
-            </div>
-            <form action="/detail/{{ $shop->id }}/evaluation" method="post">
-                @csrf
-                <input type="hidden" id="evaluation" name="evaluation" value="">
-                <textarea class="evaluation__comment" name="comment" cols="20" rows="10" placeholder="コメントを入力してください" >{{old('comment')}}</textarea>
-                <button class="evaluation__comment__btn" type="submit">
-                    投稿
-                </button>
-            </form>
         </article>
     </section>
     <script src="{{ asset('js/main.js') }}"></script>

@@ -1,0 +1,56 @@
+.content {
+    margin: 80px 0;
+    text-align: center;
+}
+
+#csvFile {
+    display: none;
+}
+
+.content__csv {
+    width: 200px;
+    height: 50px;
+    font-size: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1F7246;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 2px 2px 4px #959595;
+    margin: 0 auto;
+}
+
+.header {
+    width: auto;
+    max-width: 1342px;
+}
+
+.conditions {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.conditions>ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.alert {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    color: red;
+}
+
+.alert>ul{
+    padding-left: 20px;
+}
+
+@media screen and (max-width:540px) {
+    .conditions,
+    .alert{
+        margin: 0 20px;
+    }
+}

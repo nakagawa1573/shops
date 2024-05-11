@@ -1,0 +1,282 @@
+.content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.content__wrapper {
+    display: flex;
+}
+
+.content__item--wrapper:first-child {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.content__item--box {
+    border-right: 2px solid #D9D9D9;
+    padding-right: 100px;
+}
+
+.content__item--ttl {
+    margin-top: 0;
+    width: 400px;
+}
+
+.content__item--shop {
+    background-color: #fff;
+    width: 330px;
+    height: 320px;
+    border-radius: 6px;
+    box-shadow: 2px 2px 4px #959595;
+    margin: 0 auto;
+}
+
+.shop__img--box {
+    height: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.shop__img {
+    width: 100%;
+}
+
+.shop__txt {
+    padding: 20px;
+    padding-bottom: 0;
+}
+
+.shop__name {
+    margin: 0;
+}
+
+.shop__category {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    padding-left: 0;
+    list-style: none;
+    margin: 0;
+    font-size: 14px;
+}
+
+.shop__category--item {
+    padding-right: 5px;
+}
+
+.shop__form {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+.shop__form--detail>button {
+    background-color: #3560F6;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    padding: 7px 15px;
+    font-size: 14px;
+}
+
+.shop__form--favorite>button {
+    background-color: transparent;
+    border: none;
+}
+
+.shop__form--detail>button,
+.shop__form--favorite>button {
+    cursor: pointer;
+}
+
+.heart,
+.heart_favorite {
+    width: 32px;
+    height: 32px;
+    position: relative;
+}
+
+.heart::before,
+.heart::after,
+.heart_favorite::before,
+.heart_favorite::after {
+    content: "";
+    width: 50%;
+    height: 80%;
+
+    border-radius: 25px 25px 0 0;
+    display: block;
+    position: absolute;
+}
+
+.heart::before,
+.heart::after {
+    background: #EEE;
+}
+
+.heart_favorite::before,
+.heart_favorite::after {
+    background: #EB3223;
+}
+
+.heart::before,
+.heart_favorite::before {
+    transform: rotate(-45deg);
+    left: 14%;
+}
+
+.heart::after,
+.heart_favorite::after {
+    transform: rotate(45deg);
+    right: 14%;
+}
+
+.shop__evaluation {
+    position: relative;
+}
+
+.total__star,
+.total__star--check {
+    font-size: 20px;
+}
+
+.total__star {
+    color: #dededc;
+}
+
+.total__star--check {
+    color: #fbbc04;
+    position: absolute;
+    white-space: nowrap;
+    overflow: hidden;
+    top: 0;
+}
+
+#count {
+    font-size: 16px;
+    color: #959595;
+}
+
+.content__item--wrapper:last-child {
+    width: 100%;
+    max-width: 600px;
+    margin-left: 50px;
+    margin-right: 20px;
+}
+
+.evaluation__star {
+    font-size: 40px;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    background-color: transparent;
+    color: #dededc;
+}
+
+.evaluation__star--check {
+    color: #3F5FEC;
+}
+
+.content__item--comment {
+    resize: none;
+    width: 100%;
+    height: 150px;
+    background-color: transparent;
+    padding: 10px 20px;
+}
+
+.content__item--counter {
+    text-align: right;
+    font-weight: bold;
+    margin: 0;
+    font-size: 13px;
+}
+
+.content__item--img {
+    display: none;
+}
+
+.content__item--img__txt {
+    width: 100%;
+    height: 150px;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.message {
+    text-align: center;
+}
+
+.error {
+    color: red;
+}
+
+.btn__wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.btn {
+    width: 500px;
+    background-color: #fff;
+    border: none;
+    border-radius: 999px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.header {
+    width: 100%;
+    max-width: 1342px;
+}
+
+@media screen and (max-width:768px) {
+    .content__wrapper {
+        display: block;
+        margin: 0 20px;
+    }
+
+    .content__item--wrapper:first-child {
+        justify-content: center;
+        margin-left: 0;
+    }
+
+    .content__item--box {
+        border-right: none;
+        padding-right: 0;
+    }
+
+    .content__item--ttl {
+        width: 100%;
+    }
+
+    .content__item--wrapper:last-child{
+        margin: 0 auto;
+    }
+
+    .btn{
+        margin-bottom: 50px;
+        max-width: 500px;
+        width: 90%;
+    }
+}
+
+@media screen and (max-width:330px) {
+    .content__item--shop{
+        width: 310px;
+        height: 300px;
+    }
+
+    .shop__txt{
+        padding: 10px 15px;
+    }
+}

@@ -14,6 +14,7 @@ class Evaluation extends Model
         'shop_id',
         'evaluation',
         'comment',
+        'img',
     ];
 
     public function user()

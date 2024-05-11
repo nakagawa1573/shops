@@ -84,8 +84,8 @@ return [
         'string'  => ':attributeは、:max文字以下で指定してください。',
         'array'   => ':attributeは:max個以下指定してください。',
     ],
-    'mimes'                => ':attributeには:valuesタイプのファイルを指定してください。',
-    'mimetypes'            => ':attributeには:valuesタイプのファイルを指定してください。',
+    'mimes'                => ':attributeは:valuesタイプを指定してください。',
+    'mimetypes'            => ':attributeは:valuesタイプを指定してください。',
     'min'                  => [
         'numeric' => ':attributeには、:min以上の数字を指定してください。',
         'file'    => ':attributeには、:min kB以上のファイルを指定してください。',
@@ -157,6 +157,12 @@ return [
         'email' => 'メールアドレス',
         'password' => 'パスワード',
         'name' => '名前',
+        'csvFile' => 'ファイル',
+        'csv_data.*.0' => '店舗名',
+        'csv_data.*.1' => '地域',
+        'csv_data.*.2' => 'ジャンル',
+        'csv_data.*.3' => '店舗概要',
+        'csv_data.*.4' => '画像URL',
     ],
 
 ];

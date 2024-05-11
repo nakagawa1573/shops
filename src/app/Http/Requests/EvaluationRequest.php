@@ -22,20 +22,20 @@ class EvaluationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'evaluation' => ['required', 'numeric','between:1,5'],
-            'comment' => ['required', 'string', 'max:200'],
+            'evaluation' => ['required','between:1,5'],
+            'comment' => ['nullable', 'max:400'],
+            'img' => ['nullable','mimes:image/jpeg,image/png', 'max:5000'],
         ];
     }
 
     public function messages()
     {
         return [
-            'evaluation.required' => '★の数を指定してください',
-            'evaluation.numeric' => '投稿に失敗しました',
+            'evaluation.required' => '評価の数を指定してください',
             'evaluation.between' => '投稿に失敗しました',
-            'comment.required' => 'コメントを入力してください',
-            'comment.string' => '投稿に失敗しました',
-            'comment.max' => 'コメントは200文字以内で投稿してください',
+            'comment.max' => 'コメントは400文字以内で投稿してください',
+            'img.mimetypes' => '画像はjpegかpngを選択してください',
+            'img.max' => '5MB以下の画像を選択してください',
         ];
     }
 }
