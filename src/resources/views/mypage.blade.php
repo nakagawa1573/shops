@@ -38,7 +38,7 @@
                                                 変更
                                             </button>
                                         </form>
-                                        <form action="/reservation/delete/{{ $reservation->pivot->id }}" method="post">
+                                        <form action="/reservation/delete/{{$reservation->pivot->id}}" method="post">
                                             @csrf
                                             @method('delete')
                                             <button class="reservation__cancel--btn" type="submit">
