@@ -6,7 +6,6 @@
 
 ## アプリケーションURL
 - 開発環境：http://localhost/
-- 本番環境：http://18.182.80.119/
 - phpMyAdmin：http://localhost:8080/
 - MailHog：http://localhost:8025/
 
@@ -17,7 +16,7 @@
 
         Pass ：123456789
 
-管理者
+<a id="admin">管理者</a>
 
         Email：admin@test.com
 
@@ -372,8 +371,8 @@ Git , GitHub
 
 ## 環境構築
 ### Dockerビルド
-1.         git clone git@github.com:nakagawa1573/shops.git
-2.         docker-compose up -d --build
+1. git clone git@github.com:nakagawa1573/shops.git
+2. docker-compose up -d --build
 
 ＊MySQLは、OSによって起動しない場合があるのでそれぞれのPCに合わせて docker-compose.ymlファイルを編集してください。
 
@@ -405,6 +404,7 @@ Git , GitHub
        php artisan migrate
        php artisan db:seed
 
+
 ## 本番環境
 AWSを利用して構築
 <table>
@@ -433,3 +433,16 @@ S3
 </td>
 </tr>
 </table>
+
+## CSVインポート機能
+
+[管理者アカウント](#admin)を使用してメニューの「Import CSV」からアクセスできます。
+
+### CSVファイルの記述方法
+- 1列目 : 店舗名 (50文字以内)
+- 2列目 : 地域（東京都、大阪府、福岡県のいずれか）
+- 3列目 : ジャンル (寿司、焼肉、イタリアン、居酒屋、ラーメンのいずれか)
+- 4列目 : 店舗概要 (400文字以内)
+- 5列目 : 画像URL (jpeg、pngのみアップロード可能)
+
+<img src="https://raw.githubusercontent.com/nakagawa1573/images/main/reservation/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202024-05-11%20152404.png">
