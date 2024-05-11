@@ -16,7 +16,7 @@
 
         Pass ：123456789
 
-[管理者](#admin)
+<a id="admin">管理者</a>
 
         Email：admin@test.com
 
@@ -403,7 +403,7 @@ Git , GitHub
 
 ## CSVインポート機能
 
-<a id="admin">管理者アカウント</a>を使用してメニューの「Import CSV」からアクセスできます。
+[管理者アカウント](#admin)を使用してメニューの「Import CSV」からアクセスできます。
 
 ### CSVファイルの記述方法
 - 1列目 : 店舗名 (50文字以内)
