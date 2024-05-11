@@ -222,6 +222,7 @@
     text-decoration-thickness: 2px;
     cursor: pointer;
     font-size: 14px;
+    color: #000;
 }
 
 .evaluation__link--form {

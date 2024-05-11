@@ -9,8 +9,8 @@ use App\Models\Owner;
 use App\Models\Shop;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class ImportTest extends TestCase
@@ -50,7 +50,7 @@ class ImportTest extends TestCase
         }
         $tmp_meta = stream_get_meta_data($tmp_fp);
         $tmp_path = $tmp_meta['uri'];
-        $file = new UploadedFile($tmp_path, 'upload.csv', filesize($tmp_path), null, true);
+        $file = new UploadedFile($tmp_path, 'upload.csv', 'text/csv', null, true);
         $user = Admin::inRandomOrder()->first();
         $response = $this->actingAs($user, 'admins')
             ->post('/admin/import', [
@@ -69,7 +69,9 @@ class ImportTest extends TestCase
                 'shop_id' => $shop->id,
                 'genre_id' => $genreId,
             ]);
+            Storage::disk('public')->delete('shop/' . $shop->img);
         }
+        $response->assertSessionHasNoErrors();
     }
 
     public function testImportCsvErrorFromOwner(): void
@@ -103,7 +105,7 @@ class ImportTest extends TestCase
         }
         $tmp_meta = stream_get_meta_data($tmp_fp);
         $tmp_path = $tmp_meta['uri'];
-        $file = new UploadedFile($tmp_path, 'upload.csv', filesize($tmp_path), null, true);
+        $file = new UploadedFile($tmp_path, 'upload.csv', 'text/csv', null, true);
         $user = Owner::inRandomOrder()->first();
         $response = $this->followingRedirects()
             ->actingAs($user, 'owners')
@@ -152,7 +154,7 @@ class ImportTest extends TestCase
         }
         $tmp_meta = stream_get_meta_data($tmp_fp);
         $tmp_path = $tmp_meta['uri'];
-        $file = new UploadedFile($tmp_path, 'upload.csv', filesize($tmp_path), null, true);
+        $file = new UploadedFile($tmp_path, 'upload.csv', 'text/csv', null, true);
         $user = User::inRandomOrder()->first();
         $response = $this->followingRedirects()
             ->actingAs($user)
@@ -187,13 +189,13 @@ class ImportTest extends TestCase
         }
         $tmp_meta = stream_get_meta_data($tmp_fp);
         $tmp_path = $tmp_meta['uri'];
-        $file = new UploadedFile($tmp_path, 'upload.csv', filesize($tmp_path), null, true);
+        $file = new UploadedFile($tmp_path, 'upload.csv', 'text/csv', null, true);
         $user = Admin::inRandomOrder()->first();
         $response = $this->actingAs($user, 'admins')
             ->post('/admin/import', [
                 'csvFile' => $file,
             ]);
-        $response->assertSessionHas('message', '要件を満たしていないデータがあります');
+        $response->assertSessionHasErrors('csv_data.*.0');
     }
 
     public function testImportCsvErrorShopMax(): void
@@ -213,13 +215,13 @@ class ImportTest extends TestCase
         }
         $tmp_meta = stream_get_meta_data($tmp_fp);
         $tmp_path = $tmp_meta['uri'];
-        $file = new UploadedFile($tmp_path, 'upload.csv', filesize($tmp_path), null, true);
+        $file = new UploadedFile($tmp_path, 'upload.csv', 'text/csv', null, true);
         $user = Admin::inRandomOrder()->first();
         $response = $this->actingAs($user, 'admins')
             ->post('/admin/import', [
                 'csvFile' => $file,
             ]);
-        $response->assertSessionHas('message', '要件を満たしていないデータがあります');
+        $response->assertSessionHasErrors('csv_data.*.0');
     }
 
     public function testImportCsvErrorAreaNull(): void
@@ -239,13 +241,13 @@ class ImportTest extends TestCase
         }
         $tmp_meta = stream_get_meta_data($tmp_fp);
         $tmp_path = $tmp_meta['uri'];
-        $file = new UploadedFile($tmp_path, 'upload.csv', filesize($tmp_path), null, true);
+        $file = new UploadedFile($tmp_path, 'upload.csv', 'text/csv', null, true);
         $user = Admin::inRandomOrder()->first();
         $response = $this->actingAs($user, 'admins')
             ->post('/admin/import', [
                 'csvFile' => $file,
             ]);
-        $response->assertSessionHas('message', '要件を満たしていないデータがあります');
+        $response->assertSessionHasErrors('csv_data.*.1');
     }
 
     public function testImportCsvErrorAreaOther(): void
@@ -265,13 +267,13 @@ class ImportTest extends TestCase
         }
         $tmp_meta = stream_get_meta_data($tmp_fp);
         $tmp_path = $tmp_meta['uri'];
-        $file = new UploadedFile($tmp_path, 'upload.csv', filesize($tmp_path), null, true);
+        $file = new UploadedFile($tmp_path, 'upload.csv', 'text/csv', null, true);
         $user = Admin::inRandomOrder()->first();
         $response = $this->actingAs($user, 'admins')
         ->post('/admin/import', [
             'csvFile' => $file,
         ]);
-        $response->assertSessionHas('message', '正しい地域を入力してください');
+        $response->assertSessionHasErrors('csv_data.*.1');
     }
 
     public function testImportCsvErrorGenreNull(): void
@@ -291,13 +293,13 @@ class ImportTest extends TestCase
         }
         $tmp_meta = stream_get_meta_data($tmp_fp);
         $tmp_path = $tmp_meta['uri'];
-        $file = new UploadedFile($tmp_path, 'upload.csv', filesize($tmp_path), null, true);
+        $file = new UploadedFile($tmp_path, 'upload.csv', 'text/csv', null, true);
         $user = Admin::inRandomOrder()->first();
         $response = $this->actingAs($user, 'admins')
         ->post('/admin/import', [
             'csvFile' => $file,
         ]);
-        $response->assertSessionHas('message', '要件を満たしていないデータがあります');
+        $response->assertSessionHasErrors('csv_data.*.2');
     }
 
     public function testImportCsvErrorGenreOther(): void
@@ -317,13 +319,13 @@ class ImportTest extends TestCase
         }
         $tmp_meta = stream_get_meta_data($tmp_fp);
         $tmp_path = $tmp_meta['uri'];
-        $file = new UploadedFile($tmp_path, 'upload.csv', filesize($tmp_path), null, true);
+        $file = new UploadedFile($tmp_path, 'upload.csv', 'text/csv', null, true);
         $user = Admin::inRandomOrder()->first();
         $response = $this->actingAs($user, 'admins')
         ->post('/admin/import', [
             'csvFile' => $file,
         ]);
-        $response->assertSessionHas('message', '正しいジャンルを入力してください');
+        $response->assertSessionHasErrors('csv_data.*.2');
     }
 
     public function testImportCsvErrorUrlNull(): void
@@ -333,7 +335,7 @@ class ImportTest extends TestCase
             [
                 'テスト店',
                 '東京都',
-                '和食',
+                '寿司',
                 'テストです',
                 null,
             ],
@@ -343,13 +345,13 @@ class ImportTest extends TestCase
         }
         $tmp_meta = stream_get_meta_data($tmp_fp);
         $tmp_path = $tmp_meta['uri'];
-        $file = new UploadedFile($tmp_path, 'upload.csv', filesize($tmp_path), null, true);
+        $file = new UploadedFile($tmp_path, 'upload.csv', 'text/csv', null, true);
         $user = Admin::inRandomOrder()->first();
         $response = $this->actingAs($user, 'admins')
         ->post('/admin/import', [
             'csvFile' => $file,
         ]);
-        $response->assertSessionHas('message', '要件を満たしていないデータがあります');
+        $response->assertSessionHasErrors('csv_data.*.4');
     }
 
     public function testImportCsvErrorUrlFormat(): void
@@ -359,7 +361,7 @@ class ImportTest extends TestCase
             [
                 'テスト店',
                 '東京都',
-                '和食',
+                '寿司',
                 'テストです',
                 'test',
             ],
@@ -369,13 +371,13 @@ class ImportTest extends TestCase
         }
         $tmp_meta = stream_get_meta_data($tmp_fp);
         $tmp_path = $tmp_meta['uri'];
-        $file = new UploadedFile($tmp_path, 'upload.csv', filesize($tmp_path), null, true);
+        $file = new UploadedFile($tmp_path, 'upload.csv', 'text/csv', null, true);
         $user = Admin::inRandomOrder()->first();
         $response = $this->actingAs($user, 'admins')
         ->post('/admin/import', [
             'csvFile' => $file,
         ]);
-        $response->assertSessionHas('message', '正しいURLを記述してください');
+        $response->assertSessionHasErrors('csv_data.*.4');
     }
 
     public function testImportCsvErrorUrlOther(): void
@@ -385,7 +387,7 @@ class ImportTest extends TestCase
             [
                 'テスト店',
                 '東京都',
-                '和食',
+                '寿司',
                 'テストです',
                 'https://docs.google.com/spreadsheets/d/1uAMsN2plJJnslMP9b08rwPnR5UznwJlhxVj3-LSqCuI/edit#gid=0',
             ],
@@ -395,13 +397,13 @@ class ImportTest extends TestCase
         }
         $tmp_meta = stream_get_meta_data($tmp_fp);
         $tmp_path = $tmp_meta['uri'];
-        $file = new UploadedFile($tmp_path, 'upload.csv', filesize($tmp_path), null, true);
+        $file = new UploadedFile($tmp_path, 'upload.csv', 'text/csv', null, true);
         $user = Admin::inRandomOrder()->first();
         $response = $this->actingAs($user, 'admins')
         ->post('/admin/import', [
             'csvFile' => $file,
         ]);
-        $response->assertSessionHas('message', '画像の取得に失敗しました');
+        $response->assertSessionHasErrors('csv_data.*.4');
     }
 
     public function testImportCsvErrorImgFormat(): void
@@ -411,7 +413,7 @@ class ImportTest extends TestCase
             [
                 'テスト店',
                 '東京都',
-                '和食',
+                '寿司',
                 'テストです',
                 'https://raw.githubusercontent.com/nakagawa1573/images/d1433b88e80c85a3c56707f954b9f473f1342631/market/logo.svg',
             ],
@@ -421,13 +423,13 @@ class ImportTest extends TestCase
         }
         $tmp_meta = stream_get_meta_data($tmp_fp);
         $tmp_path = $tmp_meta['uri'];
-        $file = new UploadedFile($tmp_path, 'upload.csv', filesize($tmp_path), null, true);
+        $file = new UploadedFile($tmp_path, 'upload.csv', 'text/csv', null, true);
         $user = Admin::inRandomOrder()->first();
         $response = $this->actingAs($user, 'admins')
         ->post('/admin/import', [
             'csvFile' => $file,
         ]);
-        $response->assertSessionHas('message', 'jpegかpngの画像を選択してください');
+        $response->assertSessionHasErrors('csv_data.*.4');
     }
 
     public function testImportCsvErrorOverviewNull(): void
@@ -437,7 +439,7 @@ class ImportTest extends TestCase
             [
                 'テスト店',
                 '東京都',
-                '和食',
+                '寿司',
                 null,
                 'https://raw.githubusercontent.com/nakagawa1573/images/main/reservation/menu1.png',
             ],
@@ -447,13 +449,13 @@ class ImportTest extends TestCase
         }
         $tmp_meta = stream_get_meta_data($tmp_fp);
         $tmp_path = $tmp_meta['uri'];
-        $file = new UploadedFile($tmp_path, 'upload.csv', filesize($tmp_path), null, true);
+        $file = new UploadedFile($tmp_path, 'upload.csv', 'text/csv', null, true);
         $user = Admin::inRandomOrder()->first();
         $response = $this->actingAs($user, 'admins')
         ->post('/admin/import', [
             'csvFile' => $file,
         ]);
-        $response->assertSessionHas('message', '要件を満たしていないデータがあります');
+        $response->assertSessionHasErrors('csv_data.*.3');
     }
 
     public function testImportCsvErrorOverviewMax(): void
@@ -463,7 +465,7 @@ class ImportTest extends TestCase
             [
                 'テスト店',
                 '東京都',
-                '和食',
+                '寿司',
                 fake()->realText(450),
                 'https://raw.githubusercontent.com/nakagawa1573/images/main/reservation/menu1.png',
             ],
@@ -473,13 +475,13 @@ class ImportTest extends TestCase
         }
         $tmp_meta = stream_get_meta_data($tmp_fp);
         $tmp_path = $tmp_meta['uri'];
-        $file = new UploadedFile($tmp_path, 'upload.csv', filesize($tmp_path), null, true);
+        $file = new UploadedFile($tmp_path, 'upload.csv', 'text/csv', null, true);
         $user = Admin::inRandomOrder()->first();
         $response = $this->actingAs($user, 'admins')
         ->post('/admin/import', [
             'csvFile' => $file,
         ]);
-        $response->assertSessionHas('message', '要件を満たしていないデータがあります');
+        $response->assertSessionHasErrors('csv_data.*.3');
     }
 
     public function testImportCsvErrorHavenotCsv(): void
@@ -487,6 +489,17 @@ class ImportTest extends TestCase
         $user = Admin::inRandomOrder()->first();
         $response = $this->actingAs($user, 'admins')
         ->post('/admin/import');
-        $response->assertSessionHas('message', 'ファイルを選択してください');
+        $response->assertSessionHasErrors('csvFile');
+    }
+
+    public function testImportCsvErrorCsvFormat()
+    {
+        $file = UploadedFile::fake()->image('shop.jpg');
+        $user = Admin::inRandomOrder()->first();
+        $response = $this->actingAs($user, 'admins')
+        ->post('/admin/import', [
+            'csvFile' => $file,
+        ]);
+        $response->assertSessionHasErrors('csvFile');
     }
 }

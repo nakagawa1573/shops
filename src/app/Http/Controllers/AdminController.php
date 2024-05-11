@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\NotificationEmail;
 use App\Models\User;
 use App\Http\Requests\EmailRequest;
+use App\Http\Requests\ImportRequest;
 use App\Models\Area;
 use App\Models\Genre;
 use App\Models\Shop;
@@ -44,7 +45,7 @@ class AdminController extends Controller
         return view('import');
     }
 
-    public function storeShop(Request $request)
+    public function storeShop(ImportRequest $request)
     {
         $count = 0;
         $imgBox = [];

@@ -102,7 +102,7 @@
                     </p>
                     <p>
                         <a class="modal__link" href="/admin/import">
-                            Import Shop Data
+                            Import CSV
                         </a>
                     </p>
                 </div>

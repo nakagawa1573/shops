@@ -20,6 +20,15 @@
             @endif
         </p>
     </section>
+    @if ($errors->any())
+        <div class="alert">
+            <ul>
+                @foreach (array_unique($errors->all()) as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <nav class="conditions">
         <h3>
             以下の要件を満たしているか、必ず確認をしてください

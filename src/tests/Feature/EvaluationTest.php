@@ -38,6 +38,26 @@ class EvaluationTest extends TestCase
         ]);
     }
 
+    public function testEvaluationSuccessCommentNull(): void
+    {
+        $user = User::factory()->create();
+        $shop = Shop::inRandomOrder()->first();
+        $evaluation = rand(1, 5);
+        $response = $this->followingRedirects()
+            ->actingAs($user)
+            ->post('/detail/evaluation/' . $shop->id, [
+                'evaluation' => $evaluation,
+                'comment' => null,
+            ]);
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('evaluations', [
+            'user_id' => $user->id,
+            'shop_id' => $shop->id,
+            'evaluation' => $evaluation,
+            'comment' => null,
+        ]);
+    }
+
     public function testEvaluationErrorNotLogin(): void
     {
         $this->post('/detail/1/evaluation', [
@@ -97,8 +117,7 @@ class EvaluationTest extends TestCase
         $shop = Shop::inRandomOrder()->first();
         $evaluation = rand(1, 5);
         $comment = fake()->realText(400);
-        $this->followingRedirects()
-            ->actingAs($user)
+        $this->actingAs($user)
             ->post('/detail/evaluation/' . $shop->id, [
                 'evaluation' => $evaluation,
                 'comment' => $comment,
@@ -200,6 +219,28 @@ class EvaluationTest extends TestCase
         ]);
     }
 
+    public function testEvaluationErrorImgMax()
+    {
+        $user = User::factory()->create();
+        $shop = Shop::inRandomOrder()->first();
+        $evaluation = rand(1, 5);
+        $comment = fake()->realText(50);
+        $img = UploadedFile::fake()->image('evaluation.jpeg')->size(6000);
+        $response = $this->actingAs($user)
+            ->post('/detail/evaluation/' . $shop->id, [
+                'evaluation' => $evaluation,
+                'comment' => $comment,
+                'img' => $img,
+            ]);
+        $response->assertStatus(302)->assertSessionHasErrors('img');
+        $this->assertDatabaseMissing('evaluations', [
+            'user_id' => $user->id,
+            'shop_id' => $shop->id,
+            'evaluation' => $evaluation,
+            'comment' => $comment,
+        ]);
+    }
+
     public function testEvaluationSuccessUpdate()
     {
         $user = User::factory()->create();
@@ -283,7 +324,7 @@ class EvaluationTest extends TestCase
         $response = $this->actingAs($user)
             ->delete('/detail/evaluation/delete/' . $evaluation->id);
         $response->assertStatus(302)
-                ->assertSessionHas('message', '削除に成功しました');
+            ->assertSessionHas('message', '削除に成功しました');
         $this->assertDatabaseMissing('evaluations', [
             'id' => $evaluation->id,
         ]);
@@ -306,8 +347,20 @@ class EvaluationTest extends TestCase
     {
         $evaluation = Evaluation::inRandomOrder()->first();
         $user = Owner::inRandomOrder()->first();
-        $this->actingAs($user, 'owners')
-        ->delete('/detail/evaluation/delete/' . $evaluation->id);
+        $response = $this->actingAs($user, 'owners')
+            ->delete('/detail/evaluation/delete/' . $evaluation->id);
+        $this->assertDatabaseHas('evaluations', [
+            'id' => $evaluation->id,
+        ]);
+    }
+
+    public function testEvaluationErrorDeleteFromUser()
+    {
+        $evaluation = Evaluation::inRandomOrder()->first();
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)
+            ->delete('/detail/evaluation/delete/' . $evaluation->id);
+        $response->assertStatus(403);
         $this->assertDatabaseHas('evaluations', [
             'id' => $evaluation->id,
         ]);

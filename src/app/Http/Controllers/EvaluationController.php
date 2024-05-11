@@ -39,7 +39,7 @@ class EvaluationController extends Controller
         return redirect('/detail/' . $shop_id->id)->with('message', '投稿に成功しました');
     }
 
-    public function update(Shop $shop_id, Evaluation $evaluation_id, EvaluationRequest $request)
+    public function update(EvaluationRequest $request, Shop $shop_id, Evaluation $evaluation_id)
     {
         $this->authorize('update', $evaluation_id);
         $evaluations = $request->only(['evaluation', 'comment']);

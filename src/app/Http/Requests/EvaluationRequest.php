@@ -23,8 +23,8 @@ class EvaluationRequest extends FormRequest
     {
         return [
             'evaluation' => ['required','between:1,5'],
-            'comment' => ['max:400'],
-            'img' => ['nullable', 'mimetypes:image/jpeg,image/png'],
+            'comment' => ['nullable', 'max:400'],
+            'img' => ['nullable','mimes:image/jpeg,image/png', 'max:5000'],
         ];
     }
 
@@ -34,7 +34,8 @@ class EvaluationRequest extends FormRequest
             'evaluation.required' => '評価の数を指定してください',
             'evaluation.between' => '投稿に失敗しました',
             'comment.max' => 'コメントは400文字以内で投稿してください',
-            'img.mimes' => '画像はjpegかpngを選択してください'
+            'img.mimetypes' => '画像はjpegかpngを選択してください',
+            'img.max' => '5MB以下の画像を選択してください',
         ];
     }
 }

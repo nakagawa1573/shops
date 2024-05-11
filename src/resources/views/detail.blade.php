@@ -205,7 +205,7 @@
                                 口コミを編集
                             </a>
                         @endcan
-                        @can('destroy', $evaluation)
+                        @if (Auth::guard('admins')->check())
                             <form class="evaluation__link--form" action="/detail/evaluation/delete/{{ $evaluation->id }}"
                                 method="post">
                                 @csrf
@@ -214,7 +214,18 @@
                                     口コミを削除
                                 </button>
                             </form>
-                        @endcan
+                        @else
+                            @can('destroy', $evaluation)
+                                <form class="evaluation__link--form" action="/detail/evaluation/delete/{{ $evaluation->id }}"
+                                    method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="evaluation__link" type="submit">
+                                        口コミを削除
+                                    </button>
+                                </form>
+                            @endcan
+                        @endif
                     </div>
                     <div class="star__box">
                         <div class="star">★★★★★</div>
@@ -231,7 +242,8 @@
                         {!! nl2br(htmlspecialchars($evaluation->comment)) !!}
                     </p>
                     @if (isset($evaluation->img))
-                        <img class="evaluation__img" src="{{ Storage::disk('public')->url('/evaluation/' . $evaluation->img) }}">
+                        <img class="evaluation__img"
+                            src="{{ Storage::disk('public')->url('/evaluation/' . $evaluation->img) }}">
                     @endif
                 </div>
             @endforeach
