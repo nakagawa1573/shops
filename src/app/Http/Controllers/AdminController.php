@@ -49,76 +49,40 @@ class AdminController extends Controller
     {
         $count = 0;
         $imgBox = [];
-        $validateRule = [
-            0 => ['required', 'max:50'],
-            1 => ['required'],
-            2 => ['required'],
-            3 => ['required', 'max:400'],
-            4 => ['required'],
-        ];
         try {
             DB::beginTransaction();
-            if ($request->hasFile('csvFile')) {
-                $file = $request->file('csvFile');
-                $csv = IOFactory::load($file->getPathName());
-                $csvData = $csv->getActiveSheet()->toArray();
-                foreach ($csvData as $data) {
-                    //$dataのバリデート
-                    $result = Validator::make($data, $validateRule);
-                    if ($result->fails()) {
-                        throw new Exception('要件を満たしていないデータがあります');
-                    }
-                    $shop = ['owner_id' => null];
-                    if (filter_var($data[4], FILTER_VALIDATE_URL)) {
-                        $imgData = Http::get($data[4]);
-                        if ($imgData->successful()) {
-                            $imageId = Str::uuid()->toString();
-                            //拡張子のバリデート
-                            if ($imgData->header('Content-Type') === 'image/jpeg') {
-                                $imgPath = 'shop/' . $imageId . '.jpeg';
-                            } elseif ($imgData->header('Content-Type') === 'image/png') {
-                                $imgPath = 'shop/' . $imageId . '.png';
-                            } else {
-                                throw new Exception('jpegかpngの画像を選択してください');
-                            }
-                            Storage::disk('public')->put($imgPath, $imgData->body());
-                            $shop['img'] = basename($imgPath);
-                            $imgBox[] = basename($imgPath);
-                        } else {
-                            throw new Exception('画像の取得に失敗しました');
-                        }
-                    } else {
-                        throw new Exception('正しいURLを記述してください');
-                    }
-                    //地域のバリデート
-                    if ($data[1] === '東京都' || $data[1] === '大阪府' || $data[1] === '福岡県') {
-                        $area = Area::where('area', $data[1])->first();
-                    }else{
-                        throw new Exception('正しい地域を入力してください');
-                    }
-                    $shop['area_id'] = $area->id;
-                    $shop['shop'] = $data[0];
-                    $shop['overview'] = $data[3];
-                    $shopId = Shop::create($shop)->id;
+            $file = $request->file('csvFile');
+            $csv = IOFactory::load($file->getPathName());
+            $csvData = $csv->getActiveSheet()->toArray();
+            foreach ($csvData as $data) {
+                $shop = ['owner_id' => null];
 
-                    //ジャンルのバリデート
-                    $genre = Genre::where('genre', $data[2])->first();
-                    if (is_null($genre)) {
-                        throw new Exception('正しいジャンルを入力してください');
-                    }
-                    $genreData['genre_id'] = $genre->id;
-                    $genreData['shop_id'] = $shopId;
-                    ShopGenre::create($genreData);
-
-                    $count++;
+                $imgData = Http::get($data[4]);
+                $imageId = Str::uuid()->toString();
+                if ($imgData->header('Content-Type') === 'image/jpeg') {
+                    $imgPath = 'shop/' . $imageId . '.jpeg';
+                } elseif ($imgData->header('Content-Type') === 'image/png') {
+                    $imgPath = 'shop/' . $imageId . '.png';
                 }
-                $message = $count . '個の店舗を作成しました';
-                DB::commit();
+                Storage::disk('public')->put($imgPath, $imgData->body());
+                $shop['img'] = basename($imgPath);
+                $imgBox[] = basename($imgPath);
 
-                return back()->with('message', $message);
-            } else {
-                throw new Exception('ファイルを選択してください');
+                $area = Area::where('area', $data[1])->first();
+                $shop['area_id'] = $area->id;
+                $shop['shop'] = $data[0];
+                $shop['overview'] = $data[3];
+                $shopId = Shop::create($shop)->id;
+
+                $genre = Genre::where('genre', $data[2])->first();
+                $genreData['genre_id'] = $genre->id;
+                $genreData['shop_id'] = $shopId;
+                ShopGenre::create($genreData);
+                $count++;
             }
+            $message = $count . '個の店舗を作成しました';
+            DB::commit();
+            return back()->with('message', $message);
         } catch (\Exception $e) {
             DB::rollBack();
             foreach ($imgBox as $img) {
