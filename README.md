@@ -382,6 +382,14 @@ Git , GitHub
 3. .env.exampleファイルから.envを作成
 4. .envを編集
 
+        DB_CONNECTION=mysql
+        DB_HOST=mysql
+        DB_PORT=3306
+        DB_DATABASE=laravel_db
+        DB_USERNAME=laravel_user
+        DB_PASSWORD=laravel_pass
+
+   
         MAIL_MAILER=smtp
         MAIL_HOST=mailhog
         MAIL_PORT=1025
@@ -390,8 +398,8 @@ Git , GitHub
         MAIL_ENCRYPTION=null
         MAIL_FROM_ADDRESS="test@test.com"
         MAIL_FROM_NAME="Rese"
-5.     php artisan key:generate
-6.     php artisan storage:link
+6.     php artisan key:generate
+7.     php artisan storage:link
 <br>
 
 - もしマイグレーションとシーディングがされていなければ、自分で実行してください
