@@ -390,12 +390,8 @@ Git , GitHub
         MAIL_ENCRYPTION=null
         MAIL_FROM_ADDRESS="test@test.com"
         MAIL_FROM_NAME="Rese"
-
-        STRIPE_KEY=pk_test_51OwaF1Ej4thKGBpLnvdTzxna6urrkUm2AqtJLfvgpmwcnn9elUJORyof8iPnPtHQzs6aqgBuRaHLrG5V2KVxXSCl00umi16ofV
-
-        STRIPE_SECRET=sk_test_51OwaF1Ej4thKGBpLFeajzbDVcZ0zt6FdKp8OLozLYyCqbyslLTN2pMYKW85yr9VgMIxJSQfl7C0FasgZLVYVyp2C00jdTkefhY
 5.     php artisan key:generate
-1.     php artisan storage:link
+6.     php artisan storage:link
 <br>
 
 - もしマイグレーションとシーディングがされていなければ、自分で実行してください
